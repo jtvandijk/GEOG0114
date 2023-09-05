@@ -1,0 +1,38 @@
+--- 
+title: "GEOG0114: Principles of Spatial Analysis"
+author: Justin van Dijk
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+link-citations: yes
+github-repo: "jtvandijk/GEOG0114"
+description: "GEOG0114: Principles of Spatial Analysis handbook."
+url: 'https\://jtvandijk.github.io/GEOG0114/'
+---
+
+# Module overview {-}
+
+```{r echo=FALSE, out.width = "100%", fig.align='center', cache=TRUE,}
+knitr::include_graphics('images/general/data_science_welcome_sm.jpg') 
+```
+<br />
+
+| Week          | Section          | Topic |
+| :---          |:---------        |:------------------ |
+| 1             | Foundational Concepts | [Spatial analysis for data science](https://uclpg-msc-sgds.github.io/GEOG0114/spatial-analysis-for-data-sciences.html) |
+| 2             | Foundational Concepts | [Graphical representation of spatial data](https://uclpg-msc-sgds.github.io/GEOG0114/graphical-representation-of-spatial-data.html) | 
+| 3             | Foundational Concepts | [Spatial autocorrelation](https://uclpg-msc-sgds.github.io/GEOG0114/spatial-autocorrelation.html) | 
+| 4             | Raster data | [Suitability Mapping I](https://uclpg-msc-sgds.github.io/GEOG0114/suitability-mapping-part-1.html) |
+| 5             | Raster data | [Suitability Mapping II](https://uclpg-msc-sgds.github.io/GEOG0114/suitability-mapping-part-2.html) |
+|               | **Reading week** | **Reading week** |
+| 6             | Raster data | [Geostatistical Modelling](https://uclpg-msc-sgds.github.io/GEOG0114/geostatistical-modelling.html) |
+| 7             | Applied Spatial Analysis | [Geodemographics](geodemographics.html) |
+| 8             | Applied Spatial Analysis | [Transport network analysis](transport-network-analysis.html) |
+| 9             | Spatial models | [Spatial models I](https://uclpg-msc-sgds.github.io/GEOG0114/index.html) | 
+| 10            | Spatial models | [Spatial models II](https://uclpg-msc-sgds.github.io/GEOG0114/index.html) | 
+
+:::note
+**Note** <br />
+This GitHub page contains the material for Week 07 ([Geodemographics](geodemographics.html)) and Week 08 ([Transport network analysis](transport-network-analysis.html)) of **Principles of Spatial Analysis** 2022-2023. The content for 2021-2022 has been archived and can be found here: [[Link]](https://jtvandijk.github.io/GEOG0114_20212022)
+:::

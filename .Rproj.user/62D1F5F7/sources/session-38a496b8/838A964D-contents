@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# option
+set -ev
+
+# render gitbook
+Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::gitbook')"

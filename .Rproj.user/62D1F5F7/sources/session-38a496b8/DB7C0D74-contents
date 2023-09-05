@@ -1,0 +1,10 @@
+book_filename: "GEOG0114"
+rmd_files:
+- index.Rmd
+- 01-geodemographics.Rmd
+- 02-network.Rmd
+language:
+  ui:
+    chapter_name: ""
+delete_merged_file: true
+output_dir: "docs"
