@@ -1,0 +1,31 @@
+h1:module-overview Module overview
+h1:geodemographics Geodemographics
+h2:lecture_w07 Lecture slides
+h2:reading_w07 Reading list
+h4:essential-readings Essential readings
+h4:suggested-readings Suggested readings
+h2:geodemographics-1 Geodemographics
+h3:internet-user-classification-i Internet User Classification I
+fig:iuc-download Download the GB IUC 2018.
+fig:iuc-in-excel GB IUC 2018 in Excel.
+h3:task_w07_1 Tutorial task I
+h4:file-download File download
+h3:k-means-clustering k-means clustering
+h4:file-download-1 File download
+h3:task_w07_2 Tutorial task II
+h4:tips Tips
+h2:byl-w07 Before you leave
+h1:transport-network-analysis Transport Network Analysis
+h2:lecture_w08 Lecture slides
+h2:reading-w08 Reading list
+h4:essential-readings-1 Essential readings
+h4:suggested-readings-1 Suggested readings
+h2:transport-network-analysis-1 Transport Network Analysis
+fig:network-graph-picca Visualising networks with vertices and edges.
+h3:accessibility-in-portsmouth Accessibility in Portsmouth
+h3:loading-data-w08 Acquiring network data
+h3:osm Measuring accessibility
+h3:task-w08 Tutorial task
+h2:wm-w10 Want more? [Optional]
+h2:byl-w08 Before you leave
+
