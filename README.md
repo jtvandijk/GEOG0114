@@ -1,6 +1,6 @@
 # GEOG0114 Principles of Spatial Analysis
 
-This GitHub repository generates parts of the GEOG0114 Principles of Spatial Analysis tutorials for the 2023-2024 academic year which can be found at: https://jtvandijk.github.io/GEOG0114_20232024/
+This GitHub repository generates parts of the GEOG0114 Principles of Spatial Analysis tutorials for the 2024-2025 academic year which can be found at: https://jtvandijk.github.io/GEOG0114/
 
 This work is licensed under a
 [Creative Commons Attribution-ShareAlike 4.0 International License][cc-by-sa].
