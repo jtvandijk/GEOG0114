@@ -1,0 +1,11 @@
+meta:
+  title: GEOG0114
+
+urls:
+  git-url-am: "https://uclpg-msc-sgds.github.io/GEOG0114"
+  geodemographics: "01-geodemographics.html"
+  transport-ntx: "02-network.html"
+
+slides:
+  week07: "https://github.com/jtvandijk/GEOG0114/tree/master/slides/w07-psa.pdf"
+  week08: "https://github.com/jtvandijk/GEOG0114/tree/master/slides/w08-psa.pdf"

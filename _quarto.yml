@@ -1,0 +1,50 @@
+project:
+  type: website
+  output-dir: docs
+
+lang: en
+
+execute:
+  freeze: false
+  cache: true
+
+format:
+  html:
+    theme:
+      light: flatly
+      dark:  darkly
+    callout-appearance: simple
+    css: assets/styles.css
+    toc: true
+    smooth-scroll: true
+    highlight-style: atom-one
+    pagetitle: "{{< var meta.title >}}"
+
+website:
+  repo-url: https://github.com/jtvandijk/GEOG0114
+  repo-actions: [issue]
+  page-navigation: true
+  page-footer:
+    center: "Course material by [Justin van Dijk](https://www.mappingdutchman.com). Available under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)."
+  search:
+    location: sidebar
+    type: overlay
+  sidebar:
+    style: floating
+    collapse-level: 2
+    logo: assets/logo.svg
+    tools:
+      - icon: github
+        href: https://github.com/jtvandijk/GEOG0114Q
+    contents:
+      - section: "Module overview"
+        contents:
+          text: "Welcome"
+          file: index.qmd
+      - section: "Applied Spatial Analysis"
+        contents:
+          - 01-geodemographics.qmd
+          - 02-network.qmd
+
+editor: source
+
