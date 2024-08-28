@@ -4,7 +4,21 @@
     "href": "01-geodemographics.html",
     "title": "Geodemographics",
     "section": "",
-    "text": "Geodemographics\n\n\n\n\n\n\nThis GitHub page is receiving updates for the 2024-2025 academic year. The content for 2023-2024 has been archived and can be found here: [Link]"
+    "text": "This week we will turn to geodemographic classification. Geodemographic classification is a method used to categorise geographic areas and the people living in them based on demographic, socioeconomic, and sometimes lifestyle characteristics. This approach combines geographic information with demographic data to create profiles of different neighborhoods.\n\n\n\n\n\n\nThis GitHub page is receiving updates for the 2024-2025 academic year. The content for 2023-2024 has been archived and can be found here: [Link]\n\n\n\n\n\nYou can download the slides of this week’s lecture here: [Link].\n\n\n\n\n\n\nLongley, P. A. 2012. Geodemographics and the practices of geographic information science. International Journal of Geographical Information Science 26(12): 2227-2237. [Link]\nSingleton, A. and Longley, P. A. 2024. Classifying and mapping residential structure through the London Output Area Classification. Environment and Planning B: Urban Analytics and City Science 51(5): 1153-1164. [Link]\nWyszomierski, J., Longley, P. A., and Singleton, A. et al. 2023. A neighbourhood Output Area Classification from the 2021 and 2022 UK censuses. The Geographical Journal. Online First. [Link]\n\n\n\n\n\nFränti, P. and Sieronoja, S. 2019. How much can k-means be improved by using better initialization and repeats? Pattern Recognition 93: 95-112. [Link]\nSingleton, A. and Spielman, S. 2014. The past, present, and future of geodemographic research in the United States and United Kingdom. The Professional Geographer 66(4): 558-567. [Link]"
+  },
+  {
+    "objectID": "01-geodemographics.html#lecture-w07",
+    "href": "01-geodemographics.html#lecture-w07",
+    "title": "Geodemographics",
+    "section": "",
+    "text": "You can download the slides of this week’s lecture here: [Link]."
+  },
+  {
+    "objectID": "01-geodemographics.html#reading-w07",
+    "href": "01-geodemographics.html#reading-w07",
+    "title": "Geodemographics",
+    "section": "",
+    "text": "Longley, P. A. 2012. Geodemographics and the practices of geographic information science. International Journal of Geographical Information Science 26(12): 2227-2237. [Link]\nSingleton, A. and Longley, P. A. 2024. Classifying and mapping residential structure through the London Output Area Classification. Environment and Planning B: Urban Analytics and City Science 51(5): 1153-1164. [Link]\nWyszomierski, J., Longley, P. A., and Singleton, A. et al. 2023. A neighbourhood Output Area Classification from the 2021 and 2022 UK censuses. The Geographical Journal. Online First. [Link]\n\n\n\n\n\nFränti, P. and Sieronoja, S. 2019. How much can k-means be improved by using better initialization and repeats? Pattern Recognition 93: 95-112. [Link]\nSingleton, A. and Spielman, S. 2014. The past, present, and future of geodemographic research in the United States and United Kingdom. The Professional Geographer 66(4): 558-567. [Link]"
   },
   {
     "objectID": "02-network.html",
@@ -18,6 +32,20 @@
     "href": "index.html",
     "title": "Principles of Spatial Analysis",
     "section": "",
-    "text": "Principles of Spatial Analysis\n\n\n\n\n\n\n\n\nWeek\nSection\nTopic\n\n\n\n\n1\nFoundational Concepts\nSpatial analysis for data science\n\n\n2\nFoundational Concepts\nGraphical representation of spatial data\n\n\n3\nFoundational Concepts\nSpatial autocorrelation\n\n\n4\nRaster data\nSuitability Mapping I\n\n\n5\nRaster data\nSuitability Mapping II\n\n\n\nReading week\nReading week\n\n\n6\nRaster data\nGeostatistics using Kriging\n\n\n7\nApplied Spatial Analysis\nGeodemographics\n\n\n8\nApplied Spatial Analysis\nTransport network analysis\n\n\n9\nSpatial models\nSpatial models I\n\n\n10\nSpatial models\nSpatial models II\n\n\n\n\n\n\n\n\n\nThis GitHub page contains the material for Week 07 (Geodemographics) and Week 08 (Transport network analysis) of Principles of Spatial Analysis 2024-2025. The content for 2023-2024 has been archived and can be found here: [Link]"
+    "text": "Week\nSection\nTopic\n\n\n\n\n1\nFoundational Concepts\nSpatial analysis for data science\n\n\n2\nFoundational Concepts\nGraphical representation of spatial data\n\n\n3\nFoundational Concepts\nSpatial autocorrelation\n\n\n4\nRaster data\nSuitability Mapping I\n\n\n5\nRaster data\nSuitability Mapping II\n\n\n\nReading week\nReading week\n\n\n6\nRaster data\nGeostatistics using Kriging\n\n\n7\nApplied Spatial Analysis\nGeodemographics\n\n\n8\nApplied Spatial Analysis\nTransport network analysis\n\n\n9\nSpatial models\nSpatial models I\n\n\n10\nSpatial models\nSpatial models II\n\n\n\n\n\n\n\n\n\nThis GitHub page is receiving updates for the 2024-2025 academic year. The content for 2023-2024 has been archived and can be found here: [Link]\n\n\n\n\n\n\n\n\n\n\n\nThis year’s version features the following major updates:\n\nSecond full rewrite of the workbook using Quarto.\nFully updated geodemographics content based on the London Output Area Classification.\nUpdated transport network analysis content.\n\n\n\n\n\n\n\nThis workbook is created using the Quarto publishing system. Elements of this workbook are partially partially based on and modified from:\n\nThe GEOG114: Principles of Spatial Analysis 2023-2024 workbook by Justin van Dijk\nThe GEOG114: Principles of Spatial Analysis 2022-2023 workbook by Justin van Dijk\nThe GEOG114: Principles of Spatial Analysis 2021-2022 workbook by Justin van Dijk\nThe GEOG114: Principles of Spatial Analysis 2020-2021 workbook by Justin van Dijk\n\nThe datasets used in this workshop contain:\n\nData from Office for National Statistics licensed under the Open Government Licence v.3.0\nOS data © Crown copyright and database right [2024]"
+  },
+  {
+    "objectID": "index.html#major-updates",
+    "href": "index.html#major-updates",
+    "title": "Principles of Spatial Analysis",
+    "section": "",
+    "text": "This year’s version features the following major updates:\n\nSecond full rewrite of the workbook using Quarto.\nFully updated geodemographics content based on the London Output Area Classification.\nUpdated transport network analysis content."
+  },
+  {
+    "objectID": "index.html#acknowledgements",
+    "href": "index.html#acknowledgements",
+    "title": "Principles of Spatial Analysis",
+    "section": "",
+    "text": "This workbook is created using the Quarto publishing system. Elements of this workbook are partially partially based on and modified from:\n\nThe GEOG114: Principles of Spatial Analysis 2023-2024 workbook by Justin van Dijk\nThe GEOG114: Principles of Spatial Analysis 2022-2023 workbook by Justin van Dijk\nThe GEOG114: Principles of Spatial Analysis 2021-2022 workbook by Justin van Dijk\nThe GEOG114: Principles of Spatial Analysis 2020-2021 workbook by Justin van Dijk\n\nThe datasets used in this workshop contain:\n\nData from Office for National Statistics licensed under the Open Government Licence v.3.0\nOS data © Crown copyright and database right [2024]"
   }
 ]

@@ -23,5 +23,27 @@ knitr::include_graphics('images/w00/data-science-welcome-sm.jpg')
 | 10   | Spatial models           | [Spatial models II]({{< var urls.git-url-am >}}) |
 
 ::: {.callout-note}
-This GitHub page contains the material for Week 07 ([Geodemographics](01-geodemographics.html)) and Week 08 ([Transport network analysis](02-transport-network-analysis.html)) of **Principles of Spatial Analysis** 2024-2025. The content for 2023-2024 has been archived and can be found here: [\[Link\]](https://jtvandijk.github.io/GEOG0114_20232024)
+This GitHub page is receiving updates for the 2024-2025 academic year. The content for 2023-2024 has been archived and can be found here: [\[Link\]](https://jtvandijk.github.io/GEOG0114_20232024)
 :::
+
+## Major updates {.unnumbered}
+::: {.callout-note}
+This year's version features the following **major** updates:
+
+- Second full rewrite of the workbook using `Quarto`.
+- Fully updated geodemographics content based on the [London Output Area Classification](https://doi.org/10.1177/23998083241242913).
+- Updated transport network analysis content.
+:::
+
+## Acknowledgements {.unnumbered}
+This workbook is created using the [Quarto](https://quarto.org/) publishing system. Elements of this workbook are partially partially based on and modified from:
+
+- The [GEOG114: Principles of Spatial Analysis 2023-2024](https://jtvandijk.github.io/GEOG0114_20232024/) workbook by [Justin van Dijk](https://www.mappingdutchman.com)
+- The [GEOG114: Principles of Spatial Analysis 2022-2023](https://jtvandijk.github.io/GEOG0114_20222023/) workbook by [Justin van Dijk](https://www.mappingdutchman.com)
+- The [GEOG114: Principles of Spatial Analysis 2021-2022](https://jtvandijk.github.io/GEOG0114_20212022/) workbook by [Justin van Dijk](https://www.mappingdutchman.com)
+- The [GEOG114: Principles of Spatial Analysis 2020-2021](https://jtvandijk.github.io/GEOG0114_20202021/) workbook by [Justin van Dijk](https://www.mappingdutchman.com)
+
+The datasets used in this workshop contain:
+
+- Data from Office for National Statistics licensed under the Open Government Licence v.3.0
+- OS data © Crown copyright and database right [2024]
