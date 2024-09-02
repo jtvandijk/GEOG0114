@@ -486,7 +486,7 @@ dbl (2): Main language (11 categories) Code, Observation
 </div>
 </div>
 </div>
-<p>To account for the non-uniformity of the area units, we further need to convert the observations to percentages and only retain those columns that are likely to be meaningful in the context of the classification:</p>
+<p>To account for the non-uniformity of the areal units, we further need to convert the observations to percentages and only retain those columns that are likely to be meaningful in the context of the classification:</p>
 <div class="cell styled-output" data-hash="01-geodemographics_cache/html/01-prop-data-age_479834a7cbc4269c1f60ceee753c11a6">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -594,7 +594,17 @@ dbl (2): Main language (11 categories) Code, Observation
 </div>
 </div>
 </div>
-<p>A straightforward yet effective method to examine the distribution of our variables is to create boxplots for each variable. This can be efficiently achieved by using <code>facet_wrap()</code> to generate a matrix of panels, allowing us to visualise all variables in a single view. For more details on <code>facet_wrap()</code>, you can refer to the <a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">ggplot2 documentation</a>.</p>
+<p>A straightforward yet effective method to examine the distribution of our variables is to create boxplots for each variable. This can be efficiently achieved by using <code>facet_wrap()</code> to generate a matrix of panels, allowing us to visualise all variables in a single view.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>For more details on <code>facet_wrap()</code>, you can refer to the <a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">ggplot2 documentation</a>.</p>
+</div>
+</div>
+</div>
 <div class="cell styled-output" data-hash="01-geodemographics_cache/html/fig-01-boxplot-data_a247a03b2e8a00e37ad550134901bbd0">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -617,14 +627,14 @@ dbl (2): Main language (11 categories) Code, Observation
 </div>
 </div>
 </div>
-<p>When repeating this process for the <code>birth</code>, <code>ethnicity</code>, and <code>language</code> variables, you will notice that some variables have a very limited distribution. Specifically, some variables may have a value of <code>0</code> for the majority of London LSOAs. As a rule of thumb, we will retain only those variables where at least 25% of the LSOAs have values different from <code>0</code>.</p>
+<p>When repeating this process for the <code>birth</code>, <code>ethnicity</code>, and <code>language</code> variables, you will notice that some variables have a very limited distribution. Specifically, some variables may have a value of <code>0</code> for the majority of London LSOAs. As a rule of thumb, we will retain only those variables where at least 75% of the LSOAs have values different from <code>0</code>.</p>
 <div class="callout callout-style-simple callout-warning">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>This threshold of 25% is arbitrary, and in practice, more thorough consideration should be given when deciding whether to include or exclude a variable.</p>
+<p>This threshold of 75% is arbitrary, and in practice, more thorough consideration should be given when deciding whether to include or exclude a variable.</p>
 </div>
 </div>
 </div>

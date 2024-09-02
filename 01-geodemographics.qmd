@@ -135,7 +135,7 @@ The code above uses a pipe function: `|>`. The pipe operator allows you to pass 
 Be sure to inspect your dataframes between steps to understand exactly what the code is doing.
 :::
 
-To account for the non-uniformity of the area units, we further need to convert the observations to percentages and only retain those columns that are likely to be meaningful in the context of the classification:
+To account for the non-uniformity of the areal units, we further need to convert the observations to percentages and only retain those columns that are likely to be meaningful in the context of the classification:
 
 ```{r}
 #| label: 01-prop-data-age
@@ -232,7 +232,11 @@ Where we initially selected variables from different demographic domains, not al
 Variable selection is often a time-consuming process that requires a combination of domain knowledge and more extensive exploratory analysis than is covered in this practical.
 :::
 
-A straightforward yet effective method to examine the distribution of our variables is to create boxplots for each variable. This can be efficiently achieved by using `facet_wrap()` to generate a matrix of panels, allowing us to visualise all variables in a single view. For more details on `facet_wrap()`, you can refer to the [ggplot2 documentation](https://ggplot2.tidyverse.org/reference/facet_wrap.html).
+A straightforward yet effective method to examine the distribution of our variables is to create boxplots for each variable. This can be efficiently achieved by using `facet_wrap()` to generate a matrix of panels, allowing us to visualise all variables in a single view. 
+
+::: {.callout-note}
+For more details on `facet_wrap()`, you can refer to the [ggplot2 documentation](https://ggplot2.tidyverse.org/reference/facet_wrap.html).
+:::
 
 ```{r}
 #| label: fig-01-boxplot-data
@@ -253,10 +257,10 @@ ggplot(lsoa_age_wd, aes(y = value)) +
   theme_minimal() 
 ```
 
-When repeating this process for the `birth`, `ethnicity`, and `language` variables, you will notice that some variables have a very limited distribution. Specifically, some variables may have a value of `0` for the majority of London LSOAs. As a rule of thumb, we will retain only those variables where at least 25% of the LSOAs have values different from `0`.
+When repeating this process for the `birth`, `ethnicity`, and `language` variables, you will notice that some variables have a very limited distribution. Specifically, some variables may have a value of `0` for the majority of London LSOAs. As a rule of thumb, we will retain only those variables where at least 75% of the LSOAs have values different from `0`.
 
 ::: {.callout-warning}
-This threshold of 25% is arbitrary, and in practice, more thorough consideration should be given when deciding whether to include or exclude a variable.
+This threshold of 75% is arbitrary, and in practice, more thorough consideration should be given when deciding whether to include or exclude a variable.
 :::
 
 ```{r}
