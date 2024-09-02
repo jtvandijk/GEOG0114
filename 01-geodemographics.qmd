@@ -1,9 +1,4 @@
-# Geodemographics
-
-::: {.callout-note}
-This GitHub page is receiving updates for the 2024-2025 academic year. The content for 2023-2024 has been archived and can be found here: [\[Link\]](https://jtvandijk.github.io/GEOG0114_20232024)
-:::
-
+# Geodemographic Classification
 This week we will turn to geodemographic classification. Geodemographic classification is a method used to categorise geographic areas and the people living in them based on demographic, socioeconomic, and sometimes lifestyle characteristics. This approach combines geographic information with demographic data to create profiles of different neighborhoods.
 
 ## Lecture slides {#lecture-w07}
@@ -13,16 +8,16 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 #### Essential readings 
 - Longley, P. A. 2012. Geodemographics and the practices of geographic information science. *International Journal of Geographical Information Science* 26(12): 2227-2237. [\[Link\]](https://doi.org/10.1080/13658816.2012.719623)
 - Singleton, A. and Longley, P. A. 2024. Classifying and mapping residential structure through the London Output Area Classification. *Environment and Planning B: Urban Analytics and City Science* 51(5): 1153-1164. [\[Link\]](https://doi.org/10.1177/23998083241242913)
-- Wyszomierski, J., Longley, P. A., and Singleton, A. *et al.* 2023. A neighbourhood Output Area Classification from the 2021 and 2022 UK censuses. *The Geographical Journal*. Online First. [\[Link\]](https://doi.org/10.1111/geoj.12550)
+- Wyszomierski, J., Longley, P. A., and Singleton, A. *et al.* 2024. A neighbourhood Output Area Classification from the 2021 and 2022 UK censuses. *The Geographical Journal*. 190(2): e12550. [\[Link\]](https://doi.org/10.1111/geoj.12550)
 
 #### Suggested readings 
 - Fränti, P. and Sieronoja, S. 2019. How much can k-means be improved by using better initialization and repeats? *Pattern Recognition* 93: 95-112. [[Link]](https://doi.org/10.1016/j.patcog.2019.04.014)
 - Singleton, A. and Spielman, S. 2014. The past, present, and future of geodemographic research in the United States and United Kingdom. *The Professional Geographer* 66(4): 558-567. [\[Link\]](https://doi.org/10.1080/00330124.2013.848764)
 
 ## London Output Area Classification
-The London Output Area Classification (LOAC) is a geodemographic that summarises the built and population characteristics of all 2021 Output Areas within Greater London. The region is organised into a hierarchical typology composed of 7 Supergroups and 16 Groups, created using data from 2021 Census data. The LOAC uses 68 variables across several domains: demography, ethnicity and origins, living arrangements, usual residence, health and education and employment (see [Singleton and Longley 2024](https://doi.org/10.1177/23998083241242913)). 
+Today, we will create our own geodemographic classification to examine demographic clusters across London. Specifically, we will focus on age group, self-identified ethnicity, and country of birth. Additionally, we will include data on an individual’s first or preferred language. The data represent all usual residents as recorded in the 2021 Census for England and Wales, and have been extracted using the [Custom Dataset Tool](https://www.ons.gov.uk/datasets/create). 
 
-Today, we will create our own geodemographic classification at the LSOA level using a subset of the 2021 Census LOAC variables to examine demographic patterns across London. Specifically, we will focus on age group, self-identified ethnicity, and country of birth. Additionally, we will include data on an individual’s first or preferred language. The data represent all usual residents as recorded in the 2021 Census for England and Wales, and have been extracted using the [Custom dataset tool](https://www.ons.gov.uk/datasets/create). You can download copies of each file via the provided links. Save these files in your project folder under `data`.
+You can download copies of each file via the links below. Save these files in your project folder under `data`.
 
 | File                                        | Type   | Link |
 | :------                                     | :------| :------ |
@@ -103,10 +98,12 @@ head(lsoa_lan)
 You can further inspect the results using the `View()` function. 
 :::
 
-To identify geodemographic clusters in our dataset, we will use an unsupervised machine learning technique called $k$-means. $k$-means aims to partition a set of standardised observations into a specified number of clusters ($k$), where each observation is assigned to the cluster with the nearest mean. In this context, a cluster refers to a collection of data points grouped together based on certain similarities. To do this we first need to prepare the individual datase, as well as transform and standardise the input variables.
+To identify geodemographic clusters in our dataset, we will use an unsupervised machine learning technique called $k$-means. $k$-means aims to partition a set of standardised observations into a specified number of clusters ($k$), where each observation is assigned to the cluster with the nearest mean. In this context, a cluster refers to a collection of data points grouped together based on certain similarities. To do this we first need to prepare the individual datasets, as well as transform and standardise the input variables.
 
-### Data preparation
-Because all the data are stored in [long format](https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb), with each London LSOA having separate entries for each category, we need to transform it into a wide format. Additionally, we need to clean up the column names to align with general R naming conventions, which can be done using the `janitor` package. We will begin with the `lsoa_age` dataframe:
+### Variable preparation
+Because all the data are stored in [long format](https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb), with each London LSOA having separate entries for each category, we need to transform it into a [wide format](https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb). Additionally, we need to clean up the column names to align with general R naming conventions, which can be done using the `janitor` package. 
+
+We will begin with the `age` dataframe:
 
 ```{r}
 #| label: 01-reformat-data-age
@@ -135,10 +132,10 @@ The code above uses a pipe function: `|>`. The pipe operator allows you to pass 
 :::
 
 ::: {.callout-note}
-Make sure to inspect your dataframes in between steps to see what exactly is happening. 
+Be sure to inspect your dataframes between steps to understand exactly what the code is doing.
 :::
 
-We can now transform the LSOA counts to proportions:
+To account for the non-uniformity of the area units, we further need to convert the observations to percentages and only retain those columns that are likely to be meaningful in the context of the classification:
 
 ```{r}
 #| label: 01-prop-data-age
@@ -152,13 +149,16 @@ lsoa_age <- lsoa_age |>
   rowwise() |>
   mutate(age_pop = sum(across(2:6)))
   
-# total proportions
+# total proportions, select columns
 lsoa_age <- lsoa_age |>
   mutate(across(2:6, ~ . / age_pop)) |>
   select(1:6)
+
+# inspect
+head(lsoa_age)
 ```
 
-This looks much better. We can do the same for the other country of birth data:
+This looks much better. We can do the same for the country of `birth` data:
 
 ```{r}
 #| label: 01-reformat-cob-data
@@ -175,15 +175,15 @@ lsoa_cob <- lsoa_cob |>
               values_from = 'observation') |>
   clean_names()
 
-# proportions
+# proportions, select columns
 lsoa_cob <- lsoa_cob |>
   rowwise() |>
   mutate(cob_pop = sum(across(2:9))) |>
   mutate(across(2:9, ~ . / cob_pop )) |>
-  select(1:9)
+  select(-2,-10)
 ```
 
-And the final two datasets:
+And we can do the same for the `ethnicity` and `language` datasets:
 
 ```{r}
 #| label: 01-reformat-eth-lan-data
@@ -200,12 +200,12 @@ lsoa_eth <- lsoa_eth |>
               values_from = 'observation') |>
   clean_names()
 
-# proportions
+# proportions, select columns
 lsoa_eth <- lsoa_eth |>
   rowwise() |>
   mutate(eth_pop = sum(across(2:21))) |>
   mutate(across(2:21, ~ . / eth_pop )) |>
-  select(1:21)
+  select(-2,-22)
 
 # prepare language data
 lsoa_lan <- lsoa_lan |>
@@ -215,16 +215,74 @@ lsoa_lan <- lsoa_lan |>
               values_from = 'observation') |>
   clean_names()
 
-# proportions
+# proportions, select columns
 lsoa_lan <- lsoa_lan |>
   rowwise() |>
   mutate(lan_pop = sum(across(2:12))) |>
   mutate(across(2:12, ~ . / lan_pop )) |>
-  select(1:12)
+  select(-2,-11,-13)
 ```
 
 We now have four separate datasets, each containing the proportions of usual residents classified into different groups based on age, ethnicity, language, and country of birth.
 
+### Variable selection
+Where we initially selected variables from different demographic domains, not all variables may be suitable for inclusion. Firstly, the variables need to exhibit sufficient heterogeneity to ensure they capture meaningful differences between observations. Secondly, variables should not be highly correlated with one another, as this redundancy can skew the clustering results. Ensuring acceptable correlation between variables helps maintain the diversity of information and improves the robustness of the clustering outcome.
+
+::: {.callout-warning}
+Variable selection is often a time-consuming process that requires a combination of domain knowledge and more extensive exploratory analysis than is covered in this practical.
+:::
+
+A straightforward yet effective method to examine the distribution of our variables is to create boxplots for each variable. This can be efficiently achieved by using `facet_wrap()` to generate a matrix of panels, allowing us to visualise all variables in a single view. For more details on `facet_wrap()`, you can refer to the [ggplot2 documentation](https://ggplot2.tidyverse.org/reference/facet_wrap.html).
+
+```{r}
+#| label: fig-01-boxplot-data
+#| fig-cap: Boxplots of the distribution of the `age` dataset.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# wide to long
+lsoa_age_wd <- lsoa_age |>
+  pivot_longer(cols = c(2:5), names_to = 'variable', values_to = 'value')
+
+# facet age
+ggplot(lsoa_age_wd, aes(y = value)) +
+  geom_boxplot() +
+  facet_wrap(~ variable, ncol = 2) +
+  theme_minimal() 
+```
+
+When repeating this process for the `birth`, `ethnicity`, and `language` variables, you will notice that some variables have a very limited distribution. Specifically, some variables may have a value of `0` for the majority of London LSOAs. As a rule of thumb, we will retain only those variables where at least 25% of the LSOAs have values different from `0`.
+
+::: {.callout-warning}
+This threshold of 25% is arbitrary, and in practice, more thorough consideration should be given when deciding whether to include or exclude a variable.
+:::
+
+```{r}
+#| label: 01-filter-high-zeroes
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# join
+lsoa_df <- lsoa_age |>
+  left_join(lsoa_cob, by = 'lower_layer_super_output_areas_code') |>
+  left_join(lsoa_eth, by = 'lower_layer_super_output_areas_code') |>
+  left_join(lsoa_lan, by = 'lower_layer_super_output_areas_code')
+```
+
+::: {.callout-warning}
+Variable selection is often a time-consuming process that requires a combination of domain knowledge and more extensive exploratory analysis than is covered in this practical.
+:::
+
+### Variable standardisation
+If the input data are heavily skewed or contain outliers, $k$-means may produce less meaningful clusters. While normality is not required, it has been common to do this nonetheless. More important is to standardise the input variables, especially when they are measured on different scales. This ensures that each variable contributes equally to the clustering process. 
+
+::: {.callout-note}
+Since our variables are all expressed as proportions in this example, range standardisation is not technically required.
+:::
 
 ## Assignment 
 The creation of a geodemographic classification is an iterative process. This typically includes adding or removing variables, adjusting the number of clusters, and grouping data in different ways to achieve the most meaningful segmentation. If you want to refine your clustering solution, you can re-run the analysis with different variables or cluster numbers by simply updating your code. However, automating parts of this process with a [function](https://en.wikipedia.org/wiki/Function_(computer_programming)) would streamline the workflow and make it more efficient.

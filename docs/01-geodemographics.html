@@ -114,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-geodemographics.html">Applied Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./01-geodemographics.html">Geodemographics</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-geodemographics.html">Applied Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./01-geodemographics.html">Geodemographic Classification</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -168,7 +168,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01-geodemographics.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Geodemographics</span></a>
+ <span class="menu-text">Geodemographic Classification</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -189,13 +189,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#geodemographics" id="toc-geodemographics" class="nav-link active" data-scroll-target="#geodemographics">Geodemographics</a>
+  <li><a href="#geodemographic-classification" id="toc-geodemographic-classification" class="nav-link active" data-scroll-target="#geodemographic-classification">Geodemographic Classification</a>
   <ul class="collapse">
   <li><a href="#lecture-w07" id="toc-lecture-w07" class="nav-link" data-scroll-target="#lecture-w07">Lecture slides</a></li>
   <li><a href="#reading-w07" id="toc-reading-w07" class="nav-link" data-scroll-target="#reading-w07">Reading list</a></li>
   <li><a href="#london-output-area-classification" id="toc-london-output-area-classification" class="nav-link" data-scroll-target="#london-output-area-classification">London Output Area Classification</a>
   <ul class="collapse">
-  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation">Data preparation</a></li>
+  <li><a href="#variable-preparation" id="toc-variable-preparation" class="nav-link" data-scroll-target="#variable-preparation">Variable preparation</a></li>
+  <li><a href="#variable-selection" id="toc-variable-selection" class="nav-link" data-scroll-target="#variable-selection">Variable selection</a></li>
+  <li><a href="#variable-standardisation" id="toc-variable-standardisation" class="nav-link" data-scroll-target="#variable-standardisation">Variable standardisation</a></li>
   </ul></li>
   <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment">Assignment</a></li>
   <li><a href="#byl-geo" id="toc-byl-geo" class="nav-link" data-scroll-target="#byl-geo">Before you leave</a></li>
@@ -208,18 +210,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="geodemographics" class="level1">
-<h1>Geodemographics</h1>
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>This GitHub page is receiving updates for the 2024-2025 academic year. The content for 2023-2024 has been archived and can be found here: <a href="https://jtvandijk.github.io/GEOG0114_20232024">[Link]</a></p>
-</div>
-</div>
-</div>
+<section id="geodemographic-classification" class="level1">
+<h1>Geodemographic Classification</h1>
 <p>This week we will turn to geodemographic classification. Geodemographic classification is a method used to categorise geographic areas and the people living in them based on demographic, socioeconomic, and sometimes lifestyle characteristics. This approach combines geographic information with demographic data to create profiles of different neighborhoods.</p>
 <section id="lecture-w07" class="level2">
 <h2 class="anchored" data-anchor-id="lecture-w07">Lecture slides</h2>
@@ -232,7 +224,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Longley, P. A. 2012. Geodemographics and the practices of geographic information science. <em>International Journal of Geographical Information Science</em> 26(12): 2227-2237. <a href="https://doi.org/10.1080/13658816.2012.719623">[Link]</a></li>
 <li>Singleton, A. and Longley, P. A. 2024. Classifying and mapping residential structure through the London Output Area Classification. <em>Environment and Planning B: Urban Analytics and City Science</em> 51(5): 1153-1164. <a href="https://doi.org/10.1177/23998083241242913">[Link]</a></li>
-<li>Wyszomierski, J., Longley, P. A., and Singleton, A. <em>et al.</em> 2023. A neighbourhood Output Area Classification from the 2021 and 2022 UK censuses. <em>The Geographical Journal</em>. Online First. <a href="https://doi.org/10.1111/geoj.12550">[Link]</a></li>
+<li>Wyszomierski, J., Longley, P. A., and Singleton, A. <em>et al.</em> 2024. A neighbourhood Output Area Classification from the 2021 and 2022 UK censuses. <em>The Geographical Journal</em>. 190(2): e12550. <a href="https://doi.org/10.1111/geoj.12550">[Link]</a></li>
 </ul>
 </section>
 <section id="suggested-readings" class="level4">
@@ -245,8 +237,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="london-output-area-classification" class="level2">
 <h2 class="anchored" data-anchor-id="london-output-area-classification">London Output Area Classification</h2>
-<p>The London Output Area Classification (LOAC) is a geodemographic that summarises the built and population characteristics of all 2021 Output Areas within Greater London. The region is organised into a hierarchical typology composed of 7 Supergroups and 16 Groups, created using data from 2021 Census data. The LOAC uses 68 variables across several domains: demography, ethnicity and origins, living arrangements, usual residence, health and education and employment (see <a href="https://doi.org/10.1177/23998083241242913">Singleton and Longley 2024</a>).</p>
-<p>Today, we will create our own geodemographic classification at the LSOA level using a subset of the 2021 Census LOAC variables to examine demographic patterns across London. Specifically, we will focus on age group, self-identified ethnicity, and country of birth. Additionally, we will include data on an individual’s first or preferred language. The data represent all usual residents as recorded in the 2021 Census for England and Wales, and have been extracted using the <a href="https://www.ons.gov.uk/datasets/create">Custom dataset tool</a>. You can download copies of each file via the provided links. Save these files in your project folder under <code>data</code>.</p>
+<p>Today, we will create our own geodemographic classification to examine demographic clusters across London. Specifically, we will focus on age group, self-identified ethnicity, and country of birth. Additionally, we will include data on an individual’s first or preferred language. The data represent all usual residents as recorded in the 2021 Census for England and Wales, and have been extracted using the <a href="https://www.ons.gov.uk/datasets/create">Custom Dataset Tool</a>.</p>
+<p>You can download copies of each file via the links below. Save these files in your project folder under <code>data</code>.</p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -449,10 +441,11 @@ dbl (2): Main language (11 categories) Code, Observation
 </div>
 </div>
 </div>
-<p>To identify geodemographic clusters in our dataset, we will use an unsupervised machine learning technique called <span class="math inline">\(k\)</span>-means. <span class="math inline">\(k\)</span>-means aims to partition a set of standardised observations into a specified number of clusters (<span class="math inline">\(k\)</span>), where each observation is assigned to the cluster with the nearest mean. In this context, a cluster refers to a collection of data points grouped together based on certain similarities. To do this we first need to prepare the individual datase, as well as transform and standardise the input variables.</p>
-<section id="data-preparation" class="level3">
-<h3 class="anchored" data-anchor-id="data-preparation">Data preparation</h3>
-<p>Because all the data are stored in <a href="https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb">long format</a>, with each London LSOA having separate entries for each category, we need to transform it into a wide format. Additionally, we need to clean up the column names to align with general R naming conventions, which can be done using the <code>janitor</code> package. We will begin with the <code>lsoa_age</code> dataframe:</p>
+<p>To identify geodemographic clusters in our dataset, we will use an unsupervised machine learning technique called <span class="math inline">\(k\)</span>-means. <span class="math inline">\(k\)</span>-means aims to partition a set of standardised observations into a specified number of clusters (<span class="math inline">\(k\)</span>), where each observation is assigned to the cluster with the nearest mean. In this context, a cluster refers to a collection of data points grouped together based on certain similarities. To do this we first need to prepare the individual datasets, as well as transform and standardise the input variables.</p>
+<section id="variable-preparation" class="level3">
+<h3 class="anchored" data-anchor-id="variable-preparation">Variable preparation</h3>
+<p>Because all the data are stored in <a href="https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb">long format</a>, with each London LSOA having separate entries for each category, we need to transform it into a <a href="https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb">wide format</a>. Additionally, we need to clean up the column names to align with general R naming conventions, which can be done using the <code>janitor</code> package.</p>
+<p>We will begin with the <code>age</code> dataframe:</p>
 <div class="cell styled-output" data-hash="01-geodemographics_cache/html/01-reformat-data-age_069bdd454d46d6fbe9a466d05b64f52d">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -489,87 +482,188 @@ dbl (2): Main language (11 categories) Code, Observation
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Make sure to inspect your dataframes in between steps to see what exactly is happening.</p>
+<p>Be sure to inspect your dataframes between steps to understand exactly what the code is doing.</p>
 </div>
 </div>
 </div>
-<p>We can now transform the LSOA counts to proportions:</p>
-<div class="cell styled-output" data-hash="01-geodemographics_cache/html/01-prop-data-age_872e272fd587a145f0284367fe44e3b4">
+<p>To account for the non-uniformity of the area units, we further need to convert the observations to percentages and only retain those columns that are likely to be meaningful in the context of the classification:</p>
+<div class="cell styled-output" data-hash="01-geodemographics_cache/html/01-prop-data-age_479834a7cbc4269c1f60ceee753c11a6">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># total observations</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>lsoa_age <span class="ot">&lt;-</span> lsoa_age <span class="sc">|&gt;</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age_pop =</span> <span class="fu">sum</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>)))</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># total proportions</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rowwise</span>() <span class="sc">|&gt;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">age_pop =</span> <span class="fu">sum</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>)))</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># total proportions, select columns</span></span>
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>lsoa_age <span class="ot">&lt;-</span> lsoa_age <span class="sc">|&gt;</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>, <span class="sc">~</span> . <span class="sc">/</span> age_pop)) <span class="sc">|&gt;</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>, <span class="sc">~</span>.<span class="sc">/</span>age_pop)) <span class="sc">|&gt;</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lsoa_age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+# Rowwise: 
+  lower_layer_super_output_areas_code aged_15_years_and_un…¹ aged_16_to_24_years
+  &lt;chr&gt;                                                &lt;dbl&gt;               &lt;dbl&gt;
+1 E01000001                                           0.0846              0.0744
+2 E01000002                                           0.0621              0.0889
+3 E01000003                                           0.0682              0.0706
+4 E01000005                                           0.127               0.178 
+5 E01000006                                           0.224               0.120 
+6 E01000007                                           0.257               0.103 
+# ℹ abbreviated name: ¹​aged_15_years_and_under
+# ℹ 3 more variables: aged_25_to_34_years &lt;dbl&gt;, aged_35_to_49_years &lt;dbl&gt;,
+#   aged_50_years_and_over &lt;dbl&gt;</code></pre>
 </div>
 </div>
-<p>This looks much better. We can do the same for the other country of birth data:</p>
-<div class="cell styled-output" data-hash="01-geodemographics_cache/html/01-reformat-cob-data_dd7a74ec351fc070901e93408980d944">
+<p>This looks much better. We can do the same for the country of <code>birth</code> data:</p>
+<div class="cell styled-output" data-hash="01-geodemographics_cache/html/01-reformat-cob-data_3981592a17a402919c7ac4a5e0f30794">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare country of birth data</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>lsoa_cob <span class="ot">&lt;-</span> lsoa_cob <span class="sc">|&gt;</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="st">'lower_layer_super_output_areas_code'</span>,</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> <span class="st">'country_of_birth_8_categories'</span>,</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> <span class="st">'observation'</span>) <span class="sc">|&gt;</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co"># proportions</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>lsoa_cob <span class="ot">&lt;-</span> lsoa_cob <span class="sc">|&gt;</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cob_pop =</span> <span class="fu">sum</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">9</span>))) <span class="sc">|&gt;</span></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">9</span>, <span class="sc">~</span> . <span class="sc">/</span> cob_pop )) <span class="sc">|&gt;</span></span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare country of birth data</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>lsoa_cob <span class="ot">&lt;-</span> lsoa_cob <span class="sc">|&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="st">"lower_layer_super_output_areas_code"</span>, <span class="at">names_from =</span> <span class="st">"country_of_birth_8_categories"</span>,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_from =</span> <span class="st">"observation"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">clean_names</span>()</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co"># proportions, select columns</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>lsoa_cob <span class="ot">&lt;-</span> lsoa_cob <span class="sc">|&gt;</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rowwise</span>() <span class="sc">|&gt;</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">cob_pop =</span> <span class="fu">sum</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">9</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">9</span>, <span class="sc">~</span>.<span class="sc">/</span>cob_pop)) <span class="sc">|&gt;</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<p>And the final two datasets:</p>
-<div class="cell styled-output" data-hash="01-geodemographics_cache/html/01-reformat-eth-lan-data_c3f71fe3d946e2f57daeb68449925c8e">
+<p>And we can do the same for the <code>ethnicity</code> and <code>language</code> datasets:</p>
+<div class="cell styled-output" data-hash="01-geodemographics_cache/html/01-reformat-eth-lan-data_4c01f3ece8115f54087623543efc69e1">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare ethnicity data</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>lsoa_eth <span class="ot">&lt;-</span> lsoa_eth <span class="sc">|&gt;</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="st">'lower_layer_super_output_areas_code'</span>,</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> <span class="st">'ethnic_group_20_categories'</span>,</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> <span class="st">'observation'</span>) <span class="sc">|&gt;</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co"># proportions</span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>lsoa_eth <span class="ot">&lt;-</span> lsoa_eth <span class="sc">|&gt;</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">eth_pop =</span> <span class="fu">sum</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">21</span>))) <span class="sc">|&gt;</span></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">21</span>, <span class="sc">~</span> . <span class="sc">/</span> eth_pop )) <span class="sc">|&gt;</span></span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>)</span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare language data</span></span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>lsoa_lan <span class="ot">&lt;-</span> lsoa_lan <span class="sc">|&gt;</span></span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="st">'lower_layer_super_output_areas_code'</span>,</span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> <span class="st">'main_language_11_categories'</span>,</span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> <span class="st">'observation'</span>) <span class="sc">|&gt;</span></span>
-<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
-<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a><span class="co"># proportions</span></span>
-<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>lsoa_lan <span class="ot">&lt;-</span> lsoa_lan <span class="sc">|&gt;</span></span>
-<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span></span>
-<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lan_pop =</span> <span class="fu">sum</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">12</span>))) <span class="sc">|&gt;</span></span>
-<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">12</span>, <span class="sc">~</span> . <span class="sc">/</span> lan_pop )) <span class="sc">|&gt;</span></span>
-<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare ethnicity data</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>lsoa_eth <span class="ot">&lt;-</span> lsoa_eth <span class="sc">|&gt;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="st">'lower_layer_super_output_areas_code'</span>,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> <span class="st">'ethnic_group_20_categories'</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> <span class="st">'observation'</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co"># proportions, select columns</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>lsoa_eth <span class="ot">&lt;-</span> lsoa_eth <span class="sc">|&gt;</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">eth_pop =</span> <span class="fu">sum</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">21</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">21</span>, <span class="sc">~</span> . <span class="sc">/</span> eth_pop )) <span class="sc">|&gt;</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="sc">-</span><span class="dv">22</span>)</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare language data</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>lsoa_lan <span class="ot">&lt;-</span> lsoa_lan <span class="sc">|&gt;</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="st">'lower_layer_super_output_areas_code'</span>,</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> <span class="st">'main_language_11_categories'</span>,</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> <span class="st">'observation'</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a><span class="co"># proportions, select columns</span></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>lsoa_lan <span class="ot">&lt;-</span> lsoa_lan <span class="sc">|&gt;</span></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span></span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lan_pop =</span> <span class="fu">sum</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">12</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">12</span>, <span class="sc">~</span> . <span class="sc">/</span> lan_pop )) <span class="sc">|&gt;</span></span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="sc">-</span><span class="dv">11</span>,<span class="sc">-</span><span class="dv">13</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p>We now have four separate datasets, each containing the proportions of usual residents classified into different groups based on age, ethnicity, language, and country of birth.</p>
+</section>
+<section id="variable-selection" class="level3">
+<h3 class="anchored" data-anchor-id="variable-selection">Variable selection</h3>
+<p>Where we initially selected variables from different demographic domains, not all variables may be suitable for inclusion. Firstly, the variables need to exhibit sufficient heterogeneity to ensure they capture meaningful differences between observations. Secondly, variables should not be highly correlated with one another, as this redundancy can skew the clustering results. Ensuring acceptable correlation between variables helps maintain the diversity of information and improves the robustness of the clustering outcome.</p>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Variable selection is often a time-consuming process that requires a combination of domain knowledge and more extensive exploratory analysis than is covered in this practical.</p>
+</div>
+</div>
+</div>
+<p>A straightforward yet effective method to examine the distribution of our variables is to create boxplots for each variable. This can be efficiently achieved by using <code>facet_wrap()</code> to generate a matrix of panels, allowing us to visualise all variables in a single view. For more details on <code>facet_wrap()</code>, you can refer to the <a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">ggplot2 documentation</a>.</p>
+<div class="cell styled-output" data-hash="01-geodemographics_cache/html/fig-01-boxplot-data_a247a03b2e8a00e37ad550134901bbd0">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wide to long</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>lsoa_age_wd <span class="ot">&lt;-</span> lsoa_age <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>), <span class="at">names_to =</span> <span class="st">"variable"</span>, <span class="at">values_to =</span> <span class="st">"value"</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># facet age</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(lsoa_age_wd, <span class="fu">aes</span>(<span class="at">y =</span> value)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-01-boxplot-data" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-geodemographics_files/figure-html/fig-01-boxplot-data-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: Boxplots of the distribution of the <code>age</code> dataset.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>When repeating this process for the <code>birth</code>, <code>ethnicity</code>, and <code>language</code> variables, you will notice that some variables have a very limited distribution. Specifically, some variables may have a value of <code>0</code> for the majority of London LSOAs. As a rule of thumb, we will retain only those variables where at least 25% of the LSOAs have values different from <code>0</code>.</p>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>This threshold of 25% is arbitrary, and in practice, more thorough consideration should be given when deciding whether to include or exclude a variable.</p>
+</div>
+</div>
+</div>
+<div class="cell styled-output" data-hash="01-geodemographics_cache/html/01-filter-high-zeroes_a5104d276960dbcb4702eab58cb8c836">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>lsoa_df <span class="ot">&lt;-</span> lsoa_age <span class="sc">|&gt;</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(lsoa_cob, <span class="at">by =</span> <span class="st">"lower_layer_super_output_areas_code"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(lsoa_eth, <span class="at">by =</span> <span class="st">"lower_layer_super_output_areas_code"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(lsoa_lan, <span class="at">by =</span> <span class="st">"lower_layer_super_output_areas_code"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Variable selection is often a time-consuming process that requires a combination of domain knowledge and more extensive exploratory analysis than is covered in this practical.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="variable-standardisation" class="level3">
+<h3 class="anchored" data-anchor-id="variable-standardisation">Variable standardisation</h3>
+<p>If the input data are heavily skewed or contain outliers, <span class="math inline">\(k\)</span>-means may produce less meaningful clusters. While normality is not required, it has been common to do this nonetheless. More important is to standardise the input variables, especially when they are measured on different scales. This ensures that each variable contributes equally to the clustering process.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Since our variables are all expressed as proportions in this example, range standardisation is not technically required.</p>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="assignment" class="level2">

@@ -3,7 +3,7 @@ meta:
 
 urls:
   git-url-am: "https://uclpg-msc-sgds.github.io/GEOG0114"
-  geodemographics: "01-geodemographics.html"
+  geodemographics: "01-geodemographic.html"
   transport-ntx: "02-network.html"
 
 slides:
