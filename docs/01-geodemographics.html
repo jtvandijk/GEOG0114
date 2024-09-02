@@ -628,7 +628,7 @@ dbl (2): Main language (11 categories) Code, Observation
 </div>
 </div>
 </div>
-<div class="cell styled-output" data-hash="01-geodemographics_cache/html/01-filter-high-zeroes_a5104d276960dbcb4702eab58cb8c836">
+<div class="cell styled-output" data-hash="01-geodemographics_cache/html/01-filter-high-zeroes_7b32666727e6422713836ca5e345a622">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -637,7 +637,19 @@ dbl (2): Main language (11 categories) Code, Observation
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>lsoa_df <span class="ot">&lt;-</span> lsoa_age <span class="sc">|&gt;</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(lsoa_cob, <span class="at">by =</span> <span class="st">"lower_layer_super_output_areas_code"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(lsoa_eth, <span class="at">by =</span> <span class="st">"lower_layer_super_output_areas_code"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(lsoa_lan, <span class="at">by =</span> <span class="st">"lower_layer_super_output_areas_code"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(lsoa_lan, <span class="at">by =</span> <span class="st">"lower_layer_super_output_areas_code"</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># proportion zeroes</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>zero_percentage <span class="ot">&lt;-</span> <span class="fu">apply</span>(lsoa_df[<span class="dv">2</span><span class="sc">:</span><span class="dv">41</span>], <span class="dv">2</span>, <span class="cf">function</span>(col) {</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mean</span>(col <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co"># filter</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>idx <span class="ot">&lt;-</span> <span class="fu">which</span>(zero_percentage <span class="sc">&gt;</span> <span class="fl">0.25</span>)</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="co"># subset</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>lsoa_df <span class="ot">&lt;-</span> lsoa_df <span class="sc">|&gt;</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span><span class="fu">all_of</span>(idx))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-warning">

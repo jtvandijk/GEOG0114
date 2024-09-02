@@ -271,6 +271,18 @@ lsoa_df <- lsoa_age |>
   left_join(lsoa_cob, by = 'lower_layer_super_output_areas_code') |>
   left_join(lsoa_eth, by = 'lower_layer_super_output_areas_code') |>
   left_join(lsoa_lan, by = 'lower_layer_super_output_areas_code')
+
+# proportion zeroes
+zero_percentage <- apply(lsoa_df[2:41], 2, function(col) {
+  mean(col == 0) 
+})
+
+# filter
+idx <- which(zero_percentage > 0.25)
+
+# subset 
+lsoa_df <- lsoa_df |>
+  select(-all_of(idx))
 ```
 
 ::: {.callout-warning}
