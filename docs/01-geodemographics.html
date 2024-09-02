@@ -158,6 +158,8 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#lecture-w07" id="toc-lecture-w07" class="nav-link" data-scroll-target="#lecture-w07">Lecture slides</a></li>
   <li><a href="#reading-w07" id="toc-reading-w07" class="nav-link" data-scroll-target="#reading-w07">Reading list</a></li>
   <li><a href="#london-output-area-classification" id="toc-london-output-area-classification" class="nav-link" data-scroll-target="#london-output-area-classification">London Output Area Classification</a></li>
+  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment">Assignment</a></li>
+  <li><a href="#byl-geo" id="toc-byl-geo" class="nav-link" data-scroll-target="#byl-geo">Before you leave</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jtvandijk/GEOG0114/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -169,7 +171,6 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="geodemographics" class="level1">
 <h1>Geodemographics</h1>
-<p>This week we will turn to geodemographic classification. Geodemographic classification is a method used to categorise geographic areas and the people living in them based on demographic, socioeconomic, and sometimes lifestyle characteristics. This approach combines geographic information with demographic data to create profiles of different neighborhoods.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -180,6 +181,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
+<p>This week we will turn to geodemographic classification. Geodemographic classification is a method used to categorise geographic areas and the people living in them based on demographic, socioeconomic, and sometimes lifestyle characteristics. This approach combines geographic information with demographic data to create profiles of different neighborhoods.</p>
 <section id="lecture-w07" class="level2">
 <h2 class="anchored" data-anchor-id="lecture-w07">Lecture slides</h2>
 <p>You can download the slides of this week’s lecture here: <a href="https://github.com/jtvandijk/GEOG0114/tree/master/slides/w07-psa.pdf">[Link]</a>.</p>
@@ -204,6 +206,67 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="london-output-area-classification" class="level2">
 <h2 class="anchored" data-anchor-id="london-output-area-classification">London Output Area Classification</h2>
+<p>The London Output Area Classification (LOAC) is a geodemographic that summarises the built and population characteristics of all 2021 Output Areas within Greater London. The region is organised into a hierarchical typology composed of 7 Supergroups and 16 Groups, created using data from 2021 Census data. The LOAC uses 68 variables across several domains: demography, ethnicity and origins, living arrangements, usual residence, health and education and employment (see <a href="https://doi.org/10.1177/23998083241242913">Singleton and Longley 2024</a>).</p>
+<p>Today, we will create our own geodemographic classification at the LSOA level using a subset of the 2021 Census LOAC variables to examine demographic patterns across London. Specifically, we will focus on age group, self-identified ethnicity, and country of birth. Additionally, we will include data on an individual’s first or preferred language. The data represent all usual residents as recorded in the 2021 Census for England and Wales, and have been extracted using the <a href="https://www.ons.gov.uk/datasets/create">Custom dataset tool</a>. You can download copies of each file via the provided links. Save these files in your project folder under <code>data</code>.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">File</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Link</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">London LSOA Census 2021 Age Groups</td>
+<td style="text-align: left;"><code>csv</code></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0114/raw/master/data/London-LSOA-AgeGroup.csv">Download</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">London LSOA Census 2021 Country of Birth</td>
+<td style="text-align: left;"><code>csv</code></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0114/raw/master/data/London-LSOA-Country-of-Birth.csv">Download</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">London LSOA Census 2021 Ethnicity</td>
+<td style="text-align: left;"><code>csv</code></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0114/raw/master/data/London-LSOA-Ethnicity.csv">Download</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">London LSOA Census 2021 Main Language</td>
+<td style="text-align: left;"><code>csv</code></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0114/raw/master/data/London-LSOA-MainLanguage.csv">Download</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="assignment" class="level2">
+<h2 class="anchored" data-anchor-id="assignment">Assignment</h2>
+<p>The creation of a geodemographic classification is an iterative process. This typically includes adding or removing variables, adjusting the number of clusters, and grouping data in different ways to achieve the most meaningful segmentation. If you want to refine your clustering solution, you can re-run the analysis with different variables or cluster numbers by simply updating your code. However, automating parts of this process with a <a href="https://en.wikipedia.org/wiki/Function_(computer_programming)">function</a> would streamline the workflow and make it more efficient.</p>
+<p>Try to create a simple <em>R function</em> that:</p>
+<ol type="1">
+<li>Takes at least three arguments: a data frame containing the input data, the number of clusters you want, and a list of input variables.</li>
+<li>Executes a k-means clustering on the specified input variables and number of clusters.</li>
+<li>Generates a <code>csv</code> file that contains a table of means for each cluster in the solution.</li>
+</ol>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<ol type="1">
+<li>Your function could be structured like this: <code>run-kmeans(df, k, vars)</code>, where <code>df</code> is your input dataframe, <code>k</code> is the number of clusters, and <code>vars</code> is a list of input variables.</li>
+<li>For a more in-depth discussion on constructing functions in R, refer to Hadley Wickham’s <a href="https://r4ds.hadley.nz/functions.html">R for Data Science</a> Chapter on <em>Functions</em>.<br>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="byl-geo" class="level2">
+<h2 class="anchored" data-anchor-id="byl-geo">Before you leave</h2>
+<p>Having finished this tutorial, you should now understand the basics of a geodemographic classification. In addition, you should now be able to write simple functions. That is <a href="https://www.youtube.com/watch?v=8iwBM_YB1sE">all for this week</a>!</p>
 
 
 </section>
