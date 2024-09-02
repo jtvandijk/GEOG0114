@@ -26,10 +26,205 @@ Today, we will create our own geodemographic classification at the LSOA level us
 
 | File                                        | Type   | Link |
 | :------                                     | :------| :------ |
-| London LSOA Census 2021 Age Groups          | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/raw/master/data/London-LSOA-AgeGroup.csv) |
-| London LSOA Census 2021 Country of Birth    | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/raw/master/data/London-LSOA-Country-of-Birth.csv) |
-| London LSOA Census 2021 Ethnicity           | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/raw/master/data/London-LSOA-Ethnicity.csv) |
-| London LSOA Census 2021 Main Language       | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/raw/master/data/London-LSOA-MainLanguage.csv) |
+| London LSOA Census 2021 Age Groups          | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/London-LSOA-AgeGroup.csv) |
+| London LSOA Census 2021 Country of Birth    | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/London-LSOA-Country-of-Birth.csv) |
+| London LSOA Census 2021 Ethnicity           | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/London-LSOA-Ethnicity.csv) |
+| London LSOA Census 2021 Main Language       | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/London-LSOA-MainLanguage.csv) |
+
+::: {.callout-note}
+To download a `csv` file that is hosted on GitHub, click on the `Download raw file` button on the top right of your screen and it should download directly to your computer.
+:::
+
+We will start by loading the libraries that we will need:
+
+```{r}
+#| label: 01-load-libraries
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| output: False
+#| tidy: True
+#| filename: "R code"
+# load libraries
+library(tidyverse)
+library(janitor)
+library(tmap)
+```
+
+Next, we can load the individual `csv` files into R.
+
+```{r}
+#| label: 01-load-data
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# load age data
+lsoa_age <- read_csv('data/London-LSOA-AgeGroup.csv')
+
+# load country of birth data
+lsoa_cob <- read_csv('data/London-LSOA-Country-of-Birth.csv')
+
+# load ethnicity data
+lsoa_eth <- read_csv('data/London-LSOA-Ethnicity.csv')
+
+# load language data
+lsoa_lan <- read_csv('data/London-LSOA-MainLanguage.csv')
+```
+
+::: {.callout-warning}
+If using a Windows machine, you may need to substitute your forward-slashes (`/`) with two backslashes (`\\`) whenever you are dealing with file paths.
+:::
+
+Let us have a look at the data:
+
+```{r}
+#| label: 01-inspect-data
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# inspect age data
+head(lsoa_age)
+
+# inspect country of birth data
+head(lsoa_cob)
+
+# inspect ethnicity data
+head(lsoa_eth)
+
+# inspect language data
+head(lsoa_lan)
+```
+
+::: {.callout-note}
+You can further inspect the results using the `View()` function. 
+:::
+
+To identify geodemographic clusters in our dataset, we will use an unsupervised machine learning technique called $k$-means. $k$-means aims to partition a set of standardised observations into a specified number of clusters ($k$), where each observation is assigned to the cluster with the nearest mean. In this context, a cluster refers to a collection of data points grouped together based on certain similarities. To do this we first need to prepare the individual datase, as well as transform and standardise the input variables.
+
+### Data preparation
+Because all the data are stored in [long format](https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb), with each London LSOA having separate entries for each category, we need to transform it into a wide format. Additionally, we need to clean up the column names to align with general R naming conventions, which can be done using the `janitor` package. We will begin with the `lsoa_age` dataframe:
+
+```{r}
+#| label: 01-reformat-data-age
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# clean names 
+lsoa_age <- lsoa_age |>
+  clean_names()
+
+# pivot
+lsoa_age <- lsoa_age |>
+  pivot_wider(id_cols = 'lower_layer_super_output_areas_code',
+              names_from = 'age_5_categories',
+              values_from = 'observation') 
+
+# clean names
+lsoa_age <- lsoa_age |>
+  clean_names()
+```
+
+::: {.callout-note}
+The code above uses a pipe function: `|>`. The pipe operator allows you to pass the output of one function directly into the next, streamlining your code. While it might seem a bit confusing at first, you will find that it makes your code faster to write and easier to read. More importantly, it reduces the need to create multiple intermediate variables to store outputs.
+:::
+
+::: {.callout-note}
+Make sure to inspect your dataframes in between steps to see what exactly is happening. 
+:::
+
+We can now transform the LSOA counts to proportions:
+
+```{r}
+#| label: 01-prop-data-age
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# total observations
+lsoa_age <- lsoa_age |>
+  rowwise() |>
+  mutate(age_pop = sum(across(2:6)))
+  
+# total proportions
+lsoa_age <- lsoa_age |>
+  mutate(across(2:6, ~ . / age_pop)) |>
+  select(1:6)
+```
+
+This looks much better. We can do the same for the other country of birth data:
+
+```{r}
+#| label: 01-reformat-cob-data
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# prepare country of birth data
+lsoa_cob <- lsoa_cob |>
+  clean_names() |>
+  pivot_wider(id_cols = 'lower_layer_super_output_areas_code',
+              names_from = 'country_of_birth_8_categories',
+              values_from = 'observation') |>
+  clean_names()
+
+# proportions
+lsoa_cob <- lsoa_cob |>
+  rowwise() |>
+  mutate(cob_pop = sum(across(2:9))) |>
+  mutate(across(2:9, ~ . / cob_pop )) |>
+  select(1:9)
+```
+
+And the final two datasets:
+
+```{r}
+#| label: 01-reformat-eth-lan-data
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# prepare ethnicity data
+lsoa_eth <- lsoa_eth |>
+  clean_names() |>
+  pivot_wider(id_cols = 'lower_layer_super_output_areas_code',
+              names_from = 'ethnic_group_20_categories',
+              values_from = 'observation') |>
+  clean_names()
+
+# proportions
+lsoa_eth <- lsoa_eth |>
+  rowwise() |>
+  mutate(eth_pop = sum(across(2:21))) |>
+  mutate(across(2:21, ~ . / eth_pop )) |>
+  select(1:21)
+
+# prepare language data
+lsoa_lan <- lsoa_lan |>
+  clean_names() |>
+  pivot_wider(id_cols = 'lower_layer_super_output_areas_code',
+              names_from = 'main_language_11_categories',
+              values_from = 'observation') |>
+  clean_names()
+
+# proportions
+lsoa_lan <- lsoa_lan |>
+  rowwise() |>
+  mutate(lan_pop = sum(across(2:12))) |>
+  mutate(across(2:12, ~ . / lan_pop )) |>
+  select(1:12)
+```
+
+We now have four separate datasets, each containing the proportions of usual residents classified into different groups based on age, ethnicity, language, and country of birth.
+
 
 ## Assignment 
 The creation of a geodemographic classification is an iterative process. This typically includes adding or removing variables, adjusting the number of clusters, and grouping data in different ways to achieve the most meaningful segmentation. If you want to refine your clustering solution, you can re-run the analysis with different variables or cluster numbers by simply updating your code. However, automating parts of this process with a [function](https://en.wikipedia.org/wiki/Function_(computer_programming)) would streamline the workflow and make it more efficient.
