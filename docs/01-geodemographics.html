@@ -198,6 +198,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#variable-preparation" id="toc-variable-preparation" class="nav-link" data-scroll-target="#variable-preparation">Variable preparation</a></li>
   <li><a href="#variable-selection" id="toc-variable-selection" class="nav-link" data-scroll-target="#variable-selection">Variable selection</a></li>
   <li><a href="#variable-standardisation" id="toc-variable-standardisation" class="nav-link" data-scroll-target="#variable-standardisation">Variable standardisation</a></li>
+  <li><a href="#selecting-the-number-of-k" id="toc-selecting-the-number-of-k" class="nav-link" data-scroll-target="#selecting-the-number-of-k">Selecting the number of <span class="math inline">\(k\)</span></a></li>
   </ul></li>
   <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment">Assignment</a></li>
   <li><a href="#byl-geo" id="toc-byl-geo" class="nav-link" data-scroll-target="#byl-geo">Before you leave</a></li>
@@ -281,7 +282,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>We will start by loading the libraries that we will need:</p>
-<div class="cell styled-output" data-hash="01-geodemographics_cache/html/01-load-libraries_9b4b9d895e8478a5680dd530398f8f51">
+<div class="cell styled-output" data-hash="01-geodemographics_cache/html/01-load-libraries_7d3df415950bddff2d3f503e7b822a3e">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -289,7 +290,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggcorrplot)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cluster)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>You may have to install some of these libraries if you have not used these before.</p>
+</div>
 </div>
 </div>
 <p>Next, we can load the individual <code>csv</code> files into R.</p>
@@ -441,9 +455,19 @@ dbl (2): Main language (11 categories) Code, Observation
 </div>
 </div>
 </div>
-<p>To identify geodemographic clusters in our dataset, we will use an unsupervised machine learning technique called <span class="math inline">\(k\)</span>-means. <span class="math inline">\(k\)</span>-means aims to partition a set of standardised observations into a specified number of clusters (<span class="math inline">\(k\)</span>), where each observation is assigned to the cluster with the nearest mean. In this context, a cluster refers to a collection of data points grouped together based on certain similarities. To do this we first need to prepare the individual datasets, as well as transform and standardise the input variables.</p>
 <section id="variable-preparation" class="level3">
 <h3 class="anchored" data-anchor-id="variable-preparation">Variable preparation</h3>
+<p>To identify geodemographic clusters in our dataset, we will use a technique called <span class="math inline">\(k\)</span>-means. <span class="math inline">\(k\)</span>-means aims to partition a set of standardised observations into a specified number of clusters (<span class="math inline">\(k\)</span>). To do this we first need to prepare the individual datasets, as well as transform and standardise the input variables.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><span class="math inline">\(k\)</span>-means clustering is an unsupervised machine learning algorithm used to group data into a predefined number of clusters, based on similarities between data points. It works by initially assigning <span class="math inline">\(k\)</span> random centroids, then iteratively updating them by assigning each data point to the nearest centroid and recalculating the centroid’s position based on the mean of the points in each cluster. The process continues until the centroids stabilise, meaning they no longer change significantly. <span class="math inline">\(k\)</span>-means is often used for tasks such as data segmentation, image compression, or anomaly detection. It is simple but may not work well with non-spherical or overlapping clusters.</p>
+</div>
+</div>
+</div>
 <p>Because all the data are stored in <a href="https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb">long format</a>, with each London LSOA having separate entries for each category, we need to transform it into a <a href="https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb">wide format</a>. Additionally, we need to clean up the column names to align with general R naming conventions, which can be done using the <code>janitor</code> package.</p>
 <p>We will begin with the <code>age</code> dataframe:</p>
 <div class="cell styled-output" data-hash="01-geodemographics_cache/html/01-reformat-data-age_069bdd454d46d6fbe9a466d05b64f52d">
@@ -638,7 +662,7 @@ dbl (2): Main language (11 categories) Code, Observation
 </div>
 </div>
 </div>
-<div class="cell styled-output" data-hash="01-geodemographics_cache/html/01-filter-high-zeroes_7b32666727e6422713836ca5e345a622">
+<div class="cell styled-output" data-hash="01-geodemographics_cache/html/01-filter-high-zeroes_00cd9ea2ae95dd61610e37cd9c9ab655">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -657,32 +681,134 @@ dbl (2): Main language (11 categories) Code, Observation
 <span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co"># filter</span></span>
 <span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>idx <span class="ot">&lt;-</span> <span class="fu">which</span>(zero_percentage <span class="sc">&gt;</span> <span class="fl">0.25</span>)</span>
 <span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="co"># subset</span></span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>lsoa_df <span class="ot">&lt;-</span> lsoa_df <span class="sc">|&gt;</span></span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span><span class="fu">all_of</span>(idx))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>idx</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   white_gypsy_or_irish_traveller            any_other_uk_languages 
+                               27                                33 
+  oceanic_or_australian_languages north_or_south_american_languages 
+                               37                                38 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove columns</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>lsoa_df <span class="ot">&lt;-</span> lsoa_df <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>white_gypsy_or_irish_traveller, <span class="sc">-</span>any_other_uk_languages, <span class="sc">-</span>oceanic_or_australian_languages,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>        <span class="sc">-</span>north_or_south_american_languages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can now check for multicollinearity of the remaining variables. The easiest way to check the correlations between all variables is by visualising the correlation matrix:</p>
+<div class="cell styled-output" data-hash="01-geodemographics_cache/html/fig-01-correlation-matrix_affdbe968ef5d6fffe2256585bfd5fd4">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># variable names</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(lsoa_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "lower_layer_super_output_areas_code"                                  
+ [2] "aged_15_years_and_under"                                              
+ [3] "aged_16_to_24_years"                                                  
+ [4] "aged_25_to_34_years"                                                  
+ [5] "aged_35_to_49_years"                                                  
+ [6] "aged_50_years_and_over"                                               
+ [7] "europe_united_kingdom"                                                
+ [8] "europe_ireland"                                                       
+ [9] "europe_other_europe"                                                  
+[10] "africa"                                                               
+[11] "middle_east_and_asia"                                                 
+[12] "the_americas_and_the_caribbean"                                       
+[13] "antarctica_and_oceania_including_australasia_and_other"               
+[14] "asian_asian_british_or_asian_welsh_bangladeshi"                       
+[15] "asian_asian_british_or_asian_welsh_chinese"                           
+[16] "asian_asian_british_or_asian_welsh_indian"                            
+[17] "asian_asian_british_or_asian_welsh_pakistani"                         
+[18] "asian_asian_british_or_asian_welsh_other_asian"                       
+[19] "black_black_british_black_welsh_caribbean_or_african_african"         
+[20] "black_black_british_black_welsh_caribbean_or_african_caribbean"       
+[21] "black_black_british_black_welsh_caribbean_or_african_other_black"     
+[22] "mixed_or_multiple_ethnic_groups_white_and_asian"                      
+[23] "mixed_or_multiple_ethnic_groups_white_and_black_african"              
+[24] "mixed_or_multiple_ethnic_groups_white_and_black_caribbean"            
+[25] "mixed_or_multiple_ethnic_groups_other_mixed_or_multiple_ethnic_groups"
+[26] "white_english_welsh_scottish_northern_irish_or_british"               
+[27] "white_gypsy_or_irish_traveller"                                       
+[28] "white_roma"                                                           
+[29] "white_other_white"                                                    
+[30] "other_ethnic_group_arab"                                              
+[31] "other_ethnic_group_any_other_ethnic_group"                            
+[32] "any_other_uk_languages"                                               
+[33] "european_languages_eu"                                                
+[34] "other_european_languages_non_eu"                                      
+[35] "north_or_south_american_languages"                                    
+[36] "african_languages"                                                    
+[37] "any_other_languages"                                                  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># change dataframe names to index to improve visualisation</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>lsoa_df_vis <span class="ot">&lt;-</span> lsoa_df</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(lsoa_df_vis)[<span class="dv">2</span><span class="sc">:</span><span class="dv">37</span>] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"v"</span>, <span class="fu">as.character</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">36</span>))</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co"># correlation matrix</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>cor_mat <span class="ot">&lt;-</span> <span class="fu">cor_pmat</span>(lsoa_df_vis[, <span class="sc">-</span><span class="dv">1</span>])</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="co"># correlation plot</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(cor_mat, <span class="at">hc.order =</span> <span class="cn">FALSE</span>, <span class="at">outline.col =</span> <span class="st">"#ffffff"</span>, <span class="at">tl.cex =</span> <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-01-correlation-matrix" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-geodemographics_files/figure-html/fig-01-correlation-matrix-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Correlation plot of classification variables.</figcaption>
+</figure>
 </div>
 </div>
-<div class="callout callout-style-simple callout-warning">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
 </div>
-<div class="callout-body-container">
-<p>Variable selection is often a time-consuming process that requires a combination of domain knowledge and more extensive exploratory analysis than is covered in this practical.</p>
-</div>
-</div>
-</div>
+<p>Following the approach from <a href="https://doi.org/10.1111/geoj.12550">Wyszomierski <em>et al.</em> (2024)</a>, we can define a ‘weak’ correlation as lying between 0 and 0.40, ‘moderate’ as between 0.41 and 0.65, ‘strong’ as between 0.66 and 0.80, and ‘very strong’ as between 0.81 and 1. A few ‘strong’ and ‘very strong’ correlations are observed that probably should be removed; however, to maintain representation, here we decide to retain all variables.</p>
 </section>
 <section id="variable-standardisation" class="level3">
 <h3 class="anchored" data-anchor-id="variable-standardisation">Variable standardisation</h3>
-<p>If the input data are heavily skewed or contain outliers, <span class="math inline">\(k\)</span>-means may produce less meaningful clusters. While normality is not required, it has been common to do this nonetheless. More important is to standardise the input variables, especially when they are measured on different scales. This ensures that each variable contributes equally to the clustering process.</p>
+<p>If the input data are heavily skewed or contain outliers, <span class="math inline">\(k\)</span>-means may produce less meaningful clusters. While normality is not required per se, it has been common to do this nonetheless. More important is to standardise the input variables, especially when they are measured on different scales. This ensures that each variable contributes equally to the clustering process.</p>
+<div class="cell styled-output" data-hash="01-geodemographics_cache/html/01-standardise-variables_4fad61dce6fc6d1b743bc47cec704e01">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inverse hyperbolic sine</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>lsoa_df_vis[, <span class="sc">-</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(lsoa_df_vis[<span class="sc">-</span><span class="dv">1</span>], asinh)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># range standardise</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>lsoa_df_vis[, <span class="sc">-</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(lsoa_df_vis[<span class="sc">-</span><span class="dv">1</span>], <span class="cf">function</span>(x) {</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    (x <span class="sc">-</span> <span class="fu">min</span>(x))<span class="sc">/</span>(<span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x))</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="selecting-the-number-of-k" class="level3">
+<h3 class="anchored" data-anchor-id="selecting-the-number-of-k">Selecting the number of <span class="math inline">\(k\)</span></h3>
+<p>Now our data are prepared we will start by creating an elbow plot. The <a href="https://en.wikipedia.org/wiki/Elbow_method_(clustering)#:~:text=In%20cluster%20analysis%2C%20the%20elbow,number%20of%20clusters%20to%20use%60">elbow method</a> is a visual tool that helps determine the optimal number of clusters in a dataset. This is important because with <span class="math inline">\(k\)</span>-means clustering you need to specify the numbers of clusters <em>a priori</em>. The elbow method plots the total explained variation, known as ‘Within Sum of Squares’, against the number of clusters. The key idea is to identify the ‘elbow’ point on the curve, where the rate of decrease in explained variation starts to slow down. This point indicates that adding more clusters yields diminishing returns in terms of explained variation.</p>
+<div class="cell styled-output" data-hash="01-geodemographics_cache/html/fig-01-elbow-plot_04fae90f4db6d7e5f1bf539c0f6981cb">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># elbow plot</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_nbclust</span>(lsoa_df_vis[, <span class="sc">-</span><span class="dv">1</span>], kmeans, <span class="at">nstart =</span> <span class="dv">25</span>, <span class="at">iter.max =</span> <span class="dv">200</span>, <span class="at">method =</span> <span class="st">"wss"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-01-elbow-plot" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-geodemographics_files/figure-html/fig-01-elbow-plot-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;3: Elbow plot with ‘Within Sum of Squares’ against number of clusters.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Based on the elbow plot, we can now choose the number of clusters and it looks like <strong>6</strong> clusters would be a reasonable choice.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Since our variables are all expressed as proportions in this example, range standardisation is not technically required.</p>
+<p>The interpretation of an elbow plot can be quite subjective, and multiple options for the optimal number of clusters might be justified; for instance, 4, 5, or even 7 clusters could be reasonable choices. In addition to the elbow method, other techniques can aid in determining the optimal number of clusters, such as <a href="https://en.wikipedia.org/wiki/Silhouette_(clustering)">silhouette scores</a> and the <a href="https://en.wikipedia.org/wiki/Determining_the_number_of_clusters_in_a_data_set#The_gap_statistics">gap statistic</a>. An alternative approach is to use a <a href="https://clustergram.readthedocs.io/en/stable/notebooks/introduction.html">clustergram</a>, which is a two-dimensional plot that visualises the flows of observations between clusters as more clusters are added. This method illustrates how your data reshuffles with each additional cluster and provides insights into the quality of the splits.</p>
 </div>
 </div>
 </div>
@@ -704,7 +830,7 @@ dbl (2): Main language (11 categories) Code, Observation
 </div>
 <div class="callout-body-container">
 <ol type="1">
-<li>Your function could be structured like this: <code>run-kmeans(df, k, vars)</code>, where <code>df</code> is your input dataframe, <code>k</code> is the number of clusters, and <code>vars</code> is a list of input variables.</li>
+<li>Your function could be structured like this: <code>run_kmeans(df, k, vars)</code>, where <code>df</code> is your input dataframe, <code>k</code> is the number of clusters, and <code>vars</code> is a list of input variables.</li>
 <li>For a more in-depth discussion on constructing functions in R, refer to Hadley Wickham’s <a href="https://r4ds.hadley.nz/functions.html">R for Data Science</a> Chapter on <em>Functions</em>.<br>
 </li>
 </ol>

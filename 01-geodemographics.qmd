@@ -43,8 +43,15 @@ We will start by loading the libraries that we will need:
 # load libraries
 library(tidyverse)
 library(janitor)
+library(ggcorrplot)
+library(cluster)
+library(factoextra)
 library(tmap)
 ```
+
+::: {.callout-warning}
+You may have to install some of these libraries if you have not used these before.
+:::
 
 Next, we can load the individual `csv` files into R.
 
@@ -98,9 +105,13 @@ head(lsoa_lan)
 You can further inspect the results using the `View()` function. 
 :::
 
-To identify geodemographic clusters in our dataset, we will use an unsupervised machine learning technique called $k$-means. $k$-means aims to partition a set of standardised observations into a specified number of clusters ($k$), where each observation is assigned to the cluster with the nearest mean. In this context, a cluster refers to a collection of data points grouped together based on certain similarities. To do this we first need to prepare the individual datasets, as well as transform and standardise the input variables.
-
 ### Variable preparation
+To identify geodemographic clusters in our dataset, we will use a technique called $k$-means. $k$-means aims to partition a set of standardised observations into a specified number of clusters ($k$). To do this we first need to prepare the individual datasets, as well as transform and standardise the input variables.
+
+::: {.callout-note}
+$k$-means clustering is an unsupervised machine learning algorithm used to group data into a predefined number of clusters, based on similarities between data points. It works by initially assigning $k$ random centroids, then iteratively updating them by assigning each data point to the nearest centroid and recalculating the centroid's position based on the mean of the points in each cluster. The process continues until the centroids stabilise, meaning they no longer change significantly. $k$-means is often used for tasks such as data segmentation, image compression, or anomaly detection. It is simple but may not work well with non-spherical or overlapping clusters.
+:::
+
 Because all the data are stored in [long format](https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb), with each London LSOA having separate entries for each category, we need to transform it into a [wide format](https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb). Additionally, we need to clean up the column names to align with general R naming conventions, which can be done using the `janitor` package. 
 
 We will begin with the `age` dataframe:
@@ -284,20 +295,78 @@ zero_percentage <- apply(lsoa_df[2:41], 2, function(col) {
 # filter
 idx <- which(zero_percentage > 0.25)
 
-# subset 
+# inspect
+idx
+
+# remove columns 
 lsoa_df <- lsoa_df |>
-  select(-all_of(idx))
+  select(-white_gypsy_or_irish_traveller, -any_other_uk_languages, -oceanic_or_australian_languages, -north_or_south_american_languages)
 ```
 
-::: {.callout-warning}
-Variable selection is often a time-consuming process that requires a combination of domain knowledge and more extensive exploratory analysis than is covered in this practical.
-:::
+We can now check for multicollinearity of the remaining variables. The easiest way to check the correlations between all variables is by visualising the correlation matrix:
+
+```{r}
+#| label: fig-01-correlation-matrix
+#| fig-cap: Correlation plot of classification variables.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# variable names 
+names(lsoa_df)
+
+# change dataframe names to index to improve visualisation
+lsoa_df_vis <- lsoa_df
+names(lsoa_df_vis)[2:37] <- paste0('v', as.character(1:36))
+
+# correlation matrix
+cor_mat <- cor_pmat(lsoa_df_vis[,-1])
+
+# correlation plot
+ggcorrplot(cor_mat, hc.order = FALSE, outline.col = '#ffffff', tl.cex = 8)
+
+```
+
+Following the approach from [Wyszomierski *et al.* (2024)](https://doi.org/10.1111/geoj.12550), we can define a 'weak' correlation as lying between 0 and 0.40, 'moderate' as between 0.41 and 0.65, 'strong' as between 0.66 and 0.80, and 'very strong' as between 0.81 and 1. A few 'strong' and 'very strong' correlations are observed that probably should be removed; however, to maintain representation, here we decide to retain all variables.
 
 ### Variable standardisation
-If the input data are heavily skewed or contain outliers, $k$-means may produce less meaningful clusters. While normality is not required, it has been common to do this nonetheless. More important is to standardise the input variables, especially when they are measured on different scales. This ensures that each variable contributes equally to the clustering process. 
+If the input data are heavily skewed or contain outliers, $k$-means may produce less meaningful clusters. While normality is not required per se, it has been common to do this nonetheless. More important is to standardise the input variables, especially when they are measured on different scales. This ensures that each variable contributes equally to the clustering process. 
+
+```{r}
+#| label: 01-standardise-variables
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# inverse hyperbolic sine 
+lsoa_df_vis[,-1] <- lapply(lsoa_df_vis[-1], asinh)
+  
+# range standardise
+lsoa_df_vis[,-1] <- lapply(lsoa_df_vis[-1], function(x){(x-min(x))/(max(x)-min(x))})
+
+```
+
+### Selecting the number of $k$
+Now our data are prepared we will start by creating an elbow plot. The [elbow method](https://en.wikipedia.org/wiki/Elbow_method_(clustering)#:~:text=In%20cluster%20analysis%2C%20the%20elbow,number%20of%20clusters%20to%20use%60) is a visual tool that helps determine the optimal number of clusters in a dataset. This is important because with $k$-means clustering you need to specify the numbers of clusters *a priori*. The elbow method plots the total explained variation, known as 'Within Sum of Squares', against the number of clusters. The key idea is to identify the 'elbow' point on the curve, where the rate of decrease in explained variation starts to slow down. This point indicates that adding more clusters yields diminishing returns in terms of explained variation. 
+
+```{r}
+#| label: fig-01-elbow-plot
+#| fig-cap: Elbow plot with 'Within Sum of Squares' against number of clusters.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# elbow plot
+fviz_nbclust(lsoa_df_vis[,-1], kmeans, nstart = 25, iter.max = 200, method = 'wss') 
+```
+
+Based on the elbow plot, we can now choose the number of clusters and it looks like **6** clusters would be a reasonable choice.
 
 ::: {.callout-note}
-Since our variables are all expressed as proportions in this example, range standardisation is not technically required.
+The interpretation of an elbow plot can be quite subjective, and multiple options for the optimal number of clusters might be justified; for instance, 4, 5, or even 7 clusters could be reasonable choices. In addition to the elbow method, other techniques can aid in determining the optimal number of clusters, such as [silhouette scores](https://en.wikipedia.org/wiki/Silhouette_(clustering)) and the [gap statistic](https://en.wikipedia.org/wiki/Determining_the_number_of_clusters_in_a_data_set#The_gap_statistics). An alternative approach is to use a [clustergram](https://clustergram.readthedocs.io/en/stable/notebooks/introduction.html), which is a two-dimensional plot that visualises the flows of observations between clusters as more clusters are added. This method illustrates how your data reshuffles with each additional cluster and provides insights into the quality of the splits.
 :::
 
 ## Assignment 
@@ -310,7 +379,7 @@ Try to create a simple *R function* that:
 3.  Generates a `csv` file that contains a table of means for each cluster in the solution.
 
 ::: {.callout-note}
-1.  Your function could be structured like this: `run-kmeans(df, k, vars)`, where `df` is your input dataframe, `k` is the number of clusters, and `vars` is a list of input variables. 
+1.  Your function could be structured like this: `run_kmeans(df, k, vars)`, where `df` is your input dataframe, `k` is the number of clusters, and `vars` is a list of input variables. 
 2.  For a more in-depth discussion on constructing functions in R, refer to Hadley Wickham's [R for Data Science](https://r4ds.hadley.nz/functions.html) Chapter on *Functions*.  
 ::: 
 

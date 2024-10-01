@@ -31,8 +31,8 @@ This GitHub page is receiving updates for the 2024-2025 academic year. The conte
 This year's version features the following **major** updates:
 
 - Second full rewrite of the workbook using `Quarto`.
-- Fully updated geodemographics content based on the [London Output Area Classification](https://doi.org/10.1177/23998083241242913).
-- Updated transport network analysis content.
+- Fully updated geodemographics content drawing on the [London Output Area Classification](https://doi.org/10.1177/23998083241242913).
+- Updated transport network analysis content using [Overture Point of Interest data](https://journals.sagepub.com/doi/full/10.1177/23998083241263124).
 :::
 
 ## Acknowledgements {.unnumbered}

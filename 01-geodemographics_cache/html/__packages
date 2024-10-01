@@ -10,3 +10,6 @@ forcats
 lubridate
 tmap
 janitor
+ggcorrplot
+cluster
+factoextra
