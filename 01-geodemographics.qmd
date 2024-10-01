@@ -15,7 +15,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 - Singleton, A. and Spielman, S. 2014. The past, present, and future of geodemographic research in the United States and United Kingdom. *The Professional Geographer* 66(4): 558-567. [\[Link\]](https://doi.org/10.1080/00330124.2013.848764)
 
 ## London Output Area Classification
-Today, we will create our own geodemographic classification to examine demographic clusters across London. Specifically, we will focus on age group, self-identified ethnicity, and country of birth. Additionally, we will include data on an individual’s first or preferred language. The data represent all usual residents as recorded in the 2021 Census for England and Wales, and have been extracted using the [Custom Dataset Tool](https://www.ons.gov.uk/datasets/create). 
+Today, we will create our own geodemographic classification to examine demographic clusters across London. Specifically, we will focus on age group, self-identified ethnicity, and country of birth. Additionally, we will include data on an individual’s first or preferred language. The data represent all usual residents as recorded in the 2021 Census for England and Wales, and have been extracted using the [Custom Dataset Tool](https://www.ons.gov.uk/datasets/create). A copy of the 2021 London LSOAs is also available. 
 
 You can download copies of each file via the links below. Save these files in your project folder under `data`.
 
@@ -25,6 +25,7 @@ You can download copies of each file via the links below. Save these files in yo
 | London LSOA Census 2021 Country of Birth    | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/London-LSOA-Country-of-Birth.csv) |
 | London LSOA Census 2021 Ethnicity           | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/London-LSOA-Ethnicity.csv) |
 | London LSOA Census 2021 Main Language       | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/London-LSOA-MainLanguage.csv) |
+| London LSOA 2021 | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/London-LSOA-2021.gpkg) |
 
 ::: {.callout-note}
 To download a `csv` file that is hosted on GitHub, click on the `Download raw file` button on the top right of your screen and it should download directly to your computer.
@@ -55,6 +56,7 @@ library(janitor)
 library(ggcorrplot)
 library(cluster)
 library(factoextra)
+library(sf)
 library(tmap)
 ```
 
@@ -328,7 +330,7 @@ names(lsoa_df)
 
 # change dataframe names to index to improve visualisation
 lsoa_df_vis <- lsoa_df
-names(lsoa_df_vis)[2:37] <- paste0('v', as.character(1:36))
+names(lsoa_df_vis)[2:37] <- paste0('v', sprintf('%02d', 1:36))
 
 # correlation matrix
 cor_mat <- cor_pmat(lsoa_df_vis[,-1])
@@ -448,10 +450,10 @@ These comparisons can then be visualised using, for instance, a radial bar plot:
 #| filename: "R code"
 # to long
 cluster_diffs_long <- cluster_diffs |>
-  pivot_longer(!cluster, names_to = 'vars', values_to = 'score')
+  pivot_longer(!cluster, names_to = 'vars', values_to = 'score') 
 
 # facet clusters
-ggplot(cluster_diffs_long, aes(x = vars, y = score)) +
+ggplot(cluster_diffs_long, aes(x = factor(vars), y = score)) +
   geom_bar(stat = 'identity') +
   coord_radial(rotate.angle = TRUE, expand = FALSE) +
   facet_wrap(~ cluster, ncol = 3) +
@@ -462,21 +464,35 @@ ggplot(cluster_diffs_long, aes(x = vars, y = score)) +
 
 These plots can serve as a foundation for creating pen portraits by closely examining which variables drive each cluster. Of course, we can also map the results:
 
-```{r}
+```{r tidy='styler'} 
 #| label: fig-01-cluster-map
-#| fig-cap: Classification of London LSOAs based on several demographic variables..
+#| fig-cap: Classification of London LSOAs based on several demographic variables.
 #| classes: styled-output
 #| echo: True
 #| eval: True
-#| tidy: True
 #| filename: "R code"
 # read spatial dataset
+lsoa21 <- st_read('data/London-LSOA-2021.gpkg')
 
 # join
+lsoa21 <- cbind(lsoa21, cluster = lsoa_clus$cluster)
 
-
-# map clusters
-
+# shape, polygon
+tm_shape(lsoa21) +
+  # specify column, classes
+  tm_polygons(
+    col = 'cluster',
+    palette = c('#feebe2', '#fbb4b9', '#f768a1', '#c51b8a', '#7a0177'),
+    border.col = '#ffffff',
+    border.alpha = 0.1,
+    title = 'Cluster number'
+  ) +
+   # set layout
+  tm_layout(
+    legend.outside = FALSE,
+    legend.position = c('right', 'bottom'),
+    frame = FALSE
+  )
 ```
 
 ## Assignment 
