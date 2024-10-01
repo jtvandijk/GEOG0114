@@ -198,7 +198,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#variable-preparation" id="toc-variable-preparation" class="nav-link" data-scroll-target="#variable-preparation">Variable preparation</a></li>
   <li><a href="#variable-selection" id="toc-variable-selection" class="nav-link" data-scroll-target="#variable-selection">Variable selection</a></li>
   <li><a href="#variable-standardisation" id="toc-variable-standardisation" class="nav-link" data-scroll-target="#variable-standardisation">Variable standardisation</a></li>
-  <li><a href="#selecting-the-number-of-k" id="toc-selecting-the-number-of-k" class="nav-link" data-scroll-target="#selecting-the-number-of-k">Selecting the number of <span class="math inline">\(k\)</span></a></li>
+  <li><a href="#selecting-the-number-of-clusters" id="toc-selecting-the-number-of-clusters" class="nav-link" data-scroll-target="#selecting-the-number-of-clusters">Selecting the number of clusters</a></li>
+  <li><a href="#k-means-clustering" id="toc-k-means-clustering" class="nav-link" data-scroll-target="#k-means-clustering"><span class="math inline">\(k\)</span>-means clustering</a></li>
+  <li><a href="#visualising-clusters" id="toc-visualising-clusters" class="nav-link" data-scroll-target="#visualising-clusters">Visualising clusters</a></li>
   </ul></li>
   <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment">Assignment</a></li>
   <li><a href="#byl-geo" id="toc-byl-geo" class="nav-link" data-scroll-target="#byl-geo">Before you leave</a></li>
@@ -313,7 +315,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><strong>R code</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load age data</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>lsoa_age <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'data/London-LSOA-AgeGroup.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>lsoa_age <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/London-LSOA-AgeGroup.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 24970 Columns: 5
@@ -326,7 +328,7 @@ dbl (2): Age (5 categories) Code, Observation
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load country of birth data</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>lsoa_cob <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'data/London-LSOA-Country-of-Birth.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>lsoa_cob <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/London-LSOA-Country-of-Birth.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 39952 Columns: 5
 ── Column specification ────────────────────────────────────────────────────────
@@ -338,7 +340,7 @@ dbl (2): Country of birth (8 categories) Code, Observation
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load ethnicity data</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>lsoa_eth <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'data/London-LSOA-Ethnicity.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>lsoa_eth <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/London-LSOA-Ethnicity.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 99880 Columns: 5
 ── Column specification ────────────────────────────────────────────────────────
@@ -350,7 +352,7 @@ dbl (2): Ethnic group (20 categories) Code, Observation
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load language data</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>lsoa_lan <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'data/London-LSOA-MainLanguage.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>lsoa_lan <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/London-LSOA-MainLanguage.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 54934 Columns: 5
 ── Column specification ────────────────────────────────────────────────────────
@@ -475,19 +477,18 @@ dbl (2): Main language (11 categories) Code, Observation
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># clean names </span></span>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># clean names</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>lsoa_age <span class="ot">&lt;-</span> lsoa_age <span class="sc">|&gt;</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">clean_names</span>()</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># pivot</span></span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>lsoa_age <span class="ot">&lt;-</span> lsoa_age <span class="sc">|&gt;</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="st">'lower_layer_super_output_areas_code'</span>,</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> <span class="st">'age_5_categories'</span>,</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> <span class="st">'observation'</span>) </span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co"># clean names</span></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>lsoa_age <span class="ot">&lt;-</span> lsoa_age <span class="sc">|&gt;</span></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="st">"lower_layer_super_output_areas_code"</span>, <span class="at">names_from =</span> <span class="st">"age_5_categories"</span>,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_from =</span> <span class="st">"observation"</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co"># clean names</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>lsoa_age <span class="ot">&lt;-</span> lsoa_age <span class="sc">|&gt;</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note">
@@ -511,7 +512,7 @@ dbl (2): Main language (11 categories) Code, Observation
 </div>
 </div>
 <p>To account for the non-uniformity of the areal units, we further need to convert the observations to percentages and only retain those columns that are likely to be meaningful in the context of the classification:</p>
-<div class="cell styled-output" data-hash="01-geodemographics_cache/html/01-prop-data-age_479834a7cbc4269c1f60ceee753c11a6">
+<div class="cell styled-output" data-hash="01-geodemographics_cache/html/01-prop-data-age_ea04dedcc704d010aa3991b1ee224a0a">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -574,33 +575,31 @@ dbl (2): Main language (11 categories) Code, Observation
 </div>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare ethnicity data</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>lsoa_eth <span class="ot">&lt;-</span> lsoa_eth <span class="sc">|&gt;</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="st">'lower_layer_super_output_areas_code'</span>,</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> <span class="st">'ethnic_group_20_categories'</span>,</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> <span class="st">'observation'</span>) <span class="sc">|&gt;</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co"># proportions, select columns</span></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>lsoa_eth <span class="ot">&lt;-</span> lsoa_eth <span class="sc">|&gt;</span></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">eth_pop =</span> <span class="fu">sum</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">21</span>))) <span class="sc">|&gt;</span></span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">21</span>, <span class="sc">~</span> . <span class="sc">/</span> eth_pop )) <span class="sc">|&gt;</span></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="sc">-</span><span class="dv">22</span>)</span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare language data</span></span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>lsoa_lan <span class="ot">&lt;-</span> lsoa_lan <span class="sc">|&gt;</span></span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
-<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="st">'lower_layer_super_output_areas_code'</span>,</span>
-<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> <span class="st">'main_language_11_categories'</span>,</span>
-<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> <span class="st">'observation'</span>) <span class="sc">|&gt;</span></span>
-<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
-<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a><span class="co"># proportions, select columns</span></span>
-<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>lsoa_lan <span class="ot">&lt;-</span> lsoa_lan <span class="sc">|&gt;</span></span>
-<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span></span>
-<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lan_pop =</span> <span class="fu">sum</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">12</span>))) <span class="sc">|&gt;</span></span>
-<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">12</span>, <span class="sc">~</span> . <span class="sc">/</span> lan_pop )) <span class="sc">|&gt;</span></span>
-<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="sc">-</span><span class="dv">11</span>,<span class="sc">-</span><span class="dv">13</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="st">"lower_layer_super_output_areas_code"</span>, <span class="at">names_from =</span> <span class="st">"ethnic_group_20_categories"</span>,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_from =</span> <span class="st">"observation"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">clean_names</span>()</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co"># proportions, select columns</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>lsoa_eth <span class="ot">&lt;-</span> lsoa_eth <span class="sc">|&gt;</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rowwise</span>() <span class="sc">|&gt;</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">eth_pop =</span> <span class="fu">sum</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">21</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">21</span>, <span class="sc">~</span>.<span class="sc">/</span>eth_pop)) <span class="sc">|&gt;</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">22</span>)</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare language data</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>lsoa_lan <span class="ot">&lt;-</span> lsoa_lan <span class="sc">|&gt;</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="st">"lower_layer_super_output_areas_code"</span>, <span class="at">names_from =</span> <span class="st">"main_language_11_categories"</span>,</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_from =</span> <span class="st">"observation"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">clean_names</span>()</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a><span class="co"># proportions, select columns</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>lsoa_lan <span class="ot">&lt;-</span> lsoa_lan <span class="sc">|&gt;</span></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rowwise</span>() <span class="sc">|&gt;</span></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">lan_pop =</span> <span class="fu">sum</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">12</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">12</span>, <span class="sc">~</span>.<span class="sc">/</span>lan_pop)) <span class="sc">|&gt;</span></span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">11</span>, <span class="sc">-</span><span class="dv">13</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p>We now have four separate datasets, each containing the proportions of usual residents classified into different groups based on age, ethnicity, language, and country of birth.</p>
@@ -629,7 +628,7 @@ dbl (2): Main language (11 categories) Code, Observation
 </div>
 </div>
 </div>
-<div class="cell styled-output" data-hash="01-geodemographics_cache/html/fig-01-boxplot-data_a247a03b2e8a00e37ad550134901bbd0">
+<div class="cell styled-output" data-hash="01-geodemographics_cache/html/fig-01-boxplot-data_4f8b7396b6d6b70cd568972e6a85363e">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -640,7 +639,7 @@ dbl (2): Main language (11 categories) Code, Observation
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># facet age</span></span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(lsoa_age_wd, <span class="fu">aes</span>(<span class="at">y =</span> value)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
 <div id="fig-01-boxplot-data" class="quarto-figure quarto-figure-center anchored">
@@ -731,15 +730,15 @@ dbl (2): Main language (11 categories) Code, Observation
 [24] "mixed_or_multiple_ethnic_groups_white_and_black_caribbean"            
 [25] "mixed_or_multiple_ethnic_groups_other_mixed_or_multiple_ethnic_groups"
 [26] "white_english_welsh_scottish_northern_irish_or_british"               
-[27] "white_gypsy_or_irish_traveller"                                       
+[27] "white_irish"                                                          
 [28] "white_roma"                                                           
 [29] "white_other_white"                                                    
 [30] "other_ethnic_group_arab"                                              
 [31] "other_ethnic_group_any_other_ethnic_group"                            
-[32] "any_other_uk_languages"                                               
+[32] "english_or_welsh"                                                     
 [33] "european_languages_eu"                                                
 [34] "other_european_languages_non_eu"                                      
-[35] "north_or_south_american_languages"                                    
+[35] "asian_languages"                                                      
 [36] "african_languages"                                                    
 [37] "any_other_languages"                                                  </code></pre>
 </div>
@@ -781,16 +780,16 @@ dbl (2): Main language (11 categories) Code, Observation
 </div>
 </div>
 </section>
-<section id="selecting-the-number-of-k" class="level3">
-<h3 class="anchored" data-anchor-id="selecting-the-number-of-k">Selecting the number of <span class="math inline">\(k\)</span></h3>
+<section id="selecting-the-number-of-clusters" class="level3">
+<h3 class="anchored" data-anchor-id="selecting-the-number-of-clusters">Selecting the number of clusters</h3>
 <p>Now our data are prepared we will start by creating an elbow plot. The <a href="https://en.wikipedia.org/wiki/Elbow_method_(clustering)#:~:text=In%20cluster%20analysis%2C%20the%20elbow,number%20of%20clusters%20to%20use%60">elbow method</a> is a visual tool that helps determine the optimal number of clusters in a dataset. This is important because with <span class="math inline">\(k\)</span>-means clustering you need to specify the numbers of clusters <em>a priori</em>. The elbow method plots the total explained variation, known as ‘Within Sum of Squares’, against the number of clusters. The key idea is to identify the ‘elbow’ point on the curve, where the rate of decrease in explained variation starts to slow down. This point indicates that adding more clusters yields diminishing returns in terms of explained variation.</p>
-<div class="cell styled-output" data-hash="01-geodemographics_cache/html/fig-01-elbow-plot_04fae90f4db6d7e5f1bf539c0f6981cb">
+<div class="cell styled-output" data-hash="01-geodemographics_cache/html/fig-01-elbow-plot_66debbdf88f68e3fcc4ba6d2598ed0a0">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># elbow plot</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_nbclust</span>(lsoa_df_vis[, <span class="sc">-</span><span class="dv">1</span>], kmeans, <span class="at">nstart =</span> <span class="dv">25</span>, <span class="at">iter.max =</span> <span class="dv">200</span>, <span class="at">method =</span> <span class="st">"wss"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_nbclust</span>(lsoa_df_vis[, <span class="sc">-</span><span class="dv">1</span>], kmeans, <span class="at">nstart =</span> <span class="dv">100</span>, <span class="at">iter.max =</span> <span class="dv">100</span>, <span class="at">method =</span> <span class="st">"wss"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
 <div id="fig-01-elbow-plot" class="quarto-figure quarto-figure-center anchored">
@@ -813,30 +812,131 @@ dbl (2): Main language (11 categories) Code, Observation
 </div>
 </div>
 </section>
+<section id="k-means-clustering" class="level3">
+<h3 class="anchored" data-anchor-id="k-means-clustering"><span class="math inline">\(k\)</span>-means clustering</h3>
+<p>Now we have decided on the number of clusters, we can run our <span class="math inline">\(k\)</span>-means analysis.</p>
+<div class="cell styled-output" data-hash="01-geodemographics_cache/html/01-run-kmeans_0494b16746f87c5989a4605badca32cc">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set seed for reproducibility</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">999</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># k-means</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>lsoa_clus <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(lsoa_df_vis[, <span class="sc">-</span><span class="dv">1</span>], <span class="at">centers =</span> <span class="dv">6</span>, <span class="at">nstart =</span> <span class="dv">100</span>, <span class="at">iter.max =</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>We can inspect the object to get some information about our clusters:</p>
+<div class="cell styled-output" data-hash="01-geodemographics_cache/html/01-inspect-kmeans_d7faf17932314d632244be19762e6f94">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>lsoa_clus</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>K-means clustering with 6 clusters of sizes 796, 1097, 771, 1011, 851, 468
+
+Cluster means:
+         v1        v2        v3        v4        v5        v6        v7
+1 0.4816225 0.1632210 0.2425566 0.4838983 0.4169123 0.5410477 0.1337158
+         v8        v9       v10        v11        v12        v13        v14
+1 0.3007540 0.2480613 0.2859754 0.08913663 0.05177222 0.14603013 0.06993627
+         v15        v16        v17        v18        v19        v20        v21
+1 0.12176548 0.10935022 0.20109979 0.18150482 0.11605092 0.12757934 0.09288236
+         v22        v23       v24       v25       v26        v27       v28
+1 0.07473711 0.14662903 0.1842217 0.3522638 0.1490577 0.02997040 0.2423784
+         v29       v30       v31       v32        v33        v34        v35
+1 0.07148504 0.2193009 0.5870244 0.2411272 0.07541661 0.23467242 0.10174187
+         v36
+1 0.10216507
+ [ reached getOption("max.print") -- omitted 5 rows ]
+
+Clustering vector:
+ [1] 4 4 4 1 1 5 5 6 6 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 5 1 1 2 2 1 1 2 2 2 1 1 1
+[39] 1 1 1 1 5 1 5 1 1 1 1 1
+ [ reached getOption("max.print") -- omitted 4944 entries ]
+
+Within cluster sum of squares by cluster:
+[1] 259.0272 177.7951 288.8625 232.7770 298.9145 160.1702
+ (between_SS / total_SS =  48.5 %)
+
+Available components:
+
+[1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"
+[6] "betweenss"    "size"         "iter"         "ifault"      </code></pre>
+</div>
+</div>
+</section>
+<section id="visualising-clusters" class="level3">
+<h3 class="anchored" data-anchor-id="visualising-clusters">Visualising clusters</h3>
+<p>We now need to perform some post-processing to extract useful summary data for each cluster. To characterise the clusters, we can compare the global mean values of each variable with the corresponding cluster mean values.</p>
+<div class="cell styled-output" data-hash="01-geodemographics_cache/html/01-cluster-comparision_c3fe2edc952ab24a7aad51e6f0bce0eb">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># global means</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>glob_means <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(lsoa_df_vis[, <span class="sc">-</span><span class="dv">1</span>])</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># add clusters to input data</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>lsoa_df_vis <span class="ot">&lt;-</span> <span class="fu">cbind</span>(lsoa_df_vis, <span class="at">cluster =</span> lsoa_clus<span class="sc">$</span>cluster)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co"># cluster means</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>cluster_means <span class="ot">&lt;-</span> lsoa_df_vis <span class="sc">|&gt;</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(cluster) <span class="sc">|&gt;</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">37</span>, mean))</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="co"># difference</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>cluster_diffs <span class="ot">&lt;-</span> cluster_means <span class="sc">|&gt;</span></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">37</span>, <span class="sc">~</span>. <span class="sc">-</span> glob_means[<span class="fu">cur_column</span>()]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>These comparisons can then be visualised using, for instance, a radial bar plot:</p>
+<div class="cell styled-output" data-hash="01-geodemographics_cache/html/fig-01-radial-plot_2b2e46a8c3d3b4fdcbb9608e49a9f6b9">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to long</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>cluster_diffs_long <span class="ot">&lt;-</span> cluster_diffs <span class="sc">|&gt;</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="sc">!</span>cluster, <span class="at">names_to =</span> <span class="st">"vars"</span>, <span class="at">values_to =</span> <span class="st">"score"</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co"># facet clusters</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cluster_diffs_long, <span class="fu">aes</span>(<span class="at">x =</span> vars, <span class="at">y =</span> score)) <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_radial</span>(<span class="at">rotate.angle =</span> <span class="cn">TRUE</span>, <span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>cluster, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-01-radial-plot" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-geodemographics_files/figure-html/fig-01-radial-plot-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;4: Radial barplots of cluster means for each input variable.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>These plots can serve as a foundation for creating pen portraits by closely examining which variables drive each cluster. Of course, we can also map the results:</p>
+<div class="cell styled-output" data-hash="01-geodemographics_cache/html/fig-01-cluster-map_ab8788dbb287f396802d445308ead3f4">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read spatial dataset</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># join</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="co"># map clusters</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
 </section>
 <section id="assignment" class="level2">
 <h2 class="anchored" data-anchor-id="assignment">Assignment</h2>
-<p>The creation of a geodemographic classification is an iterative process. This typically includes adding or removing variables, adjusting the number of clusters, and grouping data in different ways to achieve the most meaningful segmentation. If you want to refine your clustering solution, you can re-run the analysis with different variables or cluster numbers by simply updating your code. However, automating parts of this process with a <a href="https://en.wikipedia.org/wiki/Function_(computer_programming)">function</a> would streamline the workflow and make it more efficient.</p>
-<p>Try to create a simple <em>R function</em> that:</p>
-<ol type="1">
-<li>Takes at least three arguments: a data frame containing the input data, the number of clusters you want, and a list of input variables.</li>
-<li>Executes a k-means clustering on the specified input variables and number of clusters.</li>
-<li>Generates a <code>csv</code> file that contains a table of means for each cluster in the solution.</li>
-</ol>
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<ol type="1">
-<li>Your function could be structured like this: <code>run_kmeans(df, k, vars)</code>, where <code>df</code> is your input dataframe, <code>k</code> is the number of clusters, and <code>vars</code> is a list of input variables.</li>
-<li>For a more in-depth discussion on constructing functions in R, refer to Hadley Wickham’s <a href="https://r4ds.hadley.nz/functions.html">R for Data Science</a> Chapter on <em>Functions</em>.<br>
-</li>
-</ol>
-</div>
-</div>
-</div>
+<p>The creation of a geodemographic classification is an iterative process. This typically includes adding or removing variables, adjusting the number of clusters, and grouping data in different ways to achieve the most meaningful segmentation.</p>
 </section>
 <section id="byl-geo" class="level2">
 <h2 class="anchored" data-anchor-id="byl-geo">Before you leave</h2>

@@ -8,8 +8,8 @@ dplyr
 stringr
 forcats
 lubridate
-tmap
 janitor
 ggcorrplot
 cluster
 factoextra
+tmap
