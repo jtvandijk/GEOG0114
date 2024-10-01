@@ -440,10 +440,9 @@ cluster_diffs <- cluster_means |>
 
 These comparisons can then be visualised using, for instance, a radial bar plot:
 
-```{r}
+```{r tidy='styler'} 
 #| label: fig-01-radial-plot
 #| fig-cap: Radial barplots of cluster means for each input variable.
-#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
