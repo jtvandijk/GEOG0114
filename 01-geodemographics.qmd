@@ -76,6 +76,7 @@ Next, we can load the individual `csv` files that we downloaded into R.
 #| echo: True
 #| eval: True
 #| tidy: True
+#| cache: True
 #| filename: "R code"
 # load age data
 lsoa_age <- read_csv('data/London-LSOA-AgeGroup.csv')
@@ -331,6 +332,7 @@ We can subsequently check for multicollinearity of the remaining variables. The 
 #| echo: True
 #| eval: True
 #| tidy: True
+#| cache: True
 #| filename: "R code"
 # inspect variable names 
 names(lsoa_df)
@@ -377,6 +379,7 @@ Now our data are prepared we will start by creating an elbow plot. The [elbow me
 #| echo: True
 #| eval: True
 #| tidy: True
+#| cache: True
 #| filename: "R code"
 # elbow plot
 fviz_nbclust(lsoa_df_vis[,-1], kmeans, nstart = 100, iter.max = 100, method = 'wss') 
@@ -385,7 +388,7 @@ fviz_nbclust(lsoa_df_vis[,-1], kmeans, nstart = 100, iter.max = 100, method = 'w
 Based on the elbow plot, we can now choose the number of clusters and it looks like **6** clusters would be a reasonable choice.
 
 ::: {.callout-note}
-The interpretation of an elbow plot can be quite subjective, and multiple options for the optimal number of clusters might be justified; for instance, 4, 5, or even 7 clusters could be reasonable choices. In addition to the elbow method, other techniques can aid in determining the optimal number of clusters, such as [silhouette scores](https://en.wikipedia.org/wiki/Silhouette_(clustering)) and the [gap statistic](https://en.wikipedia.org/wiki/Determining_the_number_of_clusters_in_a_data_set#The_gap_statistics). An alternative and helful approach is to use a [clustergram](https://clustergram.readthedocs.io/en/stable/notebooks/introduction.html), which is a two-dimensional plot that visualises the flows of observations between clusters as more clusters are added. This method illustrates how your data reshuffles with each additional cluster and provides insights into the quality of the splits. This method can be done in R, but currently easier to implement in Python. 
+The interpretation of an elbow plot can be quite subjective, and multiple options for the optimal number of clusters might be justified; for instance, 4, 5, or even 7 clusters could be reasonable choices. In addition to the elbow method, other techniques can aid in determining the optimal number of clusters, such as [silhouette scores](https://en.wikipedia.org/wiki/Silhouette_(clustering)) and the [gap statistic](https://en.wikipedia.org/wiki/Determining_the_number_of_clusters_in_a_data_set#The_gap_statistics). An alternative and helful approach is to use a [clustergram](https://clustergram.readthedocs.io/en/stable/notebooks/introduction.html), which is a two-dimensional plot that visualises the flows of observations between clusters as more clusters are added. This method illustrates how your data reshuffles with each additional cluster and provides insights into the quality of the splits. This method can be done in R, but currently easier to implement in Python.
 :::
 
 ### $k$-means clustering 
@@ -397,6 +400,7 @@ Now we have decided on the number of clusters, we can run our $k$-means analysis
 #| echo: True
 #| eval: True
 #| tidy: True
+#| cache: True
 #| filename: "R code"
 # set seed for reproducibility
 set.seed(999)

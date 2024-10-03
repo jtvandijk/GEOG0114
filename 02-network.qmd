@@ -149,7 +149,8 @@ lambeth <- borough |>
   filter(name == 'Lambeth')
 
 poi_schools <- poi_schools |>
-  st_intersection(lambeth)
+  st_intersection(lambeth) |>
+  select(1:13)
 
 # inspect
 poi_schools
