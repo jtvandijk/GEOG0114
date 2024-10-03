@@ -16,7 +16,9 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 ## Accessibility in Lambeth
 This week, we will analyse the accessibility of fast-food outlets in the London Borough of Lambeth. Specifically, we will examine how closely these outlets are situated near primary and secondary schools and investigate any potential relationships between their proximity and the relative levels of deprivation in the area.
 
-We will extract the points of interest that we will use for this analysis from the [Point of Interest (POI) data for the United Kingdom](https://journals.sagepub.com/doi/10.1177/23998083241263124), obtained from the [Overture Maps Foundation](https://overturemaps.org/) and pre-processed by the [Consumer Data Research Centre](https://data.cdrc.ac.uk/dataset/point-interest-data-united-kingdom#data-and-resources) to provide users with easy access. You can download a subset of the POI dataset via the link provided below. A copy of the 2021 London LSOAs spatial boundaries, the boundaries of the London Boroughs, and the 2019 English [Index of Multiple Deprivation](https://www.gov.uk/government/statistics/english-indices-of-deprivation-2019). Save these files in your project folder under `data`.
+We will extract the points of interest that we will use for this analysis from the [Point of Interest (POI) data for the United Kingdom](https://journals.sagepub.com/doi/10.1177/23998083241263124), obtained from the [Overture Maps Foundation](https://overturemaps.org/) and pre-processed by the [Consumer Data Research Centre](https://data.cdrc.ac.uk/dataset/point-interest-data-united-kingdom#data-and-resources) to provide users with easy access.
+
+You can download a subset of the POI dataset via the link provided below. A copy of the 2021 London LSOAs spatial boundaries, the boundaries of the London Boroughs, and the 2019 English [Index of Multiple Deprivation](https://www.gov.uk/government/statistics/english-indices-of-deprivation-2019). Save these files in your project folder under `data`.
 
 | File                                        | Type   | Link |
 | :------                                     | :------| :------ |
@@ -159,7 +161,7 @@ poi_schools
 This is still a rather long list and likely inaccurate. According to [Lambeth Council Education Statistics](https://www.lambeth.gov.uk/sites/default/files/2024-07/Education_Statistics_2023-24.pdf), there should be 80 primary and secondary schools across the borough. We can use the `alternate_category` column to further narrow down our results.
 
 ::: {.callout-note}
-You can inspect the different tags and their frequencies easily by creating a frequency table: `table(poi_schools$alternate_category)`. You can inspect these results using the `View()` function.
+You can inspect the different tags and their frequencies easily by creating a frequency table: `table(poi_schools$alternate_category)`.
 :::
 
 ```{r}
@@ -182,7 +184,7 @@ poi_schools <- poi_schools |>
 poi_schools
 ```
 
-Since the POI dataset is compiled from various open sources, the data quality is not guaranteed. Some schools may be missing, while others could be duplicated, perhaps under slightly different names or because different buildings have been assigned separate point locations. However, it is unlikely that more than one school would share the same postcode. Therefore, we will use postcode information (where available) to finalise our school selection and resolve any duplicates.
+Since the POI dataset is compiled from various open sources, the data quality is not guaranteed. Some schools may be missing, while others could be duplicated, perhaps under slightly different names or because different buildings have been assigned separate point locations. However, it is unlikely that more than one school would share the same postcode. Therefore, we will use postcode information (where available) to finalise our school selection and remove any likely duplicates.
 
 ```{r}
 #| label: 08-school-data-filter3
@@ -207,7 +209,7 @@ poi_schools <- poi_schools |>
 poi_schools
 ```
 
-Although we now have fewer schools than expected, either due to overly restrictive filtering of tags or because some school locations are not recorded in the dataset, we will proceed with the current data.
+Although we now have fewer schools than we had expected, either due to overly restrictive filtering of tags or because some school locations are not recorded in the dataset, we will proceed with the current data.
 
 ::: {.callout-warning}
 Variable preparation can be a time-consuming process that often necessitates a more extensive exploratory analysis to ensure sufficient data quality. This may involve sourcing additional data to supplement your existing dataset.
@@ -277,5 +279,39 @@ tm_shape(poi_lambeth) +
 ```
 
 ### Network data
+In addition to the locations of interest, we need network data to assess the accessibility of schools in relation to fast food outlets. We will use [OpenStreetMap](https://www.openstreetmap.org/#map=6/54.91/-3.43) to extract road segment data. Similar to the POI dataset, OSM uses `key` and `value` tags to categorise the features within its dataset.
+
+::: {.callout-note}
+OpenStreetMap (OSM) is a free, editable map of the world, but its coverage is uneven globally. However, the accuracy and quality of the data can at times be questionable, with details such as road types and speed limits missing. The [OpenStreetMap Wiki](https://wiki.openstreetmap.org/wiki/Tags) provides more details on the tagging system.
+:::
+
+To download the Lambeth road network dataset, we first need to define our bounding box coordinates. We will then use these coordinates in our OSM query to extract specific types of road segments within the defined search area. Our focus will be on selecting all OSM features with the `highway` tag that are likely to be used by pedestrians (e.g. excluding `motorways`).
+
+```{r} 
+#| label: 08-network-data
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| warning: False
+#| cache: True
+#| filename: "R code"
+
+# define our bbox coordinates, use WGS84
+bbox_lambeth <- poi24 |>
+  st_transform(4326) |>
+  st_bbox()
+  
+# osm query
+osm_network <- opq(bbox = bbox_lambeth ) |>
+  add_osm_feature(
+    key = 'highway', 
+    value = c('primary', 'secondary', 'tertiary', 'residential', 'path', 'footway', 'unclassified', 'living_street', 'pedestrian')) |> 
+  osmdata_sf()
+```
+
+::: {.callout-warning}
+In some cases, the OSM query may return an error, particularly when multiple users from the same location are executing the exact same query. If so, you can download a prepared copy of the data here: [[Download]](https://github.com/jtvandijk/GEOG0114/raw/master/data/London-OSM-Roads.RData). You can load this copy into R through `load('data/London-OSM-Roads.RData')`
+:::
 
 

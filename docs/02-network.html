@@ -231,7 +231,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="accessibility-in-lambeth" class="level2">
 <h2 class="anchored" data-anchor-id="accessibility-in-lambeth">Accessibility in Lambeth</h2>
 <p>This week, we will analyse the accessibility of fast-food outlets in the London Borough of Lambeth. Specifically, we will examine how closely these outlets are situated near primary and secondary schools and investigate any potential relationships between their proximity and the relative levels of deprivation in the area.</p>
-<p>We will extract the points of interest that we will use for this analysis from the <a href="https://journals.sagepub.com/doi/10.1177/23998083241263124">Point of Interest (POI) data for the United Kingdom</a>, obtained from the <a href="https://overturemaps.org/">Overture Maps Foundation</a> and pre-processed by the <a href="https://data.cdrc.ac.uk/dataset/point-interest-data-united-kingdom#data-and-resources">Consumer Data Research Centre</a> to provide users with easy access. You can download a subset of the POI dataset via the link provided below. A copy of the 2021 London LSOAs spatial boundaries, the boundaries of the London Boroughs, and the 2019 English <a href="https://www.gov.uk/government/statistics/english-indices-of-deprivation-2019">Index of Multiple Deprivation</a>. Save these files in your project folder under <code>data</code>.</p>
+<p>We will extract the points of interest that we will use for this analysis from the <a href="https://journals.sagepub.com/doi/10.1177/23998083241263124">Point of Interest (POI) data for the United Kingdom</a>, obtained from the <a href="https://overturemaps.org/">Overture Maps Foundation</a> and pre-processed by the <a href="https://data.cdrc.ac.uk/dataset/point-interest-data-united-kingdom#data-and-resources">Consumer Data Research Centre</a> to provide users with easy access.</p>
+<p>You can download a subset of the POI dataset via the link provided below. A copy of the 2021 London LSOAs spatial boundaries, the boundaries of the London Boroughs, and the 2019 English <a href="https://www.gov.uk/government/statistics/english-indices-of-deprivation-2019">Index of Multiple Deprivation</a>. Save these files in your project folder under <code>data</code>.</p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -526,7 +527,7 @@ First 10 features:
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>You can inspect the different tags and their frequencies easily by creating a frequency table: <code>table(poi_schools$alternate_category)</code>. You can inspect these results using the <code>View()</code> function.</p>
+<p>You can inspect the different tags and their frequencies easily by creating a frequency table: <code>table(poi_schools$alternate_category)</code>.</p>
 </div>
 </div>
 </div>
@@ -574,7 +575,7 @@ First 10 features:
  [ reached 'max' / getOption("max.print") -- omitted 6 rows ]</code></pre>
 </div>
 </div>
-<p>Since the POI dataset is compiled from various open sources, the data quality is not guaranteed. Some schools may be missing, while others could be duplicated, perhaps under slightly different names or because different buildings have been assigned separate point locations. However, it is unlikely that more than one school would share the same postcode. Therefore, we will use postcode information (where available) to finalise our school selection and resolve any duplicates.</p>
+<p>Since the POI dataset is compiled from various open sources, the data quality is not guaranteed. Some schools may be missing, while others could be duplicated, perhaps under slightly different names or because different buildings have been assigned separate point locations. However, it is unlikely that more than one school would share the same postcode. Therefore, we will use postcode information (where available) to finalise our school selection and remove any likely duplicates.</p>
 <div class="cell styled-output" data-hash="02-network_cache/html/08-school-data-filter3_a523b8e64f2e5c8d1dfd744aaef945a8">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -618,7 +619,7 @@ Projected CRS: OSGB36 / British National Grid
 #   source_record_id &lt;chr&gt;, geom &lt;POINT [m]&gt;</code></pre>
 </div>
 </div>
-<p>Although we now have fewer schools than expected, either due to overly restrictive filtering of tags or because some school locations are not recorded in the dataset, we will proceed with the current data.</p>
+<p>Although we now have fewer schools than we had expected, either due to overly restrictive filtering of tags or because some school locations are not recorded in the dataset, we will proceed with the current data.</p>
 <div class="callout callout-style-simple callout-warning">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -725,6 +726,45 @@ First 10 features:
 </section>
 <section id="network-data" class="level3">
 <h3 class="anchored" data-anchor-id="network-data">Network data</h3>
+<p>In addition to the locations of interest, we need network data to assess the accessibility of schools in relation to fast food outlets. We will use <a href="https://www.openstreetmap.org/#map=6/54.91/-3.43">OpenStreetMap</a> to extract road segment data. Similar to the POI dataset, OSM uses <code>key</code> and <code>value</code> tags to categorise the features within its dataset.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>OpenStreetMap (OSM) is a free, editable map of the world, but its coverage is uneven globally. However, the accuracy and quality of the data can at times be questionable, with details such as road types and speed limits missing. The <a href="https://wiki.openstreetmap.org/wiki/Tags">OpenStreetMap Wiki</a> provides more details on the tagging system.</p>
+</div>
+</div>
+</div>
+<p>To download the Lambeth road network dataset, we first need to define our bounding box coordinates. We will then use these coordinates in our OSM query to extract specific types of road segments within the defined search area. Our focus will be on selecting all OSM features with the <code>highway</code> tag that are likely to be used by pedestrians (e.g.&nbsp;excluding <code>motorways</code>).</p>
+<div class="cell styled-output" data-hash="02-network_cache/html/08-network-data_f4c28573ae4c3ee9bc0841b1f47b122f">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define our bbox coordinates, use WGS84</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>bbox_lambeth <span class="ot">&lt;-</span> poi24 <span class="sc">|&gt;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_transform</span>(<span class="dv">4326</span>) <span class="sc">|&gt;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_bbox</span>()</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># osm query</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>osm_network <span class="ot">&lt;-</span> <span class="fu">opq</span>(<span class="at">bbox =</span> bbox_lambeth) <span class="sc">|&gt;</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_osm_feature</span>(<span class="at">key =</span> <span class="st">"highway"</span>, <span class="at">value =</span> <span class="fu">c</span>(<span class="st">"primary"</span>, <span class="st">"secondary"</span>, <span class="st">"tertiary"</span>,</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"residential"</span>, <span class="st">"path"</span>, <span class="st">"footway"</span>, <span class="st">"unclassified"</span>, <span class="st">"living_street"</span>, <span class="st">"pedestrian"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">osmdata_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>In some cases, the OSM query may return an error, particularly when multiple users from the same location are executing the exact same query. If so, you can download a prepared copy of the data here: <a href="https://github.com/jtvandijk/GEOG0114/raw/master/data/London-OSM-Roads.RData">[Download]</a>. You can load this copy into R through <code>load('data/London-OSM-Roads.RData')</code></p>
+</div>
+</div>
+</div>
 
 
 </section>
