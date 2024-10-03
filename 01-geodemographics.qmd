@@ -35,7 +35,7 @@ To download a `csv` file that is hosted on GitHub, click on the `Download raw fi
 For the spatial boundaries of the London LSOAs, you may have noticed that, instead of providing a collection of files known as a `shapefile`, we have supplied a `GeoPackage.` While `shapefiles` remain in use, `GeoPackage` is a more modern and portable file format. Have a look at this article on *towardsdatascience.com* for an excellent explanation on why one should use `GeoPackage` files over `shapefiles`, where possible: [[Link]](https://towardsdatascience.com/why-you-need-to-use-geopackage-files-instead-of-shapefile-or-geojson-7cb24fe56416)
 :::
 
-We will start by loading the libraries that we will need:
+Open a new script and save this as `w07-geodemographics.r`. Begin by loading the necessary libraries:
 
 ```{r}
 #| label: 07-options
@@ -491,7 +491,8 @@ lsoa21 <- cbind(lsoa21, cluster = lsoa_clus$cluster)
 
 # shape, polygon
 tm_shape(lsoa21) +
-  # specify column, classes
+  
+  # specify column, colours
   tm_polygons(
     col = 'cluster',
     palette = c('#feebe2', '#fbb4b9', '#f768a1', '#c51b8a', '#7a0177'),
@@ -499,6 +500,7 @@ tm_shape(lsoa21) +
     border.alpha = 0.1,
     title = 'Cluster number'
   ) +
+  
   # set layout
   tm_layout(
     legend.outside = FALSE,

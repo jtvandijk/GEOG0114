@@ -1,5 +1,5 @@
 # Accessibility Analysis
-Accessibility is the ease with which people can reach places and opportunities, such as jobs, public services, and cultural activities. We can utilise transport network data to quantify this and characterise areas based on their accessibility. This week, we will use the `dodgr` R library to measure accessibility by calculating network distances between different locations.
+Accessibility is often described as the ease with which individuals can reach places and opportunities, such as employment, public services, and cultural activities. We can utilise transport network data to quantify accessibility and characterise areas based on their accessibility levels. This week, we will use the `dodgr` R library to measure accessibility between different points of interest by calculating network distances between them.
 
 ## Lecture slides {#lecture-w08}
 You can download the slides of this week's lecture here: [[Link]]({{< var slides.week08 >}}).
@@ -14,16 +14,266 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 - Van Dijk, J. and De Jong, T. 2017. Post-processing GPS-tracks in reconstructing travelled routes in a GIS-environment: network subset selection and attribute adjustment. *Annals of GIS* 23(3): 203-217. [[Link]](https://doi.org/10.1080/19475683.2017.1340340)
 
 ## Accessibility in Lambeth
-This week, we will analyse the accessibility of fast-food outlets in the London Borough of Lambeth. Specifically, we will examine how closely these outlets are situated near schools and investigate any potential relationships between their proximity and the relative levels of deprivation in the area.
+This week, we will analyse the accessibility of fast-food outlets in the London Borough of Lambeth. Specifically, we will examine how closely these outlets are situated near primary and secondary schools and investigate any potential relationships between their proximity and the relative levels of deprivation in the area.
 
-We will extract the points of interest that we will use for this analysis from the [Point of Interest (POI) data for the United Kingdom](https://journals.sagepub.com/doi/10.1177/23998083241263124), obtained from the [Overture Maps Foundation](https://overturemaps.org/) and pre-processed by the [Consumer Data Research Centre](https://data.cdrc.ac.uk/dataset/point-interest-data-united-kingdom#data-and-resources) to provide users with easy access. You can download a subset of the POI dataset via the link provided below. A copy of the 2021 London LSOAs spatial boundaries and the 2019 English [Index of Multiple Deprivation](https://www.gov.uk/government/statistics/english-indices-of-deprivation-2019). Save these files in your project folder under `data`.
+We will extract the points of interest that we will use for this analysis from the [Point of Interest (POI) data for the United Kingdom](https://journals.sagepub.com/doi/10.1177/23998083241263124), obtained from the [Overture Maps Foundation](https://overturemaps.org/) and pre-processed by the [Consumer Data Research Centre](https://data.cdrc.ac.uk/dataset/point-interest-data-united-kingdom#data-and-resources) to provide users with easy access. You can download a subset of the POI dataset via the link provided below. A copy of the 2021 London LSOAs spatial boundaries, the boundaries of the London Boroughs, and the 2019 English [Index of Multiple Deprivation](https://www.gov.uk/government/statistics/english-indices-of-deprivation-2019). Save these files in your project folder under `data`.
 
 | File                                        | Type   | Link |
 | :------                                     | :------| :------ |
 | Lambeth Overture Points of Interest 2024    | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0114/raw/master/data/Lambeth-POI-2024.gpkg) |
 | London LSOA 2021 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0114/raw/master/data/London-LSOA-2021.gpkg) |
+| London Borough Spatial Boundaries             | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0114/raw/master/data/London-Boroughs.gpkg) |
 | England 2019 Index of Multiple Deprivation  | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/England-IMD-2019.csv) |
 
 ::: {.callout-note}
-To extract the Lambeth Overture Points of Interest data, a 2-kilometre buffer around the boundaries of Lambeth was used. This ensures that we also include points that fall just outside the study area, as locations just beyond the borough boundary may still be accessible to residents and could represent the closest options available.
+To extract the Lambeth Overture Points of Interest data, a 2-kilometre buffer was applied around the boundaries of Lambeth. This approach ensures that points just outside the study area are included, as locations beyond the borough boundary may still be accessible to residents and could represent the nearest available options.
 :::
+
+Open a new script and save this as `w07-accessibility.r`. We will start by loading the libraries that we will need:
+
+```{r}
+#| label: 08-options
+#| echo: False
+#| eval: True
+#| output: False
+# max print
+options(max.print = 50)
+```
+
+```{r}
+#| label: 08-load-libraries
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| output: False
+#| tidy: True
+#| filename: "R code"
+# load libraries
+library(tidyverse)
+library(sf)
+library(tmap)
+library(osmdata)
+library(dodgr)
+```
+
+::: {.callout-warning}
+You may have to install some of these libraries if you have not used these before.
+:::
+
+Next, we can load the spatial data into R.
+
+```{r}
+#| label: 08-load-data
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# read poi data
+poi24 <- st_read('data/Lambeth-POI-2024.gpkg')
+
+# read lsoa dataset
+lsoa21 <- st_read('data/London-LSOA-2021.gpkg')
+
+# read borough dataset
+borough <- st_read('data/London-Boroughs.gpkg')
+```
+
+Now, carefully examine each individual dataframe to understand how the data is structured and what information it contains.
+
+```{r}
+#| label: 08-inspect-data
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# inspect poi data
+head(poi24)
+
+# inspect country of birth data
+head(lsoa21)
+```
+
+::: {.callout-note}
+You can further inspect the results using the `View()` function. 
+:::
+
+### Point of Interest data
+The inspection shows that the POI dataset contains a wide variety of location types, with each point tagged under a main and alternative category, as provided by the Overture Maps Foundation via Meta and Microsoft. However, these tags may not be consistent across the dataset, so we will need to identify specific keywords to filter the `main_category` and `alternate_category` columns. We will start by filtering out all POIs where the word `school` features in the `main_category` column:
+
+```{r}
+#| label: 08-school-data
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# filter school poi data
+poi_schools <- poi24 |>
+  filter(str_detect(main_category, 'school'))
+
+# inspect
+head(unique(poi_schools$main_category), n = 50)
+```
+
+::: {.callout-note}
+You can further inspect the results using the `View()` function. 
+:::
+
+This is still a very large list, and not all POIs containing the string `school` should be included. However, this initial selection gives us a more manageable list from which we can choose the relevant tags. Once we have made our selections, we can further filter the dataset accordingly as well as clip the dataset to the administrative boundaries of Lambeth.
+
+```{r}
+#| label: 08-school-data-filter1
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+
+# remove quotes for easier processing
+poi_schools <- poi_schools |>
+  mutate(main_category = str_replace_all(main_category, '\"',''))
+
+# filter school poi data
+poi_schools <- poi_schools |>
+  filter(main_category == 'elementary_school' |
+         main_category == 'high_school' |
+         main_category == 'middle_school' |
+         main_category == 'private_school' |
+         main_category == 'public_school' |
+         main_category == 'school')
+
+# filter school poi data 
+lambeth <- borough |>
+  filter(name == 'Lambeth')
+
+poi_schools <- poi_schools |>
+  st_intersection(lambeth)
+
+# inspect
+poi_schools
+```
+
+This is still a rather long list and likely inaccurate. According to [Lambeth Council Education Statistics](https://www.lambeth.gov.uk/sites/default/files/2024-07/Education_Statistics_2023-24.pdf), there should be 80 primary and secondary schools across the borough. We can use the `alternate_category` column to further narrow down our results.
+
+::: {.callout-note}
+You can inspect the different tags and their frequencies easily by creating a frequency table: `table(poi_schools$alternate_category)`. You can inspect these results using the `View()` function.
+:::
+
+```{r}
+#| label: 08-school-data-filter2
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+
+# filter school poi data 
+poi_schools <- poi_schools |>
+  filter(str_detect(alternate_category, 'elementary_school') |
+         str_detect(alternate_category, 'high_school') |
+         str_detect(alternate_category, 'middle_school') |
+         str_detect(alternate_category, 'private_school') |
+         str_detect(alternate_category, 'public_school'))
+
+# inspect
+poi_schools
+```
+
+Since the POI dataset is compiled from various open sources, the data quality is not guaranteed. Some schools may be missing, while others could be duplicated, perhaps under slightly different names or because different buildings have been assigned separate point locations. However, it is unlikely that more than one school would share the same postcode. Therefore, we will use postcode information (where available) to finalise our school selection and resolve any duplicates.
+
+```{r}
+#| label: 08-school-data-filter3
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+
+# identify duplicate postcodes
+poi_schools <- poi_schools |>
+  group_by(postcode) |>
+  mutate(rank = rank(primary_name)) |>
+  ungroup()
+
+# filter school poi data 
+poi_schools <- poi_schools |>
+  filter(is.na(postcode) | rank == 1)
+
+# inspect
+poi_schools
+```
+
+Although we now have fewer schools than expected, either due to overly restrictive filtering of tags or because some school locations are not recorded in the dataset, we will proceed with the current data.
+
+::: {.callout-warning}
+Variable preparation can be a time-consuming process that often necessitates a more extensive exploratory analysis to ensure sufficient data quality. This may involve sourcing additional data to supplement your existing dataset.
+:::
+
+We can now use a similar approach to approximate the locations of fast food outlets in the Borough.
+
+```{r}
+#| label: 08-fastfood-data
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# filter fast food poi data
+poi_fastfood <- poi24 |>
+  filter(str_detect(main_category, 'fast_food_restaurant') |
+         str_detect(alternate_category, 'fast_food_restaurant') |
+         str_detect(alternate_category, 'chicken_restaurant') |
+         str_detect(alternate_category, 'burger_restaurant'))
+
+# inspect
+poi_fastfood
+```
+
+Let's map both dataset to get an idea of how the data look like:
+
+```{r tidy='styler'} 
+#| label: fig-08-poi-map
+#| fig-cap: Extracted school and fast food locations for Lambeth.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| filename: "R code"
+# combine for mapping
+poi_schools <- poi_schools |>
+  mutate(type = 'School')
+poi_fastfood <- poi_fastfood |>
+  mutate(type = 'Fast food')
+poi_lambeth <- rbind(poi_schools, poi_fastfood)
+
+# shape, polygon
+tm_shape(lambeth) +
+  
+  # specify column, classes
+  tm_polygons(
+    col = '#f0f0f0', 
+  ) +
+  
+# shape, points
+tm_shape(poi_lambeth) + 
+  
+  # specify column, colours
+  tm_dots(
+    col = 'type',
+    size = 0.05,
+    palette = c('#beaed4','#fdc086'),
+    title = 'POI type'
+  ) +
+  
+  # set layout
+  tm_layout(
+    legend.outside = TRUE,
+    legend.position = c('right', 'bottom'),
+    frame = FALSE
+  )
+```
+
+### Network data
+
+

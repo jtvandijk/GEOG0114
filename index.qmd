@@ -18,7 +18,7 @@ knitr::include_graphics('images/w00/data-science-welcome-sm.jpg')
 |      | **Reading week**         | **Reading week** |
 | 6    | Raster data              | [Geostatistics using Kriging]({{< var urls.git-url-am >}}) |
 | 7    | Applied Spatial Analysis | [Geodemographics]({{< var urls.geodemographics >}}) |
-| 8    | Applied Spatial Analysis | [Transport network analysis]({{< var urls.transport-ntx >}}) |
+| 8    | Applied Spatial Analysis | [Accessibility analysis]({{< var urls.transport-ntx >}}) |
 | 9    | Spatial models           | [Spatial models I]({{< var urls.git-url-am >}}) |
 | 10   | Spatial models           | [Spatial models II]({{< var urls.git-url-am >}}) |
 
