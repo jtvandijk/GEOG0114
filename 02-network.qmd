@@ -311,7 +311,81 @@ osm_network <- opq(bbox = bbox_lambeth ) |>
 ```
 
 ::: {.callout-warning}
-In some cases, the OSM query may return an error, particularly when multiple users from the same location are executing the exact same query. If so, you can download a prepared copy of the data here: [[Download]](https://github.com/jtvandijk/GEOG0114/raw/master/data/London-OSM-Roads.RData). You can load this copy into R through `load('data/London-OSM-Roads.RData')`
+In some cases, the OSM query may return an error, particularly when multiple users from the same location are executing the exact same query. If so, you can download a prepared copy of the data here: [[Download]](https://github.com/jtvandijk/GEOG0114/raw/master/data/London-OSM-Roads.RData). 
+
+You can load this copy into R through `load('data/London-OSM-Roads.RData')`
 :::
 
+The returned `osm_network` object contains a variety of elements with the specified tags. Our next step is to extract the spatial data from this object to create our road network dataset. Specifically, we will extract the edges of the network, which represent the lines of the roads, as well as the nodes, which represent the points where the roads start, end, or intersect.
 
+```{r}
+#| label: 08-network-data-load
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| warning: False
+#| cache: False
+#| filename: "R code"
+
+# extract the nodes, with their osm_id.
+osm_network_nodes <- osm_network$osm_points[, "osm_id"]
+
+# extract the edges
+osm_network_edges <- osm_network$osm_lines[, c("osm_id", "name", "highway", "maxspeed", "oneway")]
+
+# inspect
+head(osm_network_nodes)
+
+# inspect
+head(osm_network_edges)
+```
+
+We can quickly map the edges to see how the road network looks like:
+
+```{r tidy='styler'} 
+#| label: fig-08-netx-map
+#| fig-cap: Extracted road network data for Lambeth.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: "R code"
+# shape, polygon
+tm_shape(osm_network_edges) +
+  
+  # specify column, classes
+  tm_lines(
+    col = '#bdbdbd', 
+    lwd = 0.2,
+  ) +
+  
+  # shape, polygon
+  tm_shape(lambeth) +
+  
+  # specify column, classes
+  tm_borders(
+    col = '#252525', 
+    lwd = 2
+  ) +
+  
+  # set legend
+  tm_add_legend(
+    type = 'line', 
+    labels = 'Road segments', 
+    col = '#bdbdbd'
+  ) +
+  
+  tm_add_legend(
+    type = 'line', 
+    labels = 'Outline Lambeth', 
+    col = '#252525'
+  ) +
+  
+  # set layout
+  tm_layout(
+    frame = FALSE,
+    legend.outside = TRUE,
+    legend.position = c('right', 'bottom'),
+  )
+```
