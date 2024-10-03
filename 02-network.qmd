@@ -150,7 +150,7 @@ lambeth <- borough |>
 
 poi_schools <- poi_schools |>
   st_intersection(lambeth) |>
-  select(1:13)
+  select(1:11)
 
 # inspect
 poi_schools
@@ -200,7 +200,8 @@ poi_schools <- poi_schools |>
 
 # filter school poi data 
 poi_schools <- poi_schools |>
-  filter(is.na(postcode) | rank == 1)
+  filter(is.na(postcode) | rank == 1) |>
+  select(-rank)
 
 # inspect
 poi_schools
