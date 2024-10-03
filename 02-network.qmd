@@ -294,7 +294,7 @@ To download the Lambeth road network dataset, we first need to define our boundi
 #| eval: True
 #| tidy: True
 #| warning: False
-#| cache: True
+#| cache: False
 #| filename: "R code"
 
 # define our bbox coordinates, use WGS84
