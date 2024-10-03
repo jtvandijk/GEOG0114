@@ -14,7 +14,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 - Van Dijk, J. and De Jong, T. 2017. Post-processing GPS-tracks in reconstructing travelled routes in a GIS-environment: network subset selection and attribute adjustment. *Annals of GIS* 23(3): 203-217. [[Link]](https://doi.org/10.1080/19475683.2017.1340340)
 
 ## Accessibility in Lambeth
-This week, we will analyse the accessibility of fast-food outlets in the London Borough of Lambeth. Specifically, we will examine how closely these outlets are situated near primary and secondary schools and investigate any potential relationships between their proximity and the relative levels of deprivation in the area.
+This week, we will analyse the accessibility of fast-food outlets in the London Borough of Lambeth. Specifically, we will examine how closely these outlets are located within walking distance of primary and secondary schools, and explore any potential relationships between their proximity and the relative levels of deprivation in the area.
 
 We will extract the points of interest that we will use for this analysis from the [Point of Interest (POI) data for the United Kingdom](https://journals.sagepub.com/doi/10.1177/23998083241263124), obtained from the [Overture Maps Foundation](https://overturemaps.org/) and pre-processed by the [Consumer Data Research Centre](https://data.cdrc.ac.uk/dataset/point-interest-data-united-kingdom#data-and-resources) to provide users with easy access.
 
@@ -389,3 +389,104 @@ tm_shape(osm_network_edges) +
     legend.position = c('right', 'bottom'),
   )
 ```
+
+This looks good. Since our focus is on schoolchildren, we will overwrite the `oneway` variable to assume that none of the road segments are restricted to one-way traffic. This adjustment will ensure our analysis is not skewed by such restrictions and will help maintain a more accurate representation of the general connectivity of the network.
+
+```{r} 
+#| label: 08-network-one-way
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| warning: False
+#| cache: False
+#| filename: "R code"
+
+# overwrite one-way default
+osm_network_edges$oneway <- 'no'
+```
+
+Now we have the network edges, we can turn this into a graph-representation that allows for the calculation of network-based accessibility statistics with our prepared point of interest data.
+
+### Network preparation
+In any network analysis, the primary data structure is a graph composed of nodes and edges. The `dodgr` library utilises weighting profiles to assign weights based on road types, tailored to the mode of transport that each profile is designed to model.
+
+In this instance, we will use the `foot` weighting profile, as our focus is on modelling walking accessibility. To prevent errors related to the weighting profile, we will replace any `NA` values in the highway tag with the value `unclassified`.
+
+```{r} 
+#| label: 08-network-graph
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| warning: False
+#| filename: "R code"
+
+# replace highway tags with 
+osm_network_edges <- osm_network_edges |>
+  mutate(highway = if_else(is.na(highway), 'unclassified', highway))
+
+# create network graph 
+osm_network_graph <- weight_streetnet(osm_network_edges, wt_profile = "foot")
+```
+
+Once we have constructed our graph, we can use it to calculate network distances between our points of interest. One important consideration is that not all individual components in the extracted network may be connected. This can occur, for example, if the bounding box cuts off access to the road of a [cul-de-sac](https://en.wikipedia.org/wiki/Dead_end_(street)). To ensure that our entire extracted network is connected, we will therefore extract the largest connected component of the graph. 
+
+::: {.callout-note}
+The dodgr package documentation explains that components are numbered in order of decreasing size, with $component = 1 always representing the largest component. It is essential to inspect the resulting subgraph to ensure that its coverage is adequate for analysis.
+:::
+
+```{r} 
+#| label: 08-connected-network-graph
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| warning: False
+#| filename: "R code"
+
+# extract the largest connected graph component
+osm_network_graph_connected <- osm_network_graph[osm_network_graph$component == 1, ]
+
+# inspect number of remaining road segments
+nrow(osm_network_graph)
+```
+
+::: {.callout-warning}
+OpenStreetMap is a dynamic dataset, meaning that changes are made on a continuous basis. As a result, it is quite possible that the number of remaining road segments, as shown above, may differ slightly when you run this analysis.
+:::
+
+### Accessibility analysis
+Now that we have our connected subgraph, we can use the `dodgr_distances()` function to calculate the network distances between every possible origin (i.e. school) and destination (i.e. fast food outlet). For all combinations, the function will map the point of interest locations to the nearest point on the network and return the corresponding shortest-path distances. 
+
+::: {.callout-warning}
+The dodgr package requires data to be projected in WGS84, so we need to reproject our point of interest data accordingly.
+:::
+
+```{r} 
+#| label: 08-distance-matrix
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| warning: False
+#| filename: "R code"
+
+# reproject
+poi_schools <- poi_schools |>
+  st_transform(4326)
+poi_fastfood <- poi_fastfood |>
+  st_transform(4326)
+
+# distance matrix 
+distance_matrix <- dodgr_distances(
+  osm_network_graph_connected,
+  from=st_coordinates(poi_schools),                                to= st_coordinates(poi_fastfood), 
+  shortest = FALSE, 
+  pairwise = FALSE, 
+  quiet=FALSE)
+```
+
+The result of this computation is a distance matrix that contains the network distances between all origins (i.e. schools) and all destinations (i.e. fast-food outlets):
+
+
