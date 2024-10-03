@@ -27,7 +27,7 @@ The data covers all usual residents, as recorded in the 2021 Census for England 
 | London LSOA Census 2021 Main Language       | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/London-LSOA-MainLanguage.csv) |
 | London LSOA 2021 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0114/raw/master/data/London-LSOA-2021.gpkg) |
 
-::: {.callout-note}
+::: {.callout-tip}
 To download a `csv` file that is hosted on GitHub, click on the `Download raw file` button on the top right of your screen and it should download directly to your computer.
 :::
 
@@ -117,7 +117,7 @@ head(lsoa_eth)
 head(lsoa_lan)
 ```
 
-::: {.callout-note}
+::: {.callout-tip}
 You can further inspect the results using the `View()` function. 
 :::
 
@@ -257,7 +257,7 @@ Variable selection is often a time-consuming process that requires a combination
 
 A straightforward yet effective method to examine the distribution of our variables is to create boxplots for each variable. This can be efficiently achieved by using `facet_wrap()` to generate a matrix of panels, allowing us to visualise all variables in a single view. 
 
-::: {.callout-note}
+::: {.callout-tip}
 For more details on `facet_wrap()`, you can refer to the [ggplot2 documentation](https://ggplot2.tidyverse.org/reference/facet_wrap.html).
 :::
 
@@ -474,7 +474,7 @@ ggplot(cluster_diffs_long, aes(x = factor(vars), y = score)) +
 
 These plots can serve as a foundation for creating pen portraits by closely examining which variables drive each cluster. 
 
-::: {.callout-note}
+::: {.callout-tip}
 For easier interpretation, these values can be transformed into index scores, allowing us to assess which variables are under- or overrepresented within each cluster group.
 :::
 

@@ -97,7 +97,7 @@ head(poi24)
 head(lsoa21)
 ```
 
-::: {.callout-note}
+::: {.callout-tip}
 You can further inspect the results using the `View()` function. 
 :::
 
@@ -119,7 +119,7 @@ poi_schools <- poi24 |>
 head(unique(poi_schools$main_category), n = 50)
 ```
 
-::: {.callout-note}
+::: {.callout-tip}
 You can further inspect the results using the `View()` function. 
 :::
 
@@ -160,7 +160,7 @@ poi_schools
 
 This is still a rather long list and likely inaccurate. According to [Lambeth Council Education Statistics](https://www.lambeth.gov.uk/sites/default/files/2024-07/Education_Statistics_2023-24.pdf), there should be 80 primary and secondary schools across the borough. We can use the `alternate_category` column to further narrow down our results.
 
-::: {.callout-note}
+::: {.callout-tip}
 You can inspect the different tags and their frequencies easily by creating a frequency table: `table(poi_schools$alternate_category)`.
 :::
 
@@ -432,7 +432,7 @@ osm_network_graph <- weight_streetnet(osm_network_edges, wt_profile = "foot")
 Once we have constructed our graph, we can use it to calculate network distances between our points of interest. One important consideration is that not all individual components in the extracted network may be connected. This can occur, for example, if the bounding box cuts off access to the road of a [cul-de-sac](https://en.wikipedia.org/wiki/Dead_end_(street)). To ensure that our entire extracted network is connected, we will therefore extract the largest connected component of the graph. 
 
 ::: {.callout-note}
-The dodgr package documentation explains that components are numbered in order of decreasing size, with $component = 1 always representing the largest component. It is essential to inspect the resulting subgraph to ensure that its coverage is adequate for analysis.
+The dodgr package documentation explains that components are numbered in order of decreasing size, with `$component = 1` always representing the largest component. It is essential to inspect the resulting subgraph to ensure that its coverage is adequate for analysis.
 :::
 
 ```{r} 
@@ -445,10 +445,10 @@ The dodgr package documentation explains that components are numbered in order o
 #| filename: "R code"
 
 # extract the largest connected graph component
-osm_network_graph_connected <- osm_network_graph[osm_network_graph$component == 1, ]
+netx_connected <- osm_network_graph[osm_network_graph$component == 1, ]
 
 # inspect number of remaining road segments
-nrow(osm_network_graph)
+nrow(netx_connected)
 ```
 
 ::: {.callout-warning}
@@ -479,7 +479,7 @@ poi_fastfood <- poi_fastfood |>
 
 # distance matrix 
 distance_matrix <- dodgr_distances(
-  osm_network_graph_connected,
+  netx_connected,
   from=st_coordinates(poi_schools),                                to= st_coordinates(poi_fastfood), 
   shortest = FALSE, 
   pairwise = FALSE, 
@@ -489,6 +489,7 @@ distance_matrix <- dodgr_distances(
 The result of this computation is a distance matrix that contains the network distances between all origins (i.e. schools) and all destinations (i.e. fast-food outlets):
 
 To do:
-- check input data in QGIS for NA distances
-- check shortest = FALSE to see if travel time works
+- check input data in QGIS for `NA` distances
+- check `shortest = FALSE` to see if travel time works
+
 
