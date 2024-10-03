@@ -349,7 +349,6 @@ We can quickly map the edges to see how the road network looks like:
 #| classes: styled-output
 #| echo: True
 #| eval: True
-#| cache: True
 #| filename: "R code"
 # shape, polygon
 tm_shape(osm_network_edges) +
@@ -489,4 +488,7 @@ distance_matrix <- dodgr_distances(
 
 The result of this computation is a distance matrix that contains the network distances between all origins (i.e. schools) and all destinations (i.e. fast-food outlets):
 
+To do:
+- check input data in QGIS for NA distances
+- check shortest = FALSE to see if travel time works
 
