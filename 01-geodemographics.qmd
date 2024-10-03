@@ -17,7 +17,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 ## London Output Area Classification
 Today, we will create our own geodemographic classification to examine demographic clusters across London, drawing inspiration from [London Output Area Classification](https://doi.org/10.1177/23998083241242913). Specifically, we will try to identify clusters based on age group, self-identified ethnicity, country of birth, and first or preferred language. 
 
-The data covers all usual residents, as recorded in the 2021 Census for England and Wales, aggregated at the [Lower Super Output Area (LSOA)](https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies) level. These datasets have been extracted using the [Custom Dataset Tool](https://www.ons.gov.uk/datasets/create), and you can download each file via the links provided below. A copy of the 2021 London LSOAs spatial boundaries is also available. Save these files in your project folder under `data`. 
+The data covers all usual residents, as recorded in the 2021 Census for England and Wales, aggregated at the [Lower Super Output Area (LSOA)](https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies) level. These datasets have been extracted using the [Custom Dataset Tool](https://www.ons.gov.uk/datasets/create), and you can download each file via the links provided below. A copy of the 2021 London LSOAs spatial boundaries is also available. Save these files in your project folder under `data`.
 
 | File                                        | Type   | Link |
 | :------                                     | :------| :------ |

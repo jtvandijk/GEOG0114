@@ -44,9 +44,30 @@
   {
     "objectID": "02-network.html",
     "href": "02-network.html",
-    "title": "Transport Network Analysis",
+    "title": "Accessibility Analysis",
     "section": "",
-    "text": "Transport Network Analysis\n\n\n\n\n\n\nThis GitHub page is receiving updates for the 2024-2025 academic year. The content for 2023-2024 has been archived and can be found here: [Link]"
+    "text": "Accessibility is the ease with which people can reach places and opportunities, such as jobs, public services, and cultural activities. We can utilise transport network data to quantify this and characterise areas based on their accessibility. This week, we will use the dodgr R library to measure accessibility by calculating network distances between different locations.\n\n\nYou can download the slides of this week’s lecture here: [Link].\n\n\n\n\n\n\nGeurs, K., Van Wee, B. 2004. Accessibility evaluation of land-use and transport strategies: review and research directions. Journal of Transport Geography 12(2): 127-140. [Link]\nHiggins, C., Palm, M. DeJohn, A. et al. 2022. Calculating place-based transit accessibility: Methods, tools and algorithmic dependence. Journal of Transport and Land Use 15(1): 95-116. [Link]\n\n\n\n\n\nVan Dijk, J., Krygsman, S. and De Jong, T. 2015. Toward spatial justice: The spatial equity effects of a toll road in Cape Town, South Africa. Journal of Transport and Land Use 8(3): 95-114. [Link]\nVan Dijk, J. and De Jong, T. 2017. Post-processing GPS-tracks in reconstructing travelled routes in a GIS-environment: network subset selection and attribute adjustment. Annals of GIS 23(3): 203-217. [Link]\n\n\n\n\n\nThis week, we will analyse the accessibility of fast-food outlets in the London Borough of Lambeth. Specifically, we will examine how closely these outlets are situated near schools and investigate any potential relationships between their proximity and the relative levels of deprivation in the area.\nWe will extract the points of interest that we will use for this analysis from the Point of Interest (POI) data for the United Kingdom, obtained from the Overture Maps Foundation and pre-processed by the Consumer Data Research Centre to provide users with easy access. You can download a subset of the POI dataset via the link provided below. A copy of the 2021 London LSOAs spatial boundaries and the 2019 English Index of Multiple Deprivation. Save these files in your project folder under data.\n\n\n\nFile\nType\nLink\n\n\n\n\nLambeth Overture Points of Interest 2024\nGeoPackage\nDownload\n\n\nLondon LSOA 2021 Spatial Boundaries\nGeoPackage\nDownload\n\n\nEngland 2019 Index of Multiple Deprivation\ncsv\nDownload\n\n\n\n\n\n\n\n\n\nTo extract the Lambeth Overture Points of Interest data, a 2-kilometre buffer around the boundaries of Lambeth was used. This ensures that we also include points that fall just outside the study area, as locations just beyond the borough boundary may still be accessible to residents and could represent the closest options available."
+  },
+  {
+    "objectID": "02-network.html#lecture-w08",
+    "href": "02-network.html#lecture-w08",
+    "title": "Accessibility Analysis",
+    "section": "",
+    "text": "You can download the slides of this week’s lecture here: [Link]."
+  },
+  {
+    "objectID": "02-network.html#reading-w08",
+    "href": "02-network.html#reading-w08",
+    "title": "Accessibility Analysis",
+    "section": "",
+    "text": "Geurs, K., Van Wee, B. 2004. Accessibility evaluation of land-use and transport strategies: review and research directions. Journal of Transport Geography 12(2): 127-140. [Link]\nHiggins, C., Palm, M. DeJohn, A. et al. 2022. Calculating place-based transit accessibility: Methods, tools and algorithmic dependence. Journal of Transport and Land Use 15(1): 95-116. [Link]\n\n\n\n\n\nVan Dijk, J., Krygsman, S. and De Jong, T. 2015. Toward spatial justice: The spatial equity effects of a toll road in Cape Town, South Africa. Journal of Transport and Land Use 8(3): 95-114. [Link]\nVan Dijk, J. and De Jong, T. 2017. Post-processing GPS-tracks in reconstructing travelled routes in a GIS-environment: network subset selection and attribute adjustment. Annals of GIS 23(3): 203-217. [Link]"
+  },
+  {
+    "objectID": "02-network.html#accessibility-in-lambeth",
+    "href": "02-network.html#accessibility-in-lambeth",
+    "title": "Accessibility Analysis",
+    "section": "",
+    "text": "This week, we will analyse the accessibility of fast-food outlets in the London Borough of Lambeth. Specifically, we will examine how closely these outlets are situated near schools and investigate any potential relationships between their proximity and the relative levels of deprivation in the area.\nWe will extract the points of interest that we will use for this analysis from the Point of Interest (POI) data for the United Kingdom, obtained from the Overture Maps Foundation and pre-processed by the Consumer Data Research Centre to provide users with easy access. You can download a subset of the POI dataset via the link provided below. A copy of the 2021 London LSOAs spatial boundaries and the 2019 English Index of Multiple Deprivation. Save these files in your project folder under data.\n\n\n\nFile\nType\nLink\n\n\n\n\nLambeth Overture Points of Interest 2024\nGeoPackage\nDownload\n\n\nLondon LSOA 2021 Spatial Boundaries\nGeoPackage\nDownload\n\n\nEngland 2019 Index of Multiple Deprivation\ncsv\nDownload\n\n\n\n\n\n\n\n\n\nTo extract the Lambeth Overture Points of Interest data, a 2-kilometre buffer around the boundaries of Lambeth was used. This ensures that we also include points that fall just outside the study area, as locations just beyond the borough boundary may still be accessible to residents and could represent the closest options available."
   },
   {
     "objectID": "index.html",
