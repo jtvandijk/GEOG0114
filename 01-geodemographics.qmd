@@ -6,15 +6,16 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 
 ## Reading list {#reading-w07}
 #### Essential readings 
-- Longley, P. A. 2012. Geodemographics and the practices of geographic information science. *International Journal of Geographical Information Science* 26(12): 2227-2237. [\[Link\]](https://doi.org/10.1080/13658816.2012.719623)
-- Singleton, A. and Longley, P. A. 2024. Classifying and mapping residential structure through the London Output Area Classification. *Environment and Planning B: Urban Analytics and City Science* 51(5): 1153-1164. [\[Link\]](https://doi.org/10.1177/23998083241242913)
-- Wyszomierski, J., Longley, P. A., and Singleton, A. *et al.* 2024. A neighbourhood Output Area Classification from the 2021 and 2022 UK censuses. *The Geographical Journal*. 190(2): e12550. [\[Link\]](https://doi.org/10.1111/geoj.12550)
+- Longley, P. A. 2012. Geodemographics and the practices of geographic information science. *International Journal of Geographical Information Science* 26(12): 2227-2237. [[Link]](https://doi.org/10.1080/13658816.2012.719623)
+- Singleton, A. and Longley, P. A. 2024. Classifying and mapping residential structure through the London Output Area Classification. *Environment and Planning B: Urban Analytics and City Science* 51(5): 1153-1164. [[Link]](https://doi.org/10.1177/23998083241242913)
+- Wyszomierski, J., Longley, P. A., and Singleton, A. *et al.* 2024. A neighbourhood Output Area Classification from the 2021 and 2022 UK censuses. *The Geographical Journal*. 190(2): e12550. [[Link]](https://doi.org/10.1111/geoj.12550)
 
-#### Suggested readings 
+#### Suggested readings
+- Dalton, C. M. and Thatcher. J. 2015. Inflated granularity: Spatial “Big Data” and geodemographics. *Big Data & Society* 2(2): 1-15. [[Link]](https://doi.org/10.1177/2053951715601144)
 - Fränti, P. and Sieronoja, S. 2019. How much can k-means be improved by using better initialization and repeats? *Pattern Recognition* 93: 95-112. [[Link]](https://doi.org/10.1016/j.patcog.2019.04.014)
-- Singleton, A. and Spielman, S. 2014. The past, present, and future of geodemographic research in the United States and United Kingdom. *The Professional Geographer* 66(4): 558-567. [\[Link\]](https://doi.org/10.1080/00330124.2013.848764)
+- Singleton, A. and Spielman, S. 2014. The past, present, and future of geodemographic research in the United States and United Kingdom. *The Professional Geographer* 66(4): 558-567. [[Link]](https://doi.org/10.1080/00330124.2013.848764)
 
-## Clusters in London
+## Classifying London
 Today, we will create our own geodemographic classification to examine demographic clusters across London, drawing inspiration from [London Output Area Classification](https://doi.org/10.1177/23998083241242913). Specifically, we will try to identify clusters based on age group, self-identified ethnicity, country of birth, and first or preferred language. 
 
 The data covers all usual residents, as recorded in the 2021 Census for England and Wales, aggregated at the [Lower Super Output Area (LSOA)](https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies) level. These datasets have been extracted using the [Custom Dataset Tool](https://www.ons.gov.uk/datasets/create), and you can download each file via the links provided below. A copy of the 2021 London LSOAs spatial boundaries is also available. Save these files in your project folder under `data`.
