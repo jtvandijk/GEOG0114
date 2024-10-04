@@ -353,7 +353,7 @@ ggcorrplot(cor_mat, outline.col = '#ffffff', tl.cex = 8, legend.title = 'Correla
 
 Following the approach from [Wyszomierski *et al.* (2024)](https://doi.org/10.1111/geoj.12550), we can define a *weak* correlation as lying between 0 and 0.40, *moderate* as between 0.41 and 0.65, *strong* as between 0.66 and 0.80, and *very strong* as between 0.81 and 1. 
 
-A few *strong* and *very strong* correlations can be observed that probably should be removed; however, to maintain representation, here we decide to retain all variables.
+A few *strong* and *very strong* correlations can be observed that potentially could be removed; however, to maintain representation, here we decide to retain all variables.
 
 ### Variable standardisation
 If the input data are heavily skewed or contain outliers, $k$-means may produce less meaningful clusters. While normality is not required per se, it has been common to do this nonetheless. More important is to standardise the input variables, especially when they are measured on different scales. This ensures that each variable contributes equally to the clustering process. 
@@ -522,11 +522,11 @@ The creation of a geodemographic classification is an iterative process. This ty
 
 1. Download the two datasets provided below and save them to your `data` folder. The datasets include:
     * A `csv` file containing the number of people aged 16 years and older by occupational category, as defined by the [Standard Occupational Classification 2020](https://www.ons.gov.uk/methodology/classificationsandstandards/standardoccupationalclassificationsoc), aggregated by 2021 LSOAs.
-    * A `csv` file containing the number of people aged 16 years and older by their highest level of qualification, also aggregated to the LSOA level.
+    * A `csv` file containing the number of people aged 16 years and older by their highest level of qualification, also aggregated to the 2021 LSOA level.
 2. Prepare these two datasets and retain only those variables that are potentially meaningful. Filter out any variables with a high proportion of zero values.
 3. Merge the education and occupation dataset with the dataset used to generate the initial geodemographic classification. Check for multicollinearity and consider removing any variables that are highly correlated.
 4. Perform $k$-means clustering on your extended dataset. Make sure to select an appropriate number of clusters for your analysis.
-5. Interpret the individual clusters in terms of the variables that are under- or overrepresented. 
+5. Interpret the individual clusters in terms of the variables that are under- and overrepresented. 
 
 | File                                        | Type   | Link |
 | :------                                     | :------| :------ |

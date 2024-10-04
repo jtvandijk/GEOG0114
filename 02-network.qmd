@@ -1,5 +1,5 @@
 # Accessibility Analysis
-Accessibility is often described as the ease with which individuals can reach places and opportunities, such as employment, public services, and cultural activities. We can utilise transport network data to quantify accessibility and characterise areas based on their accessibility levels. This week, we will use the `dodgr` R library to measure accessibility between different points of interest by calculating network distances between them.
+Accessibility is often described as the ease with which individuals can reach places and opportunities, such as employment, public services, and cultural activities. We can utilise transport network data to quantify accessibility and characterise areas based on their accessibility levels. This week, we will use the `dodgr` R library to measure accessibility between different points of interest by calculating the network distances between them.
 
 ## Lecture slides {#lecture-w08}
 You can download the slides of this week's lecture here: [[Link]]({{< var slides.week08 >}}).
@@ -105,10 +105,6 @@ head(lsoa11)
 # inspect borough dataset
 head(borough)
 ```
-
-::: {.callout-tip}
-You can further inspect the results using the `View()` function. 
-:::
 
 ### Point of Interest data
 The inspection shows that the POI dataset contains a wide variety of location types, with each point tagged under a main and alternative category, as provided by the Overture Maps Foundation via Meta and Microsoft. However, these tags may not be consistent across the dataset, so we will need to identify specific keywords to filter the `main_category` and `alternate_category` columns. 
@@ -340,7 +336,7 @@ The returned `osm_network` object contains a variety of elements with the specif
 # extract the nodes, with their osm_id
 osm_network_nodes <- osm_network$osm_points[, "osm_id"]
 
-# extract the edges
+# extract the edges, with their osm_id and relevant columns
 osm_network_edges <- osm_network$osm_lines[, c("osm_id", "name", "highway", "maxspeed", "oneway")]
 
 # inspect
@@ -354,7 +350,7 @@ We can quickly map the network edges to see how the road network looks like:
 
 ```{r tidy='styler'} 
 #| label: fig-08-netx-map
-#| fig-cap: Extracted road network data for Lambeth.
+#| fig-cap: Extracted OpenStreetMap road network data for Lambeth.
 #| classes: styled-output
 #| echo: True
 #| eval: True
@@ -539,11 +535,11 @@ In the final step, we can investigate whether there is a relationship between th
 # read imd dataset
 imd19 <- read_csv('data/England-IMD-2019.csv')
 
-# join
+# join imd
 lsoa11 <- lsoa11 |>
   left_join(imd19, by = c('lsoa11cd'='lsoa11cd'))
 
-# assign schools to their parent lsoa
+# join schools to their parent lsoa
 poi_schools <- poi_schools |> 
   st_transform(27700) |>
   st_join(lsoa11)

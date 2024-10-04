@@ -779,7 +779,7 @@ dbl (2): Main language (11 categories) Code, Observation
 </div>
 </div>
 <p>Following the approach from <a href="https://doi.org/10.1111/geoj.12550">Wyszomierski <em>et al.</em> (2024)</a>, we can define a <em>weak</em> correlation as lying between 0 and 0.40, <em>moderate</em> as between 0.41 and 0.65, <em>strong</em> as between 0.66 and 0.80, and <em>very strong</em> as between 0.81 and 1.</p>
-<p>A few <em>strong</em> and <em>very strong</em> correlations can be observed that probably should be removed; however, to maintain representation, here we decide to retain all variables.</p>
+<p>A few <em>strong</em> and <em>very strong</em> correlations can be observed that potentially could be removed; however, to maintain representation, here we decide to retain all variables.</p>
 </section>
 <section id="variable-standardisation" class="level3">
 <h3 class="anchored" data-anchor-id="variable-standardisation">Variable standardisation</h3>
@@ -1006,12 +1006,12 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 <li>Download the two datasets provided below and save them to your <code>data</code> folder. The datasets include:
 <ul>
 <li>A <code>csv</code> file containing the number of people aged 16 years and older by occupational category, as defined by the <a href="https://www.ons.gov.uk/methodology/classificationsandstandards/standardoccupationalclassificationsoc">Standard Occupational Classification 2020</a>, aggregated by 2021 LSOAs.</li>
-<li>A <code>csv</code> file containing the number of people aged 16 years and older by their highest level of qualification, also aggregated to the LSOA level.</li>
+<li>A <code>csv</code> file containing the number of people aged 16 years and older by their highest level of qualification, also aggregated to the 2021 LSOA level.</li>
 </ul></li>
 <li>Prepare these two datasets and retain only those variables that are potentially meaningful. Filter out any variables with a high proportion of zero values.</li>
 <li>Merge the education and occupation dataset with the dataset used to generate the initial geodemographic classification. Check for multicollinearity and consider removing any variables that are highly correlated.</li>
 <li>Perform <span class="math inline">\(k\)</span>-means clustering on your extended dataset. Make sure to select an appropriate number of clusters for your analysis.</li>
-<li>Interpret the individual clusters in terms of the variables that are under- or overrepresented.</li>
+<li>Interpret the individual clusters in terms of the variables that are under- and overrepresented.</li>
 </ol>
 <table class="table">
 <thead>

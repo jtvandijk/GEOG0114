@@ -210,7 +210,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="accessibility-analysis" class="level1">
 <h1>Accessibility Analysis</h1>
-<p>Accessibility is often described as the ease with which individuals can reach places and opportunities, such as employment, public services, and cultural activities. We can utilise transport network data to quantify accessibility and characterise areas based on their accessibility levels. This week, we will use the <code>dodgr</code> R library to measure accessibility between different points of interest by calculating network distances between them.</p>
+<p>Accessibility is often described as the ease with which individuals can reach places and opportunities, such as employment, public services, and cultural activities. We can utilise transport network data to quantify accessibility and characterise areas based on their accessibility levels. This week, we will use the <code>dodgr</code> R library to measure accessibility between different points of interest by calculating the network distances between them.</p>
 <section id="lecture-w08" class="level2">
 <h2 class="anchored" data-anchor-id="lecture-w08">Lecture slides</h2>
 <p>You can download the slides of this week’s lecture here: <a href="https://github.com/jtvandijk/GEOG0114/tree/master/slides/w08-psa.pdf">[Link]</a>.</p>
@@ -441,16 +441,6 @@ Projected CRS: OSGB36 / British National Grid
 4     West POLYGON ((509703.4 175356.6...
 5     West POLYGON ((515647.2 178787.8...
 6     East POLYGON ((553564 179127.1, ...</code></pre>
-</div>
-</div>
-<div class="callout callout-style-simple callout-tip">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>You can further inspect the results using the <code>View()</code> function.</p>
-</div>
 </div>
 </div>
 <section id="point-of-interest-data" class="level3">
@@ -806,7 +796,7 @@ First 10 features:
 </div>
 </div>
 <p>The returned <code>osm_network</code> object contains a variety of elements with the specified tags. Our next step is to extract the spatial data from this object to create our road network dataset. Specifically, we will extract the edges of the network, which represent the lines of the roads, as well as the nodes, which represent the points where the roads start, end, or intersect.</p>
-<div class="cell styled-output" data-hash="02-network_cache/html/08-network-data-load_ed3aa59237f78a7ab8a742ab7864e53a">
+<div class="cell styled-output" data-hash="02-network_cache/html/08-network-data-load_2e0da78a9e6139537810a619da875c35">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -814,7 +804,7 @@ First 10 features:
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the nodes, with their osm_id</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>osm_network_nodes <span class="ot">&lt;-</span> osm_network<span class="sc">$</span>osm_points[, <span class="st">"osm_id"</span>]</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the edges</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the edges, with their osm_id and relevant columns</span></span>
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>osm_network_edges <span class="ot">&lt;-</span> osm_network<span class="sc">$</span>osm_lines[, <span class="fu">c</span>(<span class="st">"osm_id"</span>, <span class="st">"name"</span>, <span class="st">"highway"</span>, <span class="st">"maxspeed"</span>,</span>
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"oneway"</span>)]</span>
 <span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
@@ -860,7 +850,7 @@ Geodetic CRS:  WGS 84
 </div>
 </div>
 <p>We can quickly map the network edges to see how the road network looks like:</p>
-<div class="cell styled-output" data-hash="02-network_cache/html/fig-08-netx-map_be6c23b7f8f4c40747e528074f24e836">
+<div class="cell styled-output" data-hash="02-network_cache/html/fig-08-netx-map_32eb350702d2084601531f49f484d54d">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -907,7 +897,7 @@ Geodetic CRS:  WGS 84
 <div id="fig-08-netx-map" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="02-network_files/figure-html/fig-08-netx-map-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;2: Extracted road network data for Lambeth.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;2: Extracted OpenStreetMap road network data for Lambeth.</figcaption>
 </figure>
 </div>
 </div>
@@ -1058,7 +1048,7 @@ Geodetic CRS:  WGS 84
 </div>
 </div>
 <p>In the final step, we can investigate whether there is a relationship between the proximity of fast-food outlets and the relative levels of deprivation in the area. One approach is to calculate the average number of fast-food outlets within 1,000 metres of a school for each LSOA, and then compare these figures to their corresponding IMD deciles.</p>
-<div class="cell styled-output" data-hash="02-network_cache/html/08-accessibility-join-imd_950d0d3924281483158bf5a9212c70a9">
+<div class="cell styled-output" data-hash="02-network_cache/html/08-accessibility-join-imd_a42f63953d5d425514471ac1da58e90b">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1076,11 +1066,11 @@ dbl (2): imd_rank, imd_dec
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join</span></span>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join imd</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>lsoa11 <span class="ot">&lt;-</span> lsoa11 <span class="sc">|&gt;</span></span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(imd19, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"lsoa11cd"</span> <span class="ot">=</span> <span class="st">"lsoa11cd"</span>))</span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="co"># assign schools to their parent lsoa</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="co"># join schools to their parent lsoa</span></span>
 <span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>poi_schools <span class="ot">&lt;-</span> poi_schools <span class="sc">|&gt;</span></span>
 <span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="dv">27700</span>) <span class="sc">|&gt;</span></span>
 <span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_join</span>(lsoa11)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
