@@ -513,7 +513,7 @@ tm_shape(lsoa21) +
   )
 ```
 
-## Assignment 
+## Assignment
 The creation of a geodemographic classification is an iterative process. This typically includes adding or removing variables, adjusting the number of clusters, and grouping data in different ways to achieve the most meaningful segmentation. Try to do the following:
 
 1. Download the two datasets provided below and save them to your `data` folder. The datasets include:

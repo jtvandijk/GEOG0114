@@ -35,7 +35,7 @@ website:
     logo: assets/logo.svg
     tools:
       - icon: github
-        href: https://github.com/jtvandijk/GEOG0114Q
+        href: https://github.com/jtvandijk/GEOG0114
     contents:
       - section: "Module overview"
         contents:

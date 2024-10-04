@@ -129,7 +129,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <img src="./assets/logo.svg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
       <div class="sidebar-tools-main tools-wide">
-    <a href="https://github.com/jtvandijk/GEOG0114Q" rel="" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+    <a href="https://github.com/jtvandijk/GEOG0114" rel="" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
     <div id="quarto-search" class="quarto-navigation-tool px-1" title="Search"></div>
 </div>
@@ -197,6 +197,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#network-preparation" id="toc-network-preparation" class="nav-link" data-scroll-target="#network-preparation">Network preparation</a></li>
   <li><a href="#accessibility-analysis-1" id="toc-accessibility-analysis-1" class="nav-link" data-scroll-target="#accessibility-analysis-1">Accessibility analysis</a></li>
   </ul></li>
+  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment">Assignment</a></li>
+  <li><a href="#before-you-leave" id="toc-before-you-leave" class="nav-link" data-scroll-target="#before-you-leave">Before you leave</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jtvandijk/GEOG0114/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -234,7 +236,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="accessibility-in-lambeth">Accessibility in Lambeth</h2>
 <p>This week, we will analyse the accessibility of fast-food outlets in the London Borough of Lambeth. Specifically, we will examine how closely these outlets are located within walking distance of primary and secondary schools, and explore any potential relationships between their proximity and the relative levels of deprivation in the area.</p>
 <p>We will extract the points of interest that we will use for this analysis from the <a href="https://journals.sagepub.com/doi/10.1177/23998083241263124">Point of Interest (POI) data for the United Kingdom</a>, obtained from the <a href="https://overturemaps.org/">Overture Maps Foundation</a> and pre-processed by the <a href="https://data.cdrc.ac.uk/dataset/point-interest-data-united-kingdom#data-and-resources">Consumer Data Research Centre</a> to provide users with easy access.</p>
-<p>You can download a subset of the POI dataset via the link provided below. A copy of the 2021 London LSOAs spatial boundaries, the boundaries of the London Boroughs, and the 2019 English <a href="https://www.gov.uk/government/statistics/english-indices-of-deprivation-2019">Index of Multiple Deprivation</a>. Save these files in your project folder under <code>data</code>.</p>
+<p>You can download a subset of the POI dataset via the link provided below. A copy of the 2011 London LSOAs spatial boundaries, the boundaries of the London Boroughs, and the 2019 English <a href="https://www.gov.uk/government/statistics/english-indices-of-deprivation-2019">Index of Multiple Deprivation</a>. Save these files in your project folder under <code>data</code>.</p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -250,9 +252,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0114/raw/master/data/Lambeth-POI-2024.gpkg">Download</a></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">London LSOA 2021 Spatial Boundaries</td>
+<td style="text-align: left;">London LSOA 2011 Spatial Boundaries</td>
 <td style="text-align: left;"><code>GeoPackage</code></td>
-<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0114/raw/master/data/London-LSOA-2021.gpkg">Download</a></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0114/raw/master/data/London-LSOA-2011.gpkg">Download</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">London Borough Spatial Boundaries</td>
@@ -266,6 +268,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>To download a <code>csv</code> file that is hosted on GitHub, click on the <code>Download raw file</code> button on the top right of your screen and it should download directly to your computer.</p>
+</div>
+</div>
+</div>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -276,7 +288,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Open a new script and save this as <code>w07-accessibility.r</code>. We will start by loading the libraries that we will need:</p>
+<p>Open a new script and save this as <code>w08-accessibility.r</code>. We will start by loading the libraries that we will need:</p>
 <div class="cell styled-output" data-hash="02-network_cache/html/08-load-libraries_b0f4ca282e529af795b4a9bd6793da40">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -301,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Next, we can load the spatial data into R.</p>
-<div class="cell styled-output" data-hash="02-network_cache/html/08-load-data_98ea15414299b06d467396906579fbd1">
+<div class="cell styled-output" data-hash="02-network_cache/html/08-load-data_9bd7127d05a3ccaed97f21869343c0ef">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -320,12 +332,12 @@ Bounding box:  xmin: 526556.6 ymin: 167827 xmax: 535640.4 ymax: 182673.8
 Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read lsoa dataset</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>lsoa21 <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/London-LSOA-2021.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>lsoa11 <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/London-LSOA-2011.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Reading layer `LSOA2021_London' from data source 
-  `/Users/justinvandijk/Library/CloudStorage/Dropbox/UCL/Web/jtvandijk.github.io/GEOG0114/data/London-LSOA-2021.gpkg' 
+<pre><code>Reading layer `London-LSOA-2011' from data source 
+  `/Users/justinvandijk/Library/CloudStorage/Dropbox/UCL/Web/jtvandijk.github.io/GEOG0114/data/London-LSOA-2011.gpkg' 
   using driver `GPKG'
-Simple feature collection with 4994 features and 8 fields
+Simple feature collection with 4835 features and 10 fields
 Geometry type: MULTIPOLYGON
 Dimension:     XY
 Bounding box:  xmin: 503574.2 ymin: 155850.8 xmax: 561956.7 ymax: 200933.6
@@ -345,7 +357,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 </div>
 <p>Now, carefully examine each individual dataframe to understand how the data is structured and what information it contains.</p>
-<div class="cell styled-output" data-hash="02-network_cache/html/08-inspect-data_ce7c4ba3147ac035f3e8b727e51177b8">
+<div class="cell styled-output" data-hash="02-network_cache/html/08-inspect-data_b69405bdb813e32aaa96c277ed45a43a">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -381,27 +393,53 @@ Projected CRS: OSGB36 / British National Grid
 4 MULTIPOINT ((526922.2 16988...
  [ reached 'max' / getOption("max.print") -- omitted 2 rows ]</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect country of birth data</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lsoa21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect lsoa dataset</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lsoa11)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Simple feature collection with 6 features and 8 fields
+<pre><code>Simple feature collection with 6 features and 10 fields
 Geometry type: MULTIPOLYGON
 Dimension:     XY
 Bounding box:  xmin: 531948.3 ymin: 180733.9 xmax: 545296.2 ymax: 184700.6
 Projected CRS: OSGB36 / British National Grid
-   LSOA21CD                  LSOA21NM  BNG_E  BNG_N      LONG      LAT
-1 E01000001       City of London 001A 532123 181632 -0.097140 51.51816
-2 E01000002       City of London 001B 532480 181715 -0.091970 51.51882
-3 E01000003       City of London 001C 532239 182033 -0.095320 51.52174
-4 E01000005       City of London 001E 533581 181283 -0.076270 51.51468
-5 E01000006 Barking and Dagenham 016A 544994 184274  0.089317 51.53875
-                                GlobalID pop2021                           geom
-1 {1A259A13-A525-4858-9CB0-E4952BA01AF6}    1473 MULTIPOLYGON (((532105.3 18...
-2 {1233E433-0B0D-4807-8117-17A83C23960D}    1384 MULTIPOLYGON (((532634.5 18...
-3 {5163B7CB-4FFE-4F41-95B9-AA6CFC0508A3}    1613 MULTIPOLYGON (((532135.1 18...
-4 {2AF8015E-386E-456D-A45A-D0A223C340DF}    1101 MULTIPOLYGON (((533808 1807...
-5 {B492B45E-175E-4E77-B0B5-5B2FD6993EF4}    1842 MULTIPOLYGON (((545122 1843...
- [ reached 'max' / getOption("max.print") -- omitted 1 rows ]</code></pre>
+   lsoa11cd            lsoa11nm           lsoa11nmw  bng_e  bng_n     long
+1 E01000001 City of London 001A City of London 001A 532129 181625 -0.09706
+2 E01000002 City of London 001B City of London 001B 532480 181699 -0.09197
+3 E01000003 City of London 001C City of London 001C 532245 182036 -0.09523
+4 E01000005 City of London 001E City of London 001E 533581 181265 -0.07628
+       lat                               globalid          lsoa11_name pop2011
+1 51.51810 {283B0EAD-F8FC-40B6-9A79-1DDD7E5C0758}  City of London 001A    1465
+2 51.51868 {DDCE266B-7825-428C-9E0A-DF66B0179A55}  City of London 001B    1436
+3 51.52176 {C45E358E-A794-485A-BF76-D96E5D458EA4}  City of London 001C    1346
+4 51.51452 {4DDAF5E4-E47F-4312-89A0-923FFEC028A6}  City of London 001E     985
+                            geom
+1 MULTIPOLYGON (((532105.1 18...
+2 MULTIPOLYGON (((532634.5 18...
+3 MULTIPOLYGON (((532135.1 18...
+4 MULTIPOLYGON (((533808 1807...
+ [ reached 'max' / getOption("max.print") -- omitted 2 rows ]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect borough dataset</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(borough)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 6 features and 7 fields
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 507007.4 ymin: 155850.8 xmax: 561957.5 ymax: 194889.3
+Projected CRS: OSGB36 / British National Grid
+  objectid                 name  gss_code  hectares nonld_area ons_inner
+1        1 Kingston upon Thames E09000021  3726.117      0.000         F
+2        2              Croydon E09000008  8649.441      0.000         F
+3        3              Bromley E09000006 15013.487      0.000         F
+4        4             Hounslow E09000018  5658.541     60.755         F
+5        5               Ealing E09000009  5554.428      0.000         F
+6        6             Havering E09000016 11445.735    210.763         F
+  sub_2011                           geom
+1    South POLYGON ((516401.6 160201.8...
+2    South POLYGON ((535009.2 159504.7...
+3    South POLYGON ((540373.6 157530.4...
+4     West POLYGON ((509703.4 175356.6...
+5     West POLYGON ((515647.2 178787.8...
+6     East POLYGON ((553564 179127.1, ...</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-tip">
@@ -416,18 +454,19 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 <section id="point-of-interest-data" class="level3">
 <h3 class="anchored" data-anchor-id="point-of-interest-data">Point of Interest data</h3>
-<p>The inspection shows that the POI dataset contains a wide variety of location types, with each point tagged under a main and alternative category, as provided by the Overture Maps Foundation via Meta and Microsoft. However, these tags may not be consistent across the dataset, so we will need to identify specific keywords to filter the <code>main_category</code> and <code>alternate_category</code> columns. We will start by filtering out all POIs where the word <code>school</code> features in the <code>main_category</code> column:</p>
+<p>The inspection shows that the POI dataset contains a wide variety of location types, with each point tagged under a main and alternative category, as provided by the Overture Maps Foundation via Meta and Microsoft. However, these tags may not be consistent across the dataset, so we will need to identify specific keywords to filter the <code>main_category</code> and <code>alternate_category</code> columns.</p>
+<p>We will start by filtering out all POIs where the word <code>school</code> features in the <code>main_category</code> column:</p>
 <div class="cell styled-output" data-hash="02-network_cache/html/08-school-data_7a8181bfa9b0c828b3ffdd368004d937">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter school poi data</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>poi_schools <span class="ot">&lt;-</span> poi24 <span class="sc">|&gt;</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">str_detect</span>(main_category, <span class="st">"school"</span>))</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">unique</span>(poi_schools<span class="sc">$</span>main_category), <span class="at">n =</span> <span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter school poi data</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>poi_schools <span class="ot">&lt;-</span> poi24 <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">str_detect</span>(main_category, <span class="st">"school"</span>))</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">unique</span>(poi_schools<span class="sc">$</span>main_category), <span class="at">n =</span> <span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "\"day_care_preschool\""              "\"driving_school\""                 
@@ -457,36 +496,36 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 </div>
-<p>This is still a very large list, and not all POIs containing the string <code>school</code> should be included. However, this initial selection gives us a more manageable list from which we can choose the relevant tags. Once we have made our selections, we can further filter the dataset accordingly as well as clip the dataset to the administrative boundaries of Lambeth.</p>
+<p>This is still a very large list, and looking at the categories not all POIs containing the string <code>school</code> should be included. However, this initial selection has given us a more manageable list from which we can choose the relevant tags. We can now further filter the dataset as well as clip the dataset to the administrative boundaries of Lambeth.</p>
 <div class="cell styled-output" data-hash="02-network_cache/html/08-school-data-filter1_0fe868a96698e3873b2df4a0b119f688">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove quotes for easier processing</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>poi_schools <span class="ot">&lt;-</span> poi_schools <span class="sc">|&gt;</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">main_category =</span> <span class="fu">str_replace_all</span>(main_category, <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>, <span class="st">""</span>))</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># filter school poi data</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>poi_schools <span class="ot">&lt;-</span> poi_schools <span class="sc">|&gt;</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(main_category <span class="sc">==</span> <span class="st">"elementary_school"</span> <span class="sc">|</span> main_category <span class="sc">==</span> <span class="st">"high_school"</span> <span class="sc">|</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>        main_category <span class="sc">==</span> <span class="st">"middle_school"</span> <span class="sc">|</span> main_category <span class="sc">==</span> <span class="st">"private_school"</span> <span class="sc">|</span> main_category <span class="sc">==</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"public_school"</span> <span class="sc">|</span> main_category <span class="sc">==</span> <span class="st">"school"</span>)</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co"># filter school poi data</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>lambeth <span class="ot">&lt;-</span> borough <span class="sc">|&gt;</span></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"Lambeth"</span>)</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>poi_schools <span class="ot">&lt;-</span> poi_schools <span class="sc">|&gt;</span></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersection</span>(lambeth) <span class="sc">|&gt;</span></span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">11</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove quotes for easier processing</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>poi_schools <span class="ot">&lt;-</span> poi_schools <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">main_category =</span> <span class="fu">str_replace_all</span>(main_category, <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>, <span class="st">""</span>))</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># filter school poi data</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>poi_schools <span class="ot">&lt;-</span> poi_schools <span class="sc">|&gt;</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(main_category <span class="sc">==</span> <span class="st">"elementary_school"</span> <span class="sc">|</span> main_category <span class="sc">==</span> <span class="st">"high_school"</span> <span class="sc">|</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>        main_category <span class="sc">==</span> <span class="st">"middle_school"</span> <span class="sc">|</span> main_category <span class="sc">==</span> <span class="st">"private_school"</span> <span class="sc">|</span> main_category <span class="sc">==</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"public_school"</span> <span class="sc">|</span> main_category <span class="sc">==</span> <span class="st">"school"</span>)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co"># filter school poi data</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>lambeth <span class="ot">&lt;-</span> borough <span class="sc">|&gt;</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"Lambeth"</span>)</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>poi_schools <span class="ot">&lt;-</span> poi_schools <span class="sc">|&gt;</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersection</span>(lambeth) <span class="sc">|&gt;</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">11</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: attribute variables are assumed to be spatially constant throughout
 all geometries</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>poi_schools</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>poi_schools</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 141 features and 11 fields
 Geometry type: POINT
@@ -538,14 +577,14 @@ First 10 features:
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter school poi data</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>poi_schools <span class="ot">&lt;-</span> poi_schools <span class="sc">|&gt;</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">str_detect</span>(alternate_category, <span class="st">"elementary_school"</span>) <span class="sc">|</span> <span class="fu">str_detect</span>(alternate_category,</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"high_school"</span>) <span class="sc">|</span> <span class="fu">str_detect</span>(alternate_category, <span class="st">"middle_school"</span>) <span class="sc">|</span> <span class="fu">str_detect</span>(alternate_category,</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"private_school"</span>) <span class="sc">|</span> <span class="fu">str_detect</span>(alternate_category, <span class="st">"public_school"</span>))</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>poi_schools</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter school poi data</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>poi_schools <span class="ot">&lt;-</span> poi_schools <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">str_detect</span>(alternate_category, <span class="st">"elementary_school"</span>) <span class="sc">|</span> <span class="fu">str_detect</span>(alternate_category,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"high_school"</span>) <span class="sc">|</span> <span class="fu">str_detect</span>(alternate_category, <span class="st">"middle_school"</span>) <span class="sc">|</span> <span class="fu">str_detect</span>(alternate_category,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"private_school"</span>) <span class="sc">|</span> <span class="fu">str_detect</span>(alternate_category, <span class="st">"public_school"</span>))</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>poi_schools</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 58 features and 11 fields
@@ -583,19 +622,19 @@ First 10 features:
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># identify duplicate postcodes</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>poi_schools <span class="ot">&lt;-</span> poi_schools <span class="sc">|&gt;</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(postcode) <span class="sc">|&gt;</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">rank</span>(primary_name)) <span class="sc">|&gt;</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>()</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># filter school poi data</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>poi_schools <span class="ot">&lt;-</span> poi_schools <span class="sc">|&gt;</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">is.na</span>(postcode) <span class="sc">|</span> rank <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>rank)</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>poi_schools</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># identify duplicate postcodes</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>poi_schools <span class="ot">&lt;-</span> poi_schools <span class="sc">|&gt;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(postcode) <span class="sc">|&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">rank</span>(primary_name)) <span class="sc">|&gt;</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>()</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># filter school poi data</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>poi_schools <span class="ot">&lt;-</span> poi_schools <span class="sc">|&gt;</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">is.na</span>(postcode) <span class="sc">|</span> rank <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>rank)</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>poi_schools</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 54 features and 11 fields
@@ -632,20 +671,20 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 </div>
-<p>We can now use a similar approach to approximate the locations of fast food outlets in the Borough.</p>
+<p>We can use a similar approach to approximate the locations of fast food outlets in the Borough.</p>
 <div class="cell styled-output" data-hash="02-network_cache/html/08-fastfood-data_f2f18059191800372b43a63b6f7ec651">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter fast food poi data</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>poi_fastfood <span class="ot">&lt;-</span> poi24 <span class="sc">|&gt;</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">str_detect</span>(main_category, <span class="st">"fast_food_restaurant"</span>) <span class="sc">|</span> <span class="fu">str_detect</span>(alternate_category,</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"fast_food_restaurant"</span>) <span class="sc">|</span> <span class="fu">str_detect</span>(alternate_category, <span class="st">"chicken_restaurant"</span>) <span class="sc">|</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(alternate_category, <span class="st">"burger_restaurant"</span>))</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>poi_fastfood</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter fast food poi data</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>poi_fastfood <span class="ot">&lt;-</span> poi24 <span class="sc">|&gt;</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">str_detect</span>(main_category, <span class="st">"fast_food_restaurant"</span>) <span class="sc">|</span> <span class="fu">str_detect</span>(alternate_category,</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"fast_food_restaurant"</span>) <span class="sc">|</span> <span class="fu">str_detect</span>(alternate_category, <span class="st">"chicken_restaurant"</span>) <span class="sc">|</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(alternate_category, <span class="st">"burger_restaurant"</span>))</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>poi_fastfood</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 1444 features and 11 fields
@@ -678,43 +717,43 @@ First 10 features:
 </div>
 </div>
 <p>Let’s map both dataset to get an idea of how the data look like:</p>
-<div class="cell styled-output" data-hash="02-network_cache/html/fig-08-poi-map_86ce87fe5803c882d66acbaf37e4e928">
+<div class="cell styled-output" data-hash="02-network_cache/html/fig-08-poi-map_a22162ecff70aaafc916face210cf95a">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># combine for mapping</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>poi_schools <span class="ot">&lt;-</span> poi_schools <span class="sc">|&gt;</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="st">"School"</span>)</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>poi_fastfood <span class="ot">&lt;-</span> poi_fastfood <span class="sc">|&gt;</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="st">"Fast food"</span>)</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>poi_lambeth <span class="ot">&lt;-</span> <span class="fu">rbind</span>(poi_schools, poi_fastfood)</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co"># shape, polygon</span></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(lambeth) <span class="sc">+</span></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify column, classes</span></span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#f0f0f0"</span>,</span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># shape, points</span></span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(poi_lambeth) <span class="sc">+</span></span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify column, colours</span></span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>(</span>
-<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"type"</span>,</span>
-<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.05</span>,</span>
-<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#beaed4"</span>, <span class="st">"#fdc086"</span>),</span>
-<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"POI type"</span></span>
-<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set layout</span></span>
-<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(</span>
-<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.outside =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"right"</span>, <span class="st">"bottom"</span>),</span>
-<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">frame =</span> <span class="cn">FALSE</span></span>
-<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># combine for mapping</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>poi_schools <span class="ot">&lt;-</span> poi_schools <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="st">"School"</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>poi_fastfood <span class="ot">&lt;-</span> poi_fastfood <span class="sc">|&gt;</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="st">"Fast food"</span>)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>poi_lambeth <span class="ot">&lt;-</span> <span class="fu">rbind</span>(poi_schools, poi_fastfood)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="co"># shape, polygon</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(lambeth) <span class="sc">+</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify column, classes</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#f0f0f0"</span>,</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># shape, points</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(poi_lambeth) <span class="sc">+</span></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify column, colours</span></span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>(</span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"type"</span>,</span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.05</span>,</span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#beaed4"</span>, <span class="st">"#fdc086"</span>),</span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">""</span></span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set layout</span></span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(</span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.outside =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"right"</span>, <span class="st">"bottom"</span>),</span>
+<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">frame =</span> <span class="cn">FALSE</span></span>
+<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
 <div id="fig-08-poi-map" class="quarto-figure quarto-figure-center anchored">
@@ -740,21 +779,21 @@ First 10 features:
 </div>
 </div>
 <p>To download the Lambeth road network dataset, we first need to define our bounding box coordinates. We will then use these coordinates in our OSM query to extract specific types of road segments within the defined search area. Our focus will be on selecting all OSM features with the <code>highway</code> tag that are likely to be used by pedestrians (e.g.&nbsp;excluding <code>motorways</code>).</p>
-<div class="cell styled-output">
+<div class="cell styled-output" data-hash="02-network_cache/html/08-network-data_5d99e0d0f84d378c810e19dc7d897c48">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define our bbox coordinates, use WGS84</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>bbox_lambeth <span class="ot">&lt;-</span> poi24 <span class="sc">|&gt;</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_transform</span>(<span class="dv">4326</span>) <span class="sc">|&gt;</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_bbox</span>()</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># osm query</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>osm_network <span class="ot">&lt;-</span> <span class="fu">opq</span>(<span class="at">bbox =</span> bbox_lambeth) <span class="sc">|&gt;</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_osm_feature</span>(<span class="at">key =</span> <span class="st">"highway"</span>, <span class="at">value =</span> <span class="fu">c</span>(<span class="st">"primary"</span>, <span class="st">"secondary"</span>, <span class="st">"tertiary"</span>,</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"residential"</span>, <span class="st">"path"</span>, <span class="st">"footway"</span>, <span class="st">"unclassified"</span>, <span class="st">"living_street"</span>, <span class="st">"pedestrian"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">osmdata_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define our bbox coordinates, use WGS84</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>bbox_lambeth <span class="ot">&lt;-</span> poi24 <span class="sc">|&gt;</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_transform</span>(<span class="dv">4326</span>) <span class="sc">|&gt;</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_bbox</span>()</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># osm query</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>osm_network <span class="ot">&lt;-</span> <span class="fu">opq</span>(<span class="at">bbox =</span> bbox_lambeth) <span class="sc">|&gt;</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_osm_feature</span>(<span class="at">key =</span> <span class="st">"highway"</span>, <span class="at">value =</span> <span class="fu">c</span>(<span class="st">"primary"</span>, <span class="st">"secondary"</span>, <span class="st">"tertiary"</span>,</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"residential"</span>, <span class="st">"path"</span>, <span class="st">"footway"</span>, <span class="st">"unclassified"</span>, <span class="st">"living_street"</span>, <span class="st">"pedestrian"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">osmdata_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-warning">
@@ -769,20 +808,20 @@ First 10 features:
 </div>
 </div>
 <p>The returned <code>osm_network</code> object contains a variety of elements with the specified tags. Our next step is to extract the spatial data from this object to create our road network dataset. Specifically, we will extract the edges of the network, which represent the lines of the roads, as well as the nodes, which represent the points where the roads start, end, or intersect.</p>
-<div class="cell styled-output">
+<div class="cell styled-output" data-hash="02-network_cache/html/08-network-data-load_ed3aa59237f78a7ab8a742ab7864e53a">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the nodes, with their osm_id.</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>osm_network_nodes <span class="ot">&lt;-</span> osm_network<span class="sc">$</span>osm_points[, <span class="st">"osm_id"</span>]</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the edges</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>osm_network_edges <span class="ot">&lt;-</span> osm_network<span class="sc">$</span>osm_lines[, <span class="fu">c</span>(<span class="st">"osm_id"</span>, <span class="st">"name"</span>, <span class="st">"highway"</span>, <span class="st">"maxspeed"</span>,</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"oneway"</span>)]</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(osm_network_nodes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the nodes, with their osm_id</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>osm_network_nodes <span class="ot">&lt;-</span> osm_network<span class="sc">$</span>osm_points[, <span class="st">"osm_id"</span>]</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the edges</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>osm_network_edges <span class="ot">&lt;-</span> osm_network<span class="sc">$</span>osm_lines[, <span class="fu">c</span>(<span class="st">"osm_id"</span>, <span class="st">"name"</span>, <span class="st">"highway"</span>, <span class="st">"maxspeed"</span>,</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"oneway"</span>)]</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(osm_network_nodes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 6 features and 1 field
@@ -798,8 +837,8 @@ Geodetic CRS:  WGS 84
 99882  99882 POINT (-0.1541499 51.52567)
 99883  99883 POINT (-0.1541362 51.52598)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(osm_network_edges)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(osm_network_edges)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 6 features and 5 fields
 Geometry type: LINESTRING
@@ -822,49 +861,49 @@ Geodetic CRS:  WGS 84
 1530592 LINESTRING (-0.0882957 51.5...</code></pre>
 </div>
 </div>
-<p>We can quickly map the edges to see how the road network looks like:</p>
+<p>We can quickly map the network edges to see how the road network looks like:</p>
 <div class="cell styled-output" data-hash="02-network_cache/html/fig-08-netx-map_be6c23b7f8f4c40747e528074f24e836">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># shape, polygon</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(osm_network_edges) <span class="sc">+</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify column, classes</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>(</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#bdbdbd"</span>,</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">lwd =</span> <span class="fl">0.2</span>,</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># shape, polygon</span></span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(lambeth) <span class="sc">+</span></span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify column, classes</span></span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_borders</span>(</span>
-<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#252525"</span>,</span>
-<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">lwd =</span> <span class="dv">2</span></span>
-<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set legend</span></span>
-<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_add_legend</span>(</span>
-<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"line"</span>,</span>
-<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="st">"Road segments"</span>,</span>
-<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#bdbdbd"</span></span>
-<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_add_legend</span>(</span>
-<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"line"</span>,</span>
-<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="st">"Outline Lambeth"</span>,</span>
-<span id="cb30-29"><a href="#cb30-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#252525"</span></span>
-<span id="cb30-30"><a href="#cb30-30" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb30-31"><a href="#cb30-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-32"><a href="#cb30-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set layout</span></span>
-<span id="cb30-33"><a href="#cb30-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(</span>
-<span id="cb30-34"><a href="#cb30-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">frame =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb30-35"><a href="#cb30-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.outside =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb30-36"><a href="#cb30-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"right"</span>, <span class="st">"bottom"</span>),</span>
-<span id="cb30-37"><a href="#cb30-37" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># shape, polygon</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(osm_network_edges) <span class="sc">+</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify column, classes</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>(</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#bdbdbd"</span>,</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">lwd =</span> <span class="fl">0.2</span>,</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># shape, polygon</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(lambeth) <span class="sc">+</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify column, classes</span></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_borders</span>(</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#252525"</span>,</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">lwd =</span> <span class="dv">2</span></span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set legend</span></span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_add_legend</span>(</span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"line"</span>,</span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="st">"Road segments"</span>,</span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#bdbdbd"</span></span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_add_legend</span>(</span>
+<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"line"</span>,</span>
+<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="st">"Outline Lambeth"</span>,</span>
+<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#252525"</span></span>
+<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set layout</span></span>
+<span id="cb32-33"><a href="#cb32-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(</span>
+<span id="cb32-34"><a href="#cb32-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">frame =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb32-35"><a href="#cb32-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.outside =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"right"</span>, <span class="st">"bottom"</span>),</span>
+<span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
 <div id="fig-08-netx-map" class="quarto-figure quarto-figure-center anchored">
@@ -875,33 +914,32 @@ Geodetic CRS:  WGS 84
 </div>
 </div>
 </div>
-<p>This looks good. Since our focus is on schoolchildren, we will overwrite the <code>oneway</code> variable to assume that none of the road segments are restricted to one-way traffic. This adjustment will ensure our analysis is not skewed by such restrictions and will help maintain a more accurate representation of the general connectivity of the network.</p>
-<div class="cell styled-output">
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>R code</strong></pre>
-</div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># overwrite one-way default</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>osm_network_edges<span class="sc">$</span>oneway <span class="ot">&lt;-</span> <span class="st">"no"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-<p>Now we have the network edges, we can turn this into a graph-representation that allows for the calculation of network-based accessibility statistics with our prepared point of interest data.</p>
 </section>
 <section id="network-preparation" class="level3">
 <h3 class="anchored" data-anchor-id="network-preparation">Network preparation</h3>
-<p>In any network analysis, the primary data structure is a graph composed of nodes and edges. The <code>dodgr</code> library utilises weighting profiles to assign weights based on road types, tailored to the mode of transport that each profile is designed to model.</p>
-<p>In this instance, we will use the <code>foot</code> weighting profile, as our focus is on modelling walking accessibility. To prevent errors related to the weighting profile, we will replace any <code>NA</code> values in the highway tag with the value <code>unclassified</code>.</p>
-<div class="cell styled-output" data-hash="02-network_cache/html/08-network-graph_dbc5b6d8cb770d5bb41528713255b42d">
+<p>Since our focus is on schoolchildren and walking distances, we will overwrite the <code>oneway</code> variable to assume that none of the road segments are restricted to one-way traffic. This adjustment will ensure our analysis is not skewed by such restrictions and will help maintain a more accurate representation of the general connectivity of the network.</p>
+<div class="cell styled-output" data-hash="02-network_cache/html/08-network-one-way_20007d44e01b35b7bc94c5cc86afff05">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># replace highway tags with</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>osm_network_edges <span class="ot">&lt;-</span> osm_network_edges <span class="sc">|&gt;</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">highway =</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(highway), <span class="st">"unclassified"</span>, highway))</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co"># create network graph</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>osm_network_graph <span class="ot">&lt;-</span> <span class="fu">weight_streetnet</span>(osm_network_edges, <span class="at">wt_profile =</span> <span class="st">"foot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># overwrite one-way default</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>osm_network_edges<span class="sc">$</span>oneway <span class="ot">&lt;-</span> <span class="st">"no"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Now we have the network edges, we can turn this into a graph-representation that allows for the calculation of network-based accessibility statistics with our prepared point of interest data.</p>
+<p>In any network analysis, the primary data structure is a graph composed of nodes and edges. The <code>dodgr</code> library utilises weighting profiles to assign weights based on road types, tailored to the mode of transport that each profile is designed to model. In this instance, we will use the <code>foot</code> weighting profile, as our focus is on modelling walking accessibility. To prevent errors related to the weighting profile, we will replace any <code>NA</code> values in the highway tag with the value <code>unclassified</code>.</p>
+<div class="cell styled-output" data-hash="02-network_cache/html/08-network-graph_fe950208f74821876fbb9a044be57938">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># replace missing highway tags with unclassified</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>osm_network_edges <span class="ot">&lt;-</span> osm_network_edges <span class="sc">|&gt;</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">highway =</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(highway), <span class="st">"unclassified"</span>, highway))</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co"># create network graph</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>osm_network_graph <span class="ot">&lt;-</span> <span class="fu">weight_streetnet</span>(osm_network_edges, <span class="at">wt_profile =</span> <span class="st">"foot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p>Once we have constructed our graph, we can use it to calculate network distances between our points of interest. One important consideration is that not all individual components in the extracted network may be connected. This can occur, for example, if the bounding box cuts off access to the road of a <a href="https://en.wikipedia.org/wiki/Dead_end_(street)">cul-de-sac</a>. To ensure that our entire extracted network is connected, we will therefore extract the largest connected component of the graph.</p>
@@ -911,23 +949,23 @@ Geodetic CRS:  WGS 84
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>The dodgr package documentation explains that components are numbered in order of decreasing size, with <code>$component = 1</code> always representing the largest component. It is essential to inspect the resulting subgraph to ensure that its coverage is adequate for analysis.</p>
+<p>The <code>dodgr</code> package documentation explains that components are numbered in order of decreasing size, with <code>$component = 1</code> always representing the largest component. It is essential to inspect the resulting subgraph to ensure that its coverage is adequate for analysis.</p>
 </div>
 </div>
 </div>
-<div class="cell styled-output" data-hash="02-network_cache/html/08-connected-network-graph_daa235afef54b57de5aeb0ff052f1228">
+<div class="cell styled-output" data-hash="02-network_cache/html/08-connected-network-graph_ec0ccbecac137e818b0488f753bccec7">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the largest connected graph component</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>netx_connected <span class="ot">&lt;-</span> osm_network_graph[osm_network_graph<span class="sc">$</span>component <span class="sc">==</span> <span class="dv">1</span>, ]</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect number of remaining road segments</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(netx_connected)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the largest connected graph component</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>netx_connected <span class="ot">&lt;-</span> osm_network_graph[osm_network_graph<span class="sc">$</span>component <span class="sc">==</span> <span class="dv">1</span>, ]</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect number of remaining road segments</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(netx_connected)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 406752</code></pre>
+<pre><code>[1] 406770</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-warning">
@@ -944,37 +982,182 @@ Geodetic CRS:  WGS 84
 <section id="accessibility-analysis-1" class="level3">
 <h3 class="anchored" data-anchor-id="accessibility-analysis-1">Accessibility analysis</h3>
 <p>Now that we have our connected subgraph, we can use the <code>dodgr_distances()</code> function to calculate the network distances between every possible origin (i.e.&nbsp;school) and destination (i.e.&nbsp;fast food outlet). For all combinations, the function will map the point of interest locations to the nearest point on the network and return the corresponding shortest-path distances.</p>
-<div class="callout callout-style-simple callout-warning">
+<div class="callout callout-style-simple callout-tip">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>The dodgr package requires data to be projected in WGS84, so we need to reproject our point of interest data accordingly.</p>
+<p>The <code>dodgr</code> package requires data to be projected in WGS84, so we need to reproject our point of interest data accordingly.</p>
 </div>
 </div>
 </div>
-<div class="cell styled-output" data-hash="02-network_cache/html/08-distance-matrix_61fc66c8ef3494e90fdc1fee62dda53a">
+<div class="cell styled-output" data-hash="02-network_cache/html/08-distance-matrix_7a5f7be5ee5dc266bfb92d9cd174d467">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reproject</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>poi_schools <span class="ot">&lt;-</span> poi_schools <span class="sc">|&gt;</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_transform</span>(<span class="dv">4326</span>)</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>poi_fastfood <span class="ot">&lt;-</span> poi_fastfood <span class="sc">|&gt;</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_transform</span>(<span class="dv">4326</span>)</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co"># distance matrix</span></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>distance_matrix <span class="ot">&lt;-</span> <span class="fu">dodgr_distances</span>(netx_connected, <span class="at">from =</span> <span class="fu">st_coordinates</span>(poi_schools),</span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">to =</span> <span class="fu">st_coordinates</span>(poi_fastfood), <span class="at">shortest =</span> <span class="cn">FALSE</span>, <span class="at">pairwise =</span> <span class="cn">FALSE</span>, <span class="at">quiet =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reproject</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>poi_schools <span class="ot">&lt;-</span> poi_schools <span class="sc">|&gt;</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_transform</span>(<span class="dv">4326</span>)</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>poi_fastfood <span class="ot">&lt;-</span> poi_fastfood <span class="sc">|&gt;</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_transform</span>(<span class="dv">4326</span>)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="co"># distance matrix</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>distance_matrix <span class="ot">&lt;-</span> <span class="fu">dodgr_distances</span>(netx_connected, <span class="at">from =</span> <span class="fu">st_coordinates</span>(poi_schools),</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">to =</span> <span class="fu">st_coordinates</span>(poi_fastfood), <span class="at">shortest =</span> <span class="cn">FALSE</span>, <span class="at">pairwise =</span> <span class="cn">FALSE</span>, <span class="at">quiet =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Calculating shortest paths ... done.</code></pre>
 </div>
 </div>
 <p>The result of this computation is a distance matrix that contains the network distances between all origins (i.e.&nbsp;schools) and all destinations (i.e.&nbsp;fast-food outlets):</p>
-<p>To do: - check input data in QGIS for <code>NA</code> distances - check <code>shortest = FALSE</code> to see if travel time works</p>
+<div class="cell styled-output" data-hash="02-network_cache/html/08-distance-matrix-check_2963f9a60d3e05d739a65480427f98dc">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>distance_matrix[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            6807494201 7110321980 7110321980 11371586827 33148215
+8796433764    4620.065   4620.244   4620.244    3134.942 3093.025
+8820889464    3621.747   3763.371   3763.371    1969.607 1927.691
+11479633279   8456.816   8456.995   8456.995    6946.458 6904.541
+292521291     4917.554   4917.732   4917.732    3841.312 3905.577
+6625498885    6279.569   6279.747   6279.747    5203.327 5267.591</code></pre>
+</div>
+</div>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The above output displays the distance (in metres) between the first five schools and the first five fast-food outlets. The row and column IDs refer to the nearest nodes on the OSM network to which the schools and fast-food outlets were mapped.</p>
+</div>
+</div>
+</div>
+<p>Now that we have the distance matrix, we can aggregate the data and perform accessibility analysis. For example, we can count the number of fast-food outlets within 500 or 1,000 metres walking distance from each school:</p>
+<div class="cell styled-output" data-hash="02-network_cache/html/08-distance-matrix-aggregate_c4b13b1bb1c93338923d09ead7d86c60">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fast-food outlets within 500m</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>poi_schools<span class="sc">$</span>fastfood_500m <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(distance_matrix <span class="sc">&lt;=</span> <span class="dv">500</span>)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co"># fast-food outlets within 1000m</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>poi_schools<span class="sc">$</span>fastfood_1000m <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(distance_matrix <span class="sc">&lt;=</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>You can further inspect the results using the <code>View()</code> function.</p>
+</div>
+</div>
+</div>
+<p>In the final step, we can investigate whether there is a relationship between the proximity of fast-food outlets and the relative levels of deprivation in the area. One approach is to calculate the average number of fast-food outlets within 1,000 metres of a school for each LSOA, and then compare these figures to their corresponding IMD deciles.</p>
+<div class="cell styled-output" data-hash="02-network_cache/html/08-accessibility-join-imd_8790f59fcf1c061bb7bd7db8c53138c2">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read imd dataset</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>imd19 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/England-IMD-2019.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 32844 Columns: 3
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): lsoa11cd
+dbl (2): imd_rank, imd_dec
 
-
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>lsoa11 <span class="ot">&lt;-</span> lsoa11 <span class="sc">|&gt;</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(imd19, <span class="at">by =</span> <span class="fu">c</span>(<span class="at">lsoa11cd =</span> <span class="st">"lsoa11cd"</span>))</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="co"># assign schools to their parent lsoa</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>poi_schools <span class="ot">&lt;-</span> poi_schools <span class="sc">|&gt;</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_transform</span>(<span class="dv">27700</span>) <span class="sc">|&gt;</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_join</span>(lsoa11)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can use this approach to derive the average number of fast-food by IMD decile:</p>
+<div class="cell styled-output" data-hash="02-network_cache/html/08-accessibility-cnt-imd_8da13a7e9caef55749b7aa3910a5a22f">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># average counts by imd decile</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>fastfood_imd <span class="ot">&lt;-</span> poi_schools <span class="sc">|&gt;</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(imd_dec) <span class="sc">|&gt;</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">avg_cnt =</span> <span class="fu">mean</span>(fastfood_1000m)) <span class="sc">|&gt;</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>(imd_dec, avg_cnt) <span class="sc">|&gt;</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(imd_dec)</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>fastfood_imd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 2
+# Groups:   imd_dec [7]
+  imd_dec avg_cnt
+    &lt;dbl&gt;   &lt;dbl&gt;
+1       2   20.1 
+2       3   14.4 
+3       4   17.9 
+4       5    9.83
+5       6    3   
+6       7    8.2 
+7       8   23.5 </code></pre>
+</div>
+</div>
+<p>There appears to be a weak relationship, with schools in more deprived areas having, on average, a higher number of fast-food outlets within a 1,000-metre walking distance. However, this trend is not consistent, as schools in the least deprived areas of Lambeth show the highest accessibility on average.</p>
 </section>
+</section>
+<section id="assignment" class="level2">
+<h2 class="anchored" data-anchor-id="assignment">Assignment</h2>
+<p>Accessibility analysis involves evaluating how easily people can reach essential services, destinations, or opportunities, such as schools, healthcare facilities, or workplaces, from a given location. It considers factors like distance, travel time, and transport networks, providing valuable insights for urban planning, transport policies, and social equity. The CDRC <a href="https://data.cdrc.ac.uk/dataset/access-healthy-assets-hazards-ahah">Access to Healthy Assets &amp; Hazards (AHAH)</a> dataset, for instance, uses accessibility analysis to quantify how easy it is to reach ‘unhealthy’ places, such as pubs and gambling outlets, for each neighbourhood in Great Britain.</p>
+<p>Having run through all the steps during the tutorial, we can recreate this analysis ourselves. Using Lambeth as a case study, try to complete the following tasks:</p>
+<ol type="1">
+<li>Extract all <code>pubs</code> from the Point of Interest dataset.</li>
+<li>For each LSOA within Lambeth, calculate the average walking distance to the nearest pub.</li>
+<li>Create a map of the results.</li>
+</ol>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Unlike before, LSOAs are now the unit of analysis. This means you will need to use the LSOA centroids as inputs for your distance matrix.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>If you want to take a deep dive into accessibility analysis, there is a great resource that got published recently: <a href="https://ipeagit.github.io/intro_access_book/">Introduction to urban accessibility: a practical guide in R</a>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="before-you-leave" class="level2">
+<h2 class="anchored" data-anchor-id="before-you-leave">Before you leave</h2>
+<p>This brings us to the end of the tutorial. You should now have a basic understanding of the concepts behind accessibility analysis, how it can be executed in R, and some of the challenges you may encounter when conducting your own research. With this being said, <a href="https://www.youtube.com/watch?v=fFw7q-BLxLA">you have now reached the end of this week’s content</a>. Onwards and upwards!</p>
+
+
 </section>
 </section>
 
