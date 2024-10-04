@@ -32,7 +32,7 @@ This year's version features the following **major** updates:
 
 - Second full rewrite of the workbook using `Quarto`.
 - Fully updated geodemographics content drawing on the [London Output Area Classification](https://doi.org/10.1177/23998083241242913).
-- Updated accesibility analysis content using [Overture Point of Interest data](https://journals.sagepub.com/doi/full/10.1177/23998083241263124).
+- Updated accessibility analysis content using [Overture Point of Interest data](https://journals.sagepub.com/doi/full/10.1177/23998083241263124).
 :::
 
 ## Acknowledgements {.unnumbered}
