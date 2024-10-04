@@ -35,7 +35,9 @@ To download a `csv` file that is hosted on GitHub, click on the `Download raw fi
 To extract the Lambeth Overture Points of Interest data, a 2-kilometre buffer was applied around the boundaries of Lambeth. This approach ensures that points just outside the study area are included, as locations beyond the borough boundary may still be accessible to residents and could represent the nearest available options.
 :::
 
-Open a new script and save this as `w08-accessibility.r`. We will start by loading the libraries that we will need:
+Open a new script and save this as `w08-accessibility.r`. 
+
+We will start by loading the libraries that we will need:
 
 ```{r}
 #| label: 08-options
@@ -140,6 +142,7 @@ This is still a very large list, and looking at the categories not all POIs cont
 #| echo: True
 #| eval: True
 #| tidy: True
+#| warning: False
 #| filename: "R code"
 
 # remove quotes for easier processing
@@ -244,7 +247,7 @@ poi_fastfood <- poi24 |>
 poi_fastfood
 ```
 
-Let's map both dataset to get an idea of how the data look like:
+Let's map both datasets to get an idea of how the data look like:
 
 ```{r tidy='styler'} 
 #| label: fig-08-poi-map
@@ -468,6 +471,7 @@ The `dodgr` package requires data to be projected in WGS84, so we need to reproj
 #| echo: True
 #| eval: True
 #| tidy: True
+#| message: False
 #| filename: "R code"
 
 # reproject
@@ -526,12 +530,11 @@ You can further inspect the results using the `View()` function.
 
 In the final step, we can investigate whether there is a relationship between the proximity of fast-food outlets and the relative levels of deprivation in the area. One approach is to calculate the average number of fast-food outlets within 1,000 metres of a school for each LSOA, and then compare these figures to their corresponding IMD deciles.
 
-```{r} 
+```{r tidy='styler'} 
 #| label: 08-accessibility-join-imd
 #| classes: styled-output
 #| echo: True
 #| eval: True
-#| tidy: True
 #| filename: "R code"
 # read imd dataset
 imd19 <- read_csv('data/England-IMD-2019.csv')

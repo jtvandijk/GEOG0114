@@ -35,7 +35,9 @@ To download a `csv` file that is hosted on GitHub, click on the `Download raw fi
 For the spatial boundaries of the London LSOAs, you may have noticed that, instead of providing a collection of files known as a `shapefile`, we have supplied a `GeoPackage.` While `shapefiles` remain in use, `GeoPackage` is a more modern and portable file format. Have a look at this article on *towardsdatascience.com* for an excellent explanation on why one should use `GeoPackage` files over `shapefiles`, where possible: [[Link]](https://towardsdatascience.com/why-you-need-to-use-geopackage-files-instead-of-shapefile-or-geojson-7cb24fe56416)
 :::
 
-Open a new script and save this as `w07-geodemographics.r`. Begin by loading the necessary libraries:
+Open a new script and save this as `w07-geodemographics.r`. 
+
+Begin by loading the necessary libraries:
 
 ```{r}
 #| label: 07-options
@@ -342,10 +344,10 @@ lsoa_df_vis <- lsoa_df
 names(lsoa_df_vis)[2:37] <- paste0('v', sprintf('%02d', 1:36))
 
 # correlation matrix
-cor_mat <- cor_pmat(lsoa_df_vis[,-1])
+cor_mat <- cor(lsoa_df_vis[,-1])
 
 # correlation plot
-ggcorrplot(cor_mat, hc.order = FALSE, outline.col = '#ffffff', tl.cex = 8)
+ggcorrplot(cor_mat, outline.col = '#ffffff', tl.cex = 8, legend.title = 'Correlation')
 ```
 
 Following the approach from [Wyszomierski *et al.* (2024)](https://doi.org/10.1111/geoj.12550), we can define a *weak* correlation as lying between 0 and 0.40, *moderate* as between 0.41 and 0.65, *strong* as between 0.66 and 0.80, and *very strong* as between 0.81 and 1. 
@@ -468,6 +470,7 @@ ggplot(cluster_diffs_long, aes(x = factor(vars), y = score)) +
   coord_radial(rotate.angle = TRUE, expand = FALSE) +
   facet_wrap(~cluster, ncol = 3) +
   theme_minimal() +
+  theme(axis.text.x = element_text(size = 7)) +
   xlab('') +
   ylab('')
 ```
