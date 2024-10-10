@@ -161,7 +161,7 @@ lsoa_age <- lsoa_age |>
 The code above uses a pipe function: `|>`. The pipe operator allows you to pass the output of one function directly into the next, streamlining your code. While it might be a bit confusing at first, you will find that it makes your code faster to write and easier to read. More importantly, it reduces the need to create multiple intermediate variables to store outputs.
 :::
 
-To account for the non-uniformity of the areal units, we further need to convert the observations to percentages and only retain those columns that are likely to be meaningful in the context of the classification:
+To account for the non-uniformity of the areal units, we further need to convert the observations to proportions and only retain those columns that are likely to be meaningful in the context of the classification:
 
 ```{r}
 #| label: 07-prop-data-age

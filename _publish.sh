@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # clear cache
-# rm -r *_cache *_files
+rm -r *_cache *_files
 
 # render
 quarto render
