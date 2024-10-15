@@ -23,7 +23,7 @@ knitr::include_graphics('images/w00/data-science-welcome-sm.jpg')
 | 10   | Spatial models           | [Spatial models II]({{< var urls.git-url-am >}}) |
 
 ::: {.callout-note}
-This GitHub resrouces has been updated for the 2024-2025 academic year. The content for 2023-2024 has been archived and can be found here: [\[Link\]](https://jtvandijk.github.io/GEOG0114_20232024)
+This GitHub resource has been updated for the 2024-2025 academic year. The content for 2023-2024 has been archived and can be found here: [\[Link\]](https://jtvandijk.github.io/GEOG0114_20232024)
 :::
 
 ## Major updates {.unnumbered}
