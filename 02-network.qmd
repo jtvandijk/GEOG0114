@@ -24,7 +24,7 @@ You can download a subset of the POI dataset via the link provided below. A copy
 | :------                                     | :------| :------ |
 | Lambeth Overture Points of Interest 2024    | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0114/raw/master/data/Lambeth-POI-2024.gpkg) |
 | London LSOA 2011 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0114/raw/master/data/London-LSOA-2011.gpkg) |
-| London Borough Spatial Boundaries             | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0114/raw/master/data/London-Boroughs.gpkg) |
+| London Borough Spatial Boundaries           | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0114/raw/master/data/London-Boroughs.gpkg) |
 | England 2019 Index of Multiple Deprivation  | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/England-IMD-2019.csv) |
 
 ::: {.callout-tip}
@@ -35,7 +35,7 @@ To download a `csv` file that is hosted on GitHub, click on the `Download raw fi
 To extract the Lambeth Overture Points of Interest data, a 2-kilometre buffer was applied around the boundaries of Lambeth. This approach ensures that points just outside the study area are included, as locations beyond the borough boundary may still be accessible to residents and could represent the nearest available options.
 :::
 
-Open a new script and save this as `w08-accessibility.r`. 
+Open a new script and save this as `w08-accessibility-analysis.r`. 
 
 We will start by loading the libraries that we will need:
 
@@ -106,7 +106,7 @@ head(lsoa11)
 head(borough)
 ```
 
-### Point of Interest data
+### POI data
 The inspection shows that the POI dataset contains a wide variety of location types, with each point tagged under a main and alternative category, as provided by the Overture Maps Foundation via Meta and Microsoft. However, these tags may not be consistent across the dataset, so we will need to identify specific keywords to filter the `main_category` and `alternate_category` columns. 
 
 We will start by filtering out all POIs where the word `school` features in the `main_category` column:

@@ -36,7 +36,7 @@ To download a `csv` file that is hosted on GitHub, click on the `Download raw fi
 For the spatial boundaries of the London LSOAs, you may have noticed that, instead of providing a collection of files known as a `shapefile`, we have supplied a `GeoPackage.` While `shapefiles` remain in use, `GeoPackage` is a more modern and portable file format. Have a look at this article on *towardsdatascience.com* for an excellent explanation on why one should use `GeoPackage` files over `shapefiles`, where possible: [[Link]](https://towardsdatascience.com/why-you-need-to-use-geopackage-files-instead-of-shapefile-or-geojson-7cb24fe56416)
 :::
 
-Open a new script and save this as `w07-geodemographics.r`. 
+Open a new script and save this as `w07-geodemographic-analysis.r`. 
 
 Begin by loading the necessary libraries:
 

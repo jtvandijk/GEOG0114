@@ -192,7 +192,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#reading-w08" id="toc-reading-w08" class="nav-link" data-scroll-target="#reading-w08">Reading list</a></li>
   <li><a href="#accessibility-in-lambeth" id="toc-accessibility-in-lambeth" class="nav-link" data-scroll-target="#accessibility-in-lambeth">Accessibility in Lambeth</a>
   <ul class="collapse">
-  <li><a href="#point-of-interest-data" id="toc-point-of-interest-data" class="nav-link" data-scroll-target="#point-of-interest-data">Point of Interest data</a></li>
+  <li><a href="#poi-data" id="toc-poi-data" class="nav-link" data-scroll-target="#poi-data">POI data</a></li>
   <li><a href="#network-data" id="toc-network-data" class="nav-link" data-scroll-target="#network-data">Network data</a></li>
   <li><a href="#network-preparation" id="toc-network-preparation" class="nav-link" data-scroll-target="#network-preparation">Network preparation</a></li>
   <li><a href="#accessibility-analysis-1" id="toc-accessibility-analysis-1" class="nav-link" data-scroll-target="#accessibility-analysis-1">Accessibility analysis</a></li>
@@ -288,7 +288,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Open a new script and save this as <code>w08-accessibility.r</code>.</p>
+<p>Open a new script and save this as <code>w08-accessibility-analysis.r</code>.</p>
 <p>We will start by loading the libraries that we will need:</p>
 <div class="cell styled-output" data-hash="02-network_cache/html/08-load-libraries_b0f4ca282e529af795b4a9bd6793da40">
 <div class="code-with-filename">
@@ -443,8 +443,8 @@ Projected CRS: OSGB36 / British National Grid
 6     East POLYGON ((553564 179127.1, ...</code></pre>
 </div>
 </div>
-<section id="point-of-interest-data" class="level3">
-<h3 class="anchored" data-anchor-id="point-of-interest-data">Point of Interest data</h3>
+<section id="poi-data" class="level3">
+<h3 class="anchored" data-anchor-id="poi-data">POI data</h3>
 <p>The inspection shows that the POI dataset contains a wide variety of location types, with each point tagged under a main and alternative category, as provided by the Overture Maps Foundation via Meta and Microsoft. However, these tags may not be consistent across the dataset, so we will need to identify specific keywords to filter the <code>main_category</code> and <code>alternate_category</code> columns.</p>
 <p>We will start by filtering out all POIs where the word <code>school</code> features in the <code>main_category</code> column:</p>
 <div class="cell styled-output" data-hash="02-network_cache/html/08-school-data_7a8181bfa9b0c828b3ffdd368004d937">
