@@ -29,7 +29,7 @@ The data covers all usual residents, as recorded in the 2021 Census for England 
 | London LSOA 2021 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0114/raw/master/data/London-LSOA-2021.gpkg) |
 
 ::: {.callout-tip}
-To download a `csv` file that is hosted on GitHub, click on the `Download raw file` button on the top right of your screen and it should download directly to your computer.
+To download a `csv` file that is hosted on GitHub, click on the **Download raw file** button on the top right of your screen and it should download directly to your computer.
 :::
 
 ::: {.callout-note}
