@@ -261,7 +261,7 @@ Variable selection is often a time-consuming process that requires a combination
 A straightforward yet effective method to examine the distribution of our variables is to create boxplots for each variable. This can be efficiently achieved by using `facet_wrap()` from the `ggplot2()` library to generate a matrix of panels, allowing us to visualise all variables in a single view. 
 
 ::: {.callout-note}
-`ggplot2` is a popular data visualisation package in R, designed for creating complex plots. It uses the [Grammar of Graphics](https://towardsdatascience.com/a-comprehensive-guide-to-the-grammar-of-graphics-for-effective-visualization-of-multi-dimensional-1f92b4ed4149) to build layered, customisable graphics by mapping data to visual elements like colour, size, and shape. You can refer to the [ggplot2 documentation](https://ggplot2.tidyverse.org/for more details.
+`ggplot2` is a popular data visualisation package in R, designed for creating complex plots. It uses the [Grammar of Graphics](https://towardsdatascience.com/a-comprehensive-guide-to-the-grammar-of-graphics-for-effective-visualization-of-multi-dimensional-1f92b4ed4149) to build layered, customisable graphics by mapping data to visual elements like colour, size, and shape. You can refer to the [ggplot2 documentation](https://ggplot2.tidyverse.org/) for more details.
 :::
 
 ```{r}
