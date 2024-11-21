@@ -914,7 +914,7 @@ Available components:
 </div>
 </div>
 <p>These comparisons can then be visualised using, for instance, a radial bar plot:</p>
-<div class="cell" data-hash="01-geodemographics_cache/html/fig-07-radial-plot_27545eb0a81d509e2027aaac9cee7789">
+<div class="cell" data-hash="01-geodemographics_cache/html/fig-07-radial-plot_4478dbddcc344885022b724aed74123b">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -925,8 +925,8 @@ Available components:
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co"># facet clusters</span></span>
 <span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cluster_diffs_long, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(vars), <span class="at">y =</span> score)) <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_radial</span>(<span class="at">rotate.angle =</span> <span class="cn">TRUE</span>, <span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>cluster, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>)) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_radial</span>(<span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>cluster, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>)) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
 <div id="fig-07-radial-plot" class="quarto-figure quarto-figure-center anchored">
