@@ -468,7 +468,7 @@ cluster_diffs_long <- cluster_diffs |>
 # facet clusters
 ggplot(cluster_diffs_long, aes(x = factor(vars), y = score)) +
   geom_bar(stat = 'identity') +
-  coord_radial(expand = FALSE) +
+  coord_radial(rotate.angle = TRUE, expand = FALSE) +
   facet_wrap(~cluster, ncol = 3) +
   theme_minimal() +
   theme(axis.text.x = element_text(size = 7)) +
