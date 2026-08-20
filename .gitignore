@@ -4,3 +4,8 @@
 .Rproj.user
 
 **/*.quarto_ipynb
+
+# local build cache only - not needed for the published site, and knitr
+# can cache individual chunk results (e.g. dodgr street networks) well
+# past GitHub's 100MB file limit
+/*_cache/
