@@ -1,42 +1,45 @@
 # Geodemographic Classification
-This week we will turn to geodemographic classification. Geodemographic classification is a method used to categorise geographic areas and the people living in them based on demographic, socioeconomic, and sometimes lifestyle characteristics. This approach combines geographic information with demographic data to create profiles of different neighborhoods.
+This week we will turn to geodemographic classification. Geodemographic classification is a method used to categorise geographic areas and the people living in them based on demographic, socioeconomic, and sometimes lifestyle characteristics. This approach combines geographic information with demographic data to create profiles of different neighbourhoods.
 
-## Lecture slides {#lecture-w07}
+## Lecture slides
 You can download the slides of this week's lecture here: [[Link]]({{< var slides.week07 >}}).
 
-## Reading list {#reading-w07}
-#### Essential readings 
+## Reading list
+#### Essential readings {.unnumbered}
+- Dalton, C. M. and Thatcher. J. 2015. Inflated granularity: Spatial "Big Data" and geodemographics. *Big Data & Society* 2(2): 1-15. [[Link]](https://doi.org/10.1177/2053951715601144)
 - Longley, P. A. 2012. Geodemographics and the practices of geographic information science. *International Journal of Geographical Information Science* 26(12): 2227-2237. [[Link]](https://doi.org/10.1080/13658816.2012.719623)
-- Singleton, A. and Longley, P. A. 2024. Classifying and mapping residential structure through the London Output Area Classification. *Environment and Planning B: Urban Analytics and City Science* 51(5): 1153-1164. [[Link]](https://doi.org/10.1177/23998083241242913)
 - Wyszomierski, J., Longley, P. A., and Singleton, A. *et al.* 2024. A neighbourhood Output Area Classification from the 2021 and 2022 UK censuses. *The Geographical Journal*. 190(2): e12550. [[Link]](https://doi.org/10.1111/geoj.12550)
 
-#### Suggested readings
-- Dalton, C. M. and Thatcher. J. 2015. Inflated granularity: Spatial “Big Data” and geodemographics. *Big Data & Society* 2(2): 1-15. [[Link]](https://doi.org/10.1177/2053951715601144)
+#### Suggested readings {.unnumbered}
 - Fränti, P. and Sieronoja, S. 2019. How much can k-means be improved by using better initialization and repeats? *Pattern Recognition* 93: 95-112. [[Link]](https://doi.org/10.1016/j.patcog.2019.04.014)
+- Mavrogeni, M., Cheshire, J., Iliev, M., and Van Dijk, J. 2025. Creating the London night-worker geodemographic classification. *Environment and Planning B: Urban Analytics and City Science*. OnlineFirst. [[Link]](https://doi.org/10.1177/23998083251410392)
+- Singleton, A. and Longley, P. A. 2024. Classifying and mapping residential structure through the London Output Area Classification. *Environment and Planning B: Urban Analytics and City Science* 51(5): 1153-1164. [[Link]](https://doi.org/10.1177/23998083241242913)
 - Singleton, A. and Spielman, S. 2014. The past, present, and future of geodemographic research in the United States and United Kingdom. *The Professional Geographer* 66(4): 558-567. [[Link]](https://doi.org/10.1080/00330124.2013.848764)
 
+## Start of session
+Before working through the tutorial, we will spend a few minutes looking at:
+
+- How `cbind()` joins the cluster results to the map
+- Why the variables are transformed before standardising
+
 ## Classifying London
-Today, we will create our own geodemographic classification to examine demographic clusters across London, drawing inspiration from [London Output Area Classification](https://doi.org/10.1177/23998083241242913). Specifically, we will try to identify clusters based on age group, self-identified ethnicity, country of birth, and first or preferred language. 
+Today, we will create our own geodemographic classification to examine demographic clusters across London, drawing inspiration from [London Output Area Classification](https://doi.org/10.1177/23998083241242913). Specifically, we will try to identify clusters based on age group, self-identified ethnicity, country of birth, and first or preferred language.
 
 The data covers all usual residents, as recorded in the 2021 Census for England and Wales, aggregated at the [Lower Super Output Area (LSOA)](https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies) level. These datasets have been extracted using the [Custom Dataset Tool](https://www.ons.gov.uk/datasets/create), and you can download each file via the links provided below. A copy of the 2021 London LSOAs spatial boundaries is also available. Save these files in your project folder under `data`.
 
 | File                                        | Type   | Link |
 | :------                                     | :------| :------ |
-| London LSOA Census 2021 Age Groups          | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/London-LSOA-AgeGroup.csv) |
-| London LSOA Census 2021 Country of Birth    | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/London-LSOA-Country-of-Birth.csv) |
-| London LSOA Census 2021 Ethnicity           | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/London-LSOA-Ethnicity.csv) |
-| London LSOA Census 2021 Main Language       | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/London-LSOA-MainLanguage.csv) |
-| London LSOA 2021 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0114/raw/master/data/London-LSOA-2021.gpkg) |
+| London LSOA Census 2021 Age Groups          | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/attributes/London-LSOA-AgeGroup.csv) |
+| London LSOA Census 2021 Country of Birth    | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/attributes/London-LSOA-Country-of-Birth.csv) |
+| London LSOA Census 2021 Ethnicity           | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/attributes/London-LSOA-Ethnicity.csv) |
+| London LSOA Census 2021 Main Language       | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/attributes/London-LSOA-MainLanguage.csv) |
+| London LSOA 2021 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0114/raw/refs/heads/master/data/spatial/London-LSOA-2021.gpkg) |
 
 ::: {.callout-tip}
-To download a `csv` file that is hosted on GitHub, click on the **Download raw file** button on the top right of your screen and it should download directly to your computer.
+You may have already downloaded some of these datasets in previous weeks, but for completeness, they are all provided here. Only download the datasets you do not already have or did not save.
 :::
 
-::: {.callout-note}
-For the spatial boundaries of the London LSOAs, you may have noticed that, instead of providing a collection of files known as a `shapefile`, we have supplied a `GeoPackage.` While `shapefiles` remain in use, `GeoPackage` is a more modern and portable file format. Have a look at this article on *towardsdatascience.com* for an excellent explanation on why one should use `GeoPackage` files over `shapefiles`, where possible: [[Link]](https://towardsdatascience.com/why-you-need-to-use-geopackage-files-instead-of-shapefile-or-geojson-7cb24fe56416)
-:::
-
-Open a new script and save this as `w07-geodemographic-analysis.r`. 
+Open a new script within your `GEOG0114` project and save this as `w07-geodemographic-classification.r`.
 
 Begin by loading the necessary libraries:
 
@@ -56,7 +59,7 @@ options(max.print = 50)
 #| eval: True
 #| output: False
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # load libraries
 library(tidyverse)
 library(janitor)
@@ -79,19 +82,18 @@ Next, we can load the individual `csv` files that we downloaded into R.
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
-#| filename: "R code"
+#| filename: 'R code'
 # load age data
-lsoa_age <- read_csv('data/London-LSOA-AgeGroup.csv')
+lsoa_age <- read_csv('data/attributes/London-LSOA-AgeGroup.csv')
 
 # load country of birth data
-lsoa_cob <- read_csv('data/London-LSOA-Country-of-Birth.csv')
+lsoa_cob <- read_csv('data/attributes/London-LSOA-Country-of-Birth.csv')
 
 # load ethnicity data
-lsoa_eth <- read_csv('data/London-LSOA-Ethnicity.csv')
+lsoa_eth <- read_csv('data/attributes/London-LSOA-Ethnicity.csv')
 
 # load language data
-lsoa_lan <- read_csv('data/London-LSOA-MainLanguage.csv')
+lsoa_lan <- read_csv('data/attributes/London-LSOA-MainLanguage.csv')
 ```
 
 ::: {.callout-warning}
@@ -106,7 +108,7 @@ Now, carefully examine each individual dataframe to understand how the data is s
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # inspect age data
 head(lsoa_age)
 
@@ -121,7 +123,7 @@ head(lsoa_lan)
 ```
 
 ::: {.callout-tip}
-You can further inspect the results using the `View()` function. 
+You can further inspect the results using the `View()` function.
 :::
 
 ### Variable preparation
@@ -131,7 +133,7 @@ To identify geodemographic clusters in our dataset, we will use a technique call
 $k$-means clustering is an unsupervised machine learning algorithm used to group data into a predefined number of clusters, based on similarities between data points. It works by initially assigning $k$ random centroids, then iteratively updating them by assigning each data point to the nearest centroid and recalculating the centroid's position based on the mean of the points in each cluster. The process continues until the centroids stabilise, meaning they no longer change significantly. $k$-means is often used for tasks such as data segmentation, image compression, or anomaly detection. It is simple but may not work well with non-spherical or overlapping clusters.
 :::
 
-Because all the data are stored in [long format](https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb), with each London LSOA appearing on multiple rows for each category — such as separate rows for different age groups, ethnicities, countries of birth, and first or preferred languages - we need to transform it into a [wide format](https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb). For example, instead of having multiple rows for an LSOA showing counts for different age groups  all the information for each LSOA will be consolidated into a single row. Additionally, we will clean up the column names to follow standard R naming conventions and make the data easier to work with. We can automate this process using the janitor package.
+Because all the data are stored in [long format](https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb), with each London LSOA appearing on multiple rows for each category — such as separate rows for different age groups, ethnicities, countries of birth, and first or preferred languages — we need to transform it into a [wide format](https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb). For example, instead of having multiple rows for an LSOA showing counts for different age groups all the information for each LSOA will be consolidated into a single row. Additionally, we will clean up the column names to follow standard R naming conventions and make the data easier to work with. Like we have done previously, we can automate this process using the `janitor` package.
 
 We will begin with the `age` dataframe:
 
@@ -141,8 +143,8 @@ We will begin with the `age` dataframe:
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
-# clean names 
+#| filename: 'R code'
+# clean names
 lsoa_age <- lsoa_age |>
   clean_names()
 
@@ -150,7 +152,7 @@ lsoa_age <- lsoa_age |>
 lsoa_age <- lsoa_age |>
   pivot_wider(id_cols = 'lower_layer_super_output_areas_code',
               names_from = 'age_5_categories',
-              values_from = 'observation') 
+              values_from = 'observation')
 
 # clean names
 lsoa_age <- lsoa_age |>
@@ -158,7 +160,7 @@ lsoa_age <- lsoa_age |>
 ```
 
 ::: {.callout-note}
-The code above uses a pipe function: `|>`. The pipe operator allows you to pass the output of one function directly into the next, streamlining your code. While it might be a bit confusing at first, you will find that it makes your code faster to write and easier to read. More importantly, it reduces the need to create multiple intermediate variables to store outputs.
+If your `clean_names()` function returns an error, it is likely due to a conflict with another library that also includes a `clean_names()` function. In such cases, R cannot determine which one to use. To resolve this, you can specify the library explicitly by using `janitor::clean_names()`.
 :::
 
 To account for the non-uniformity of the areal units, we further need to convert the observations to proportions and only retain those columns that are likely to be meaningful in the context of the classification:
@@ -169,7 +171,7 @@ To account for the non-uniformity of the areal units, we further need to convert
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # total observations
 lsoa_age <- lsoa_age |>
   rowwise() |>
@@ -192,7 +194,7 @@ This looks much better. We can do the same for the country of `birth` data:
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # prepare country of birth data
 lsoa_cob <- lsoa_cob |>
   clean_names() |>
@@ -205,8 +207,8 @@ lsoa_cob <- lsoa_cob |>
 lsoa_cob <- lsoa_cob |>
   rowwise() |>
   mutate(cob_pop = sum(across(2:9))) |>
-  mutate(across(2:9, ~ . / cob_pop )) |>
-  select(-2,-10)
+  mutate(across(2:9, ~ . / cob_pop)) |>
+  select(-2, -10)
 ```
 
 And we can do the same for the `ethnicity` and `language` datasets:
@@ -217,7 +219,7 @@ And we can do the same for the `ethnicity` and `language` datasets:
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # prepare ethnicity data
 lsoa_eth <- lsoa_eth |>
   clean_names() |>
@@ -230,8 +232,8 @@ lsoa_eth <- lsoa_eth |>
 lsoa_eth <- lsoa_eth |>
   rowwise() |>
   mutate(eth_pop = sum(across(2:21))) |>
-  mutate(across(2:21, ~ . / eth_pop )) |>
-  select(-2,-22)
+  mutate(across(2:21, ~ . / eth_pop)) |>
+  select(-2, -22)
 
 # prepare language data
 lsoa_lan <- lsoa_lan |>
@@ -245,8 +247,8 @@ lsoa_lan <- lsoa_lan |>
 lsoa_lan <- lsoa_lan |>
   rowwise() |>
   mutate(lan_pop = sum(across(2:12))) |>
-  mutate(across(2:12, ~ . / lan_pop )) |>
-  select(-2,-11,-13)
+  mutate(across(2:12, ~ . / lan_pop)) |>
+  select(-2, -11, -13)
 ```
 
 We now have four separate datasets, each containing the proportions of usual residents classified into different groups based on age, country of birth, ethnicity, and language.
@@ -258,10 +260,10 @@ Where we initially selected variables from different demographic domains, not al
 Variable selection is often a time-consuming process that requires a combination of domain knowledge and more extensive exploratory analysis than is covered in this practical.
 :::
 
-A straightforward yet effective method to examine the distribution of our variables is to create boxplots for each variable. This can be efficiently achieved by using `facet_wrap()` from the `ggplot2` library to generate a matrix of panels, allowing us to visualise all variables in a single view. 
+A straightforward yet effective method to examine the distribution of our variables is to create boxplots for each variable. This can be efficiently achieved by using `facet_wrap()` from the `ggplot2` library to generate a matrix of panels, allowing us to visualise all variables in a single view.
 
 ::: {.callout-note}
-`ggplot2` is a popular data visualisation package in R, designed for creating complex plots. It uses the [Grammar of Graphics](https://towardsdatascience.com/a-comprehensive-guide-to-the-grammar-of-graphics-for-effective-visualization-of-multi-dimensional-1f92b4ed4149) to build layered, customisable graphics by mapping data to visual elements like colour, size, and shape. You can refer to the [ggplot2 documentation](https://ggplot2.tidyverse.org/) for more details.
+`ggplot2` is a popular data visualisation package in R, designed for creating complex plots. It uses the [Grammar of Graphics](https://towardsdatascience.com/a-comprehensive-guide-to-the-grammar-of-graphics-for-effective-visualization-of-multi-dimensional-1f92b4ed4149) to build layered, customisable graphics by mapping data to visual elements like colour, size, and shape. You can refer to the [ggplot2 documentation](https://ggplot2.tidyverse.org/reference/facet_wrap.html) for more details on `facet_wrap()`.
 :::
 
 ```{r}
@@ -271,7 +273,7 @@ A straightforward yet effective method to examine the distribution of our variab
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # wide to long
 lsoa_age_wd <- lsoa_age |>
   pivot_longer(cols = c(2:5), names_to = 'agegroup', values_to = 'count')
@@ -296,7 +298,7 @@ This threshold of 75% is arbitrary, and in practice, more thorough consideration
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # join
 lsoa_df <- lsoa_age |>
   left_join(lsoa_cob, by = 'lower_layer_super_output_areas_code') |>
@@ -305,7 +307,7 @@ lsoa_df <- lsoa_age |>
 
 # calculate proportion of zeroes
 zero_prop <- sapply(lsoa_df[2:41], function(x) {
-  mean(x == 0) 
+  mean(x == 0)
 })
 
 # extract variables with high proportion zeroes
@@ -316,9 +318,9 @@ idx
 
 # remove variables with high proportion zeroes
 lsoa_df <- lsoa_df |>
-  select(-white_gypsy_or_irish_traveller, 
-         -any_other_uk_languages, 
-         -oceanic_or_australian_languages, 
+  select(-white_gypsy_or_irish_traveller,
+         -any_other_uk_languages,
+         -oceanic_or_australian_languages,
          -north_or_south_american_languages)
 ```
 
@@ -335,9 +337,8 @@ We can subsequently check for multicollinearity of the remaining variables. The 
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
-#| filename: "R code"
-# inspect variable names 
+#| filename: 'R code'
+# inspect variable names
 names(lsoa_df)
 
 # change variable names to index to improve visualisation
@@ -351,12 +352,12 @@ cor_mat <- cor(lsoa_df_vis[,-1])
 ggcorrplot(cor_mat, outline.col = '#ffffff', tl.cex = 8, legend.title = 'Correlation')
 ```
 
-Following the approach from [Wyszomierski *et al.* (2024)](https://doi.org/10.1111/geoj.12550), we can define a *weak* correlation as lying between 0 and 0.40, *moderate* as between 0.41 and 0.65, *strong* as between 0.66 and 0.80, and *very strong* as between 0.81 and 1. 
+Following the approach from [Wyszomierski *et al.* (2024)](https://doi.org/10.1111/geoj.12550), we can define a *weak* correlation as lying between 0 and 0.40, *moderate* as between 0.41 and 0.65, *strong* as between 0.66 and 0.80, and *very strong* as between 0.81 and 1.
 
 A few *strong* and *very strong* correlations can be observed that potentially could be removed; however, to maintain representation, here we decide to retain all variables.
 
 ### Variable standardisation
-If the input data are heavily skewed or contain outliers, $k$-means may produce less meaningful clusters. While normality is not required per se, it has been common to do this nonetheless. More important is to standardise the input variables, especially when they are measured on different scales. This ensures that each variable contributes equally to the clustering process. 
+If the input data are heavily skewed or contain outliers, $k$-means may produce less meaningful clusters. While normality is not required per se, it has been common to do this nonetheless. More important is to standardise the input variables, especially when they are measured on different scales. This ensures that each variable contributes equally to the clustering process.
 
 ```{r}
 #| label: 07-standardise-variables
@@ -364,37 +365,37 @@ If the input data are heavily skewed or contain outliers, $k$-means may produce 
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
-# inverse hyperbolic sine 
+#| filename: 'R code'
+# inverse hyperbolic sine
 lsoa_df_vis[,-1] <- sapply(lsoa_df_vis[-1], asinh)
-  
+
 # range standardise
 lsoa_df_vis[,-1] <- sapply(lsoa_df_vis[-1], function(x){(x-min(x))/(max(x)-min(x))})
 ```
 
 ### Selecting the number of clusters
-Now our data are prepared we will start by creating an elbow plot. The [elbow method](https://en.wikipedia.org/wiki/Elbow_method_(clustering)#:~:text=In%20cluster%20analysis%2C%20the%20elbow,number%20of%20clusters%20to%20use%60) is a visual tool that helps determine the optimal number of clusters in a dataset. This is important because with $k$-means clustering you need to specify the numbers of clusters *a priori*. The elbow method involves running the clustering algorithm with varying numbers of clusters ($k$) and plotting the total explained variation (known as the *Within Sum of Squares*) against the number of clusters. The goal is to identify the 'elbow' point on the curve, where the rate of decrease in explained variation starts to slow. This point suggests that adding more clusters yields diminishing returns in terms of explained variation.
+Now our data are prepared we will start by creating an elbow plot. The [elbow method](https://en.wikipedia.org/wiki/Elbow_method_(clustering)#:~:text=In%20cluster%20analysis%2C%20the%20elbow,number%20of%20clusters%20to%20use%60) is a visual tool that helps determine the optimal number of clusters in a dataset. This is important because with $k$-means clustering you need to specify the numbers of clusters *a priori*. The elbow method involves running the clustering algorithm with varying numbers of clusters ($k$) and plotting the total explained variation (known as the *Within Sum of Squares*) against the number of clusters. The goal is to identify the *elbow* point on the curve, where the rate of decrease in explained variation starts to slow. This point suggests that adding more clusters yields diminishing returns in terms of explained variation.
 
 ```{r}
 #| label: fig-07-elbow-plot
-#| fig-cap: Elbow plot with 'Within Sum of Squares' against number of clusters.
+#| fig-cap: Elbow plot with *Within Sum of Squares* against number of clusters.
 #| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
 #| cache: True
-#| filename: "R code"
+#| filename: 'R code'
 # elbow plot
-fviz_nbclust(lsoa_df_vis[,-1], kmeans, nstart = 100, iter.max = 100, method = 'wss') 
+fviz_nbclust(lsoa_df_vis[,-1], kmeans, nstart = 100, iter.max = 100, method = 'wss')
 ```
 
 Based on the elbow plot, we can now choose the number of clusters and it looks like **6** clusters would be a reasonable choice.
 
 ::: {.callout-note}
-The interpretation of an elbow plot can be quite subjective, and multiple options for the optimal number of clusters might be justified; for instance, 4, 5, or even 7 clusters could be reasonable choices. In addition to the elbow method, other techniques can aid in determining the optimal number of clusters, such as [silhouette scores](https://en.wikipedia.org/wiki/Silhouette_(clustering)) and the [gap statistic](https://en.wikipedia.org/wiki/Determining_the_number_of_clusters_in_a_data_set#The_gap_statistics). An alternative and helful approach is to use a [clustergram](https://clustergram.readthedocs.io/en/stable/notebooks/introduction.html), which is a two-dimensional plot that visualises the flows of observations between clusters as more clusters are added. This method illustrates how your data reshuffles with each additional cluster and provides insights into the quality of the splits. This method can be done in R, but currently easier to implement in Python.
+The interpretation of an elbow plot can be quite subjective, and multiple options for the optimal number of clusters might be justified; for instance, 4, 5, or even 7 clusters could be reasonable choices. In addition to the elbow method, other techniques can aid in determining the optimal number of clusters, such as [silhouette scores](https://en.wikipedia.org/wiki/Silhouette_(clustering)) and the [gap statistic](https://en.wikipedia.org/wiki/Determining_the_number_of_clusters_in_a_data_set#The_gap_statistics). An alternative and helpful approach is to use a [clustergram](https://clustergram.readthedocs.io/en/stable/notebooks/introduction.html), which is a two-dimensional plot that visualises the flows of observations between clusters as more clusters are added. This method illustrates how your data reshuffles with each additional cluster and provides insights into the quality of the splits. This method can be done in R, but is currently easier to implement in Python.
 :::
 
-### $k$-means clustering 
+### $k$-means clustering
 Now we have decided on the number of clusters, we can run our $k$-means analysis.
 
 ```{r}
@@ -404,12 +405,12 @@ Now we have decided on the number of clusters, we can run our $k$-means analysis
 #| eval: True
 #| tidy: True
 #| cache: True
-#| filename: "R code"
+#| filename: 'R code'
 # set seed for reproducibility
 set.seed(999)
 
 # k-means
-lsoa_clus <- kmeans(lsoa_df_vis[,-1], centers = 6, nstart = 100, iter.max = 100) 
+lsoa_clus <- kmeans(lsoa_df_vis[,-1], centers = 6, nstart = 100, iter.max = 100)
 ```
 
 We can inspect the object to get some information about our clusters:
@@ -420,13 +421,13 @@ We can inspect the object to get some information about our clusters:
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # inspect
 lsoa_clus
 ```
 
 ### Visualising clusters
-We now need to perform some post-processing to extract useful summary data for each cluster. To characterise the clusters, we can compare the global mean values of each variable with the mean values specific to each cluster. 
+We now need to perform some post-processing to extract useful summary data for each cluster. To characterise the clusters, we can compare the global mean values of each variable with the mean values specific to each cluster.
 
 ```{r}
 #| label: 07-cluster-comparision
@@ -434,7 +435,7 @@ We now need to perform some post-processing to extract useful summary data for e
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 
 # global means
 glob_means <- colMeans(lsoa_df_vis[,-1])
@@ -442,7 +443,7 @@ glob_means <- colMeans(lsoa_df_vis[,-1])
 # add clusters to input data
 lsoa_df_vis <- cbind(lsoa_df_vis, cluster = lsoa_clus$cluster)
 
-# cluster means 
+# cluster means
 cluster_means <- lsoa_df_vis |>
   group_by(cluster) |>
   summarise(across(2:37, mean))
@@ -454,16 +455,16 @@ cluster_diffs <- cluster_means |>
 
 These comparisons can then be visualised using, for instance, a radial bar plot:
 
-```{r} 
+```{r}
 #| label: fig-07-radial-plot
 #| fig-cap: Radial barplots of cluster means for each input variable.
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # to long format
 cluster_diffs_long <- cluster_diffs |>
-  pivot_longer(!cluster, names_to = 'vars', values_to = 'score') 
+  pivot_longer(!cluster, names_to = 'vars', values_to = 'score')
 
 # facet clusters
 ggplot(cluster_diffs_long, aes(x = factor(vars), y = score)) +
@@ -476,7 +477,7 @@ ggplot(cluster_diffs_long, aes(x = factor(vars), y = score)) +
   ylab('')
 ```
 
-These plots can serve as a foundation for creating pen portraits by closely examining which variables drive each cluster. 
+These plots can serve as a foundation for creating pen portraits by closely examining which variables drive each cluster.
 
 ::: {.callout-tip}
 For easier interpretation, these values can be transformed into index scores, allowing us to assess which variables are under- or overrepresented within each cluster group.
@@ -484,38 +485,56 @@ For easier interpretation, these values can be transformed into index scores, al
 
 Of course, we can also map the results:
 
-```{r tidy='styler'} 
+```{r tidy='styler'}
 #| label: fig-07-cluster-map
 #| fig-cap: Classification of London LSOAs based on several demographic variables.
 #| classes: styled-output
 #| echo: True
 #| eval: True
-#| filename: "R code"
+#| filename: 'R code'
 # read spatial dataset
-lsoa21 <- st_read('data/London-LSOA-2021.gpkg')
+lsoa21 <- st_read('data/spatial/London-LSOA-2021.gpkg')
 
 # join
 lsoa21 <- cbind(lsoa21, cluster = lsoa_clus$cluster)
 
-# shape, polygon
+# shape
 tm_shape(lsoa21) +
-  
-  # specify column, colours
-  tm_polygons(
-    col = 'cluster',
-    palette = c('#feebe2', '#fbb4b9', '#f768a1', '#c51b8a', '#7a0177'),
-    border.col = '#ffffff',
-    border.alpha = 0.1,
-    title = 'Cluster number'
-  ) +
-  
-  # set layout
-  tm_layout(
-    legend.outside = FALSE,
-    legend.position = c('right', 'bottom'),
-    frame = FALSE
-  )
+
+# map data
+tm_polygons(
+  fill = 'cluster',
+  fill.scale = tm_scale_categorical(
+    values = c('#feebe2', '#fbb4b9', '#f768a1', '#c51b8a', '#7a0177'),
+  ),
+
+  # legend
+  fill.legend = tm_legend(
+    title = 'Cluster number',
+    frame = FALSE,
+  ),
+
+  # borders
+  col = '#ffffff',
+  col_alpha = 0.3
+) +
+
+# layout
+tm_layout(
+
+  # legend
+  legend.outside = FALSE,
+  legend.position = c(0.90, 0.4),
+
+  # canvas
+  frame = FALSE,
+)
+
 ```
+
+::: {.callout-important}
+The reason we can use `cbind()` to join the cluster outputs to the `lsoa21` spatial file is that the LSOAs in both files are recorded in the same order. It is essential to verify that the LSOAs are indeed in the same order in both datasets, as any discrepancy will result in clusters being assigned to the wrong polygons.
+:::
 
 ## Assignment
 The creation of a geodemographic classification is an iterative process. This typically includes adding or removing variables, adjusting the number of clusters, and grouping data in different ways to achieve the most meaningful segmentation. Try to do the following:
@@ -526,12 +545,12 @@ The creation of a geodemographic classification is an iterative process. This ty
 2. Prepare these two datasets and retain only those variables that are potentially meaningful. Filter out any variables with a high proportion of zero values.
 3. Merge the education and occupation dataset with the dataset used to generate the initial geodemographic classification. Check for multicollinearity and consider removing any variables that are highly correlated.
 4. Perform $k$-means clustering on your extended dataset. Make sure to select an appropriate number of clusters for your analysis.
-5. Interpret the individual clusters in terms of the variables that are under- and overrepresented. 
+5. Interpret the individual clusters in terms of the variables that are under- and overrepresented.
 
 | File                                        | Type   | Link |
 | :------                                     | :------| :------ |
-| London LSOA Census 2021 Occupation          | `csv`  | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/London-LSOA-Occupation.csv) |
-| London LSOA Census 2021 Education           | `csv`  | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/London-LSOA-Education.csv) |
+| London LSOA Census 2021 Occupation          | `csv`  | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/attributes/London-LSOA-Occupation.csv) |
+| London LSOA Census 2021 Education           | `csv`  | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/attributes/London-LSOA-Education.csv) |
 
 ## Before you leave
-Having finished this tutorial, you should now understand the basics of a geodemographic classification. That is [all for this week](https://www.youtube.com/watch?v=8iwBM_YB1sE)! 
+Having finished this tutorial, you should now understand the basics of a geodemographic classification. That is [all for this week](https://www.youtube.com/watch?v=ArFyi_iaEdw)!

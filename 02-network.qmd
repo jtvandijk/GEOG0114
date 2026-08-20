@@ -1,41 +1,53 @@
+---
+freeze: true
+---
+
 # Accessibility Analysis
 Accessibility is often described as the ease with which individuals can reach places and opportunities, such as employment, public services, and cultural activities. We can utilise transport network data to quantify accessibility and characterise areas based on their accessibility levels. This week, we will use the `dodgr` R library to measure accessibility between different points of interest by calculating the network distances between them.
 
-## Lecture slides {#lecture-w08}
+## Lecture slides
 You can download the slides of this week's lecture here: [[Link]]({{< var slides.week08 >}}).
 
-## Reading list {#reading-w08}
-#### Essential readings 
-- Geurs, K., Van Wee, B. 2004. Accessibility evaluation of land-use and transport strategies: review and research directions. *Journal of Transport Geography* 12(2): 127-140. [[Link]](https://doi.org/10.1016/j.jtrangeo.2003.10.005)
-- Higgins, C., Palm, M. DeJohn, A. *et al.* 2022. Calculating place-based transit accessibility: Methods, tools and algorithmic dependence. *Journal of Transport and Land Use* 15(1): 95-116. [[Link]](https://doi.org/10.5198/jtlu.2022.2012)
+## Reading list
+#### Essential readings {.unnumbered}
+- Geurs, K. and Van Wee, B. 2004. Accessibility evaluation of land-use and transport strategies: review and research directions. *Journal of Transport Geography* 12(2): 127-140. [[Link]](https://doi.org/10.1016/j.jtrangeo.2003.10.005)
+- Verduzco Torres, J. R. and McArthur, D.P. 2024. Public transport accessibility indicators to urban and regional services in Great Britain. *Scientific Data* 11: 53. [[Link]](https://doi.org/10.1038/s41597-023-02890-w)
 
-#### Suggested readings
+#### Suggested readings {.unnumbered}
+- Higgins, C., Palm, M. DeJohn, A. *et al.* 2022. Calculating place-based transit accessibility: Methods, tools and algorithmic dependence. *Journal of Transport and Land Use* 15(1): 95-116. [[Link]](https://doi.org/10.5198/jtlu.2022.2012)
+- Pönkänen, M., Tenkanen, H., and Mladenović, M. 2024. Spatial accessibility and transport inequity in Finland: Open source models and perspectives from planning practice. *Computers, Environment and Urban Systems* 116: 102218. [[Link]](https://doi.org/10.1016/j.compenvurbsys.2024.102218)
 - Van Dijk, J., Krygsman, S. and De Jong, T. 2015. Toward spatial justice: The spatial equity effects of a toll road in Cape Town, South Africa. *Journal of Transport and Land Use* 8(3): 95-114. [[Link]](https://doi.org/10.5198/jtlu.2015.555)
 - Van Dijk, J. and De Jong, T. 2017. Post-processing GPS-tracks in reconstructing travelled routes in a GIS-environment: network subset selection and attribute adjustment. *Annals of GIS* 23(3): 203-217. [[Link]](https://doi.org/10.1080/19475683.2017.1340340)
+
+## Start of session
+Before working through the tutorial, we will spend a few minutes looking at:
+
+- Checking a filtered point count against a known reference figure
+- The connectivity of a road network extracted from a bounding box
 
 ## Accessibility in Lambeth
 This week, we will analyse the accessibility of fast-food outlets in the London Borough of Lambeth. Specifically, we will examine how closely these outlets are located within walking distance of primary and secondary schools, and explore any potential relationships between their proximity and the relative levels of deprivation in the area.
 
-We will extract the points of interest that we will use for this analysis from the [Point of Interest (POI) data for the United Kingdom](https://journals.sagepub.com/doi/10.1177/23998083241263124), obtained from the [Overture Maps Foundation](https://overturemaps.org/) and pre-processed by the [Consumer Data Research Centre](https://data.cdrc.ac.uk/dataset/point-interest-data-united-kingdom#data-and-resources) to provide users with easy access.
+We will extract the points of interest that we will use for this analysis from the [Point of Interest (POI) data for the United Kingdom](https://doi.org/10.1177/23998083241263124), obtained from the [Overture Maps Foundation](https://overturemaps.org/) and pre-processed by the [Geographic Data Service](https://data.geods.ac.uk/dataset/point-of-interest-data-for-the-united-kingdom#data-and-resources) to provide users with easy access.
 
-You can download a subset of the POI dataset via the link provided below. A copy of the 2011 London LSOAs spatial boundaries, the boundaries of the London Boroughs, and the 2019 English [Index of Multiple Deprivation](https://www.gov.uk/government/statistics/english-indices-of-deprivation-2019). Save these files in your project folder under `data`.
+You can download a subset of the POI dataset via the link provided below, along with a copy of the 2021 London LSOAs spatial boundaries, the boundaries of the London Boroughs, and the 2025 English [Index of Multiple Deprivation](https://www.gov.uk/government/statistics/english-indices-of-deprivation-2025). Save these files in your project folder under `data`.
 
 | File                                        | Type   | Link |
 | :------                                     | :------| :------ |
-| Lambeth Overture Points of Interest 2024    | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0114/raw/master/data/Lambeth-POI-2024.gpkg) |
-| London LSOA 2011 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0114/raw/master/data/London-LSOA-2011.gpkg) |
-| London Borough Spatial Boundaries           | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0114/raw/master/data/London-Boroughs.gpkg) |
-| England 2019 Index of Multiple Deprivation  | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/England-IMD-2019.csv) |
+| Lambeth Overture Points of Interest 2024    | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0114/raw/refs/heads/master/data/spatial/Lambeth-POI-2024.gpkg) |
+| London LSOA 2021 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0114/raw/refs/heads/master/data/spatial/London-LSOA-2021.gpkg) |
+| London Borough Spatial Boundaries           | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0114/raw/refs/heads/master/data/spatial/London-Boroughs.gpkg) |
+| England 2025 Index of Multiple Deprivation  | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/attributes/England-IMD-2025.csv) |
 
 ::: {.callout-tip}
-To download a `csv` file that is hosted on GitHub, click on the **Download raw file** button on the top right of your screen and it should download directly to your computer.
+You may have already downloaded some of these datasets in previous weeks, but for completeness, they are all provided here. Only download the datasets you do not already have or did not save.
 :::
 
 ::: {.callout-note}
 To extract the Lambeth Overture Points of Interest data, a 2-kilometre buffer was applied around the boundaries of Lambeth. This approach ensures that points just outside the study area are included, as locations beyond the borough boundary may still be accessible to residents and could represent the nearest available options.
 :::
 
-Open a new script and save this as `w08-accessibility-analysis.r`. 
+Open a new script within your `GEOG0114` project and save this as `w08-accessibility-analysis.r`.
 
 We will start by loading the libraries that we will need:
 
@@ -55,7 +67,7 @@ options(max.print = 50)
 #| eval: True
 #| output: False
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # load libraries
 library(tidyverse)
 library(sf)
@@ -76,15 +88,15 @@ Next, we can load the spatial data into R.
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # read poi data
-poi24 <- st_read('data/Lambeth-POI-2024.gpkg')
+poi24 <- st_read('data/spatial/Lambeth-POI-2024.gpkg')
 
 # read lsoa dataset
-lsoa11 <- st_read('data/London-LSOA-2011.gpkg')
+lsoa21 <- st_read('data/spatial/London-LSOA-2021.gpkg')
 
 # read borough dataset
-borough <- st_read('data/London-Boroughs.gpkg')
+borough <- st_read('data/spatial/London-Boroughs.gpkg')
 ```
 
 Now, carefully examine each individual dataframe to understand how the data is structured and what information it contains.
@@ -95,19 +107,19 @@ Now, carefully examine each individual dataframe to understand how the data is s
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # inspect poi data
 head(poi24)
 
 # inspect lsoa dataset
-head(lsoa11)
+head(lsoa21)
 
 # inspect borough dataset
 head(borough)
 ```
 
 ### POI data
-The inspection shows that the POI dataset contains a wide variety of location types, with each point tagged under a main and alternative category, as provided by the Overture Maps Foundation via Meta and Microsoft. However, these tags may not be consistent across the dataset, so we will need to identify specific keywords to filter the `main_category` and `alternate_category` columns. 
+The inspection shows that the POI dataset contains a wide variety of location types, with each point tagged under a main and alternative category, as provided by the Overture Maps Foundation via Meta and Microsoft. However, these tags may not be consistent across the dataset, so we will need to identify specific keywords to filter the `main_category` and `alternate_category` columns.
 
 We will start by filtering out all POIs where the word `school` features in the `main_category` column:
 
@@ -117,7 +129,7 @@ We will start by filtering out all POIs where the word `school` features in the 
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # filter school poi data
 poi_schools <- poi24 |>
   filter(str_detect(main_category, 'school'))
@@ -127,10 +139,10 @@ head(unique(poi_schools$main_category), n = 50)
 ```
 
 ::: {.callout-tip}
-You can further inspect the results using the `View()` function. 
+You can further inspect the results using the `View()` function.
 :::
 
-This is still a very large list, and looking at the categories not all POIs containing the string `school` should be included. However, this initial selection has given us a more manageable list from which we can choose the relevant tags. We can now further filter the dataset as well as clip the dataset to the administrative boundaries of Lambeth.
+This is still a very large list, and looking at the categories, not all POIs containing the string `school` should be included. However, this initial selection has given us a more manageable list from which we can choose the relevant tags. We can now further filter the dataset as well as clip the dataset to the administrative boundaries of Lambeth.
 
 ```{r}
 #| label: 08-school-data-filter1
@@ -139,11 +151,11 @@ This is still a very large list, and looking at the categories not all POIs cont
 #| eval: True
 #| tidy: True
 #| warning: False
-#| filename: "R code"
+#| filename: 'R code'
 
 # remove quotes for easier processing
 poi_schools <- poi_schools |>
-  mutate(main_category = str_replace_all(main_category, '\"',''))
+  mutate(main_category = str_replace_all(main_category, '\"', ''))
 
 # filter school poi data
 poi_schools <- poi_schools |>
@@ -154,7 +166,7 @@ poi_schools <- poi_schools |>
          main_category == 'public_school' |
          main_category == 'school')
 
-# filter school poi data 
+# filter school poi data
 lambeth <- borough |>
   filter(name == 'Lambeth')
 
@@ -178,9 +190,9 @@ You can inspect the different tags and their frequencies easily by creating a fr
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 
-# filter school poi data 
+# filter school poi data
 poi_schools <- poi_schools |>
   filter(str_detect(alternate_category, 'elementary_school') |
          str_detect(alternate_category, 'high_school') |
@@ -200,7 +212,7 @@ Since the POI dataset is compiled from various open sources, the data quality is
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 
 # identify duplicate postcodes
 poi_schools <- poi_schools |>
@@ -208,7 +220,7 @@ poi_schools <- poi_schools |>
   mutate(rank = rank(primary_name)) |>
   ungroup()
 
-# filter school poi data 
+# filter school poi data
 poi_schools <- poi_schools |>
   filter(is.na(postcode) | rank == 1) |>
   select(-rank)
@@ -219,7 +231,7 @@ poi_schools
 
 Although we now have fewer schools than we had expected, either due to overly restrictive filtering of tags or because some school locations are not recorded in the dataset, we will proceed with the current data.
 
-::: {.callout-warning}
+::: {.callout-important}
 Variable preparation can be a time-consuming process that often necessitates a more extensive exploratory analysis to ensure sufficient data quality. This may involve sourcing additional data to supplement your existing dataset.
 :::
 
@@ -231,7 +243,7 @@ We can use a similar approach to approximate the locations of fast food outlets 
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # filter fast food poi data
 poi_fastfood <- poi24 |>
   filter(str_detect(main_category, 'fast_food_restaurant') |
@@ -243,15 +255,15 @@ poi_fastfood <- poi24 |>
 poi_fastfood
 ```
 
-Let's map both datasets to get an idea of how the data look like:
+Let's map both datasets to get an idea of what the data looks like:
 
-```{r tidy='styler'} 
+```{r tidy='styler'}
 #| label: fig-08-poi-map
 #| fig-cap: Extracted school and fast food locations for Lambeth.
 #| classes: styled-output
 #| echo: True
 #| eval: True
-#| filename: "R code"
+#| filename: 'R code'
 # combine for mapping
 poi_schools <- poi_schools |>
   mutate(type = 'School')
@@ -259,29 +271,44 @@ poi_fastfood <- poi_fastfood |>
   mutate(type = 'Fast food')
 poi_lambeth <- rbind(poi_schools, poi_fastfood)
 
-# shape, polygon
+# shape
 tm_shape(lambeth) +
-  
-  # specify column, classes
+
+  # map data
   tm_polygons(
-    col = '#f0f0f0', 
+    fill = '#f0f0f0',
   ) +
-  
-# shape, points
-tm_shape(poi_lambeth) + 
-  
-  # specify column, colours
-  tm_dots(
+
+# shape
+tm_shape(poi_lambeth) +
+
+  # map data
+  tm_symbols(
     col = 'type',
-    size = 0.05,
-    palette = c('#beaed4','#fdc086'),
-    title = ''
+    size = 0.2,
+    col.scale = tm_scale_categorical(
+      values = c(
+        'Fast food' = '#beaed4',
+        'School' = '#fdc086'
+      ),
+    ),
+
+    # legend
+    col.legend = tm_legend(
+      title = '',
+      frame = FALSE,
+    )
   ) +
-  
-  # set layout
+
+  # layout
   tm_layout(
-    legend.outside = TRUE,
-    legend.position = c('right', 'bottom'),
+
+    # legend
+    legend.outside = FALSE,
+    legend.position = c(1.0, 0.15),
+    legend.text.size = 0.8,
+
+    # canvas
     frame = FALSE
   )
 ```
@@ -295,30 +322,31 @@ OpenStreetMap (OSM) is a free, editable map of the world, but its coverage is un
 
 To download the Lambeth road network dataset, we first need to define our bounding box coordinates. We will then use these coordinates in our OSM query to extract specific types of road segments within the defined search area. Our focus will be on selecting all OSM features with the `highway` tag that are likely to be used by pedestrians (e.g. excluding `motorways`).
 
-```{r} 
+```{r}
 #| label: 08-network-data
 #| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
 #| warning: False
-#| filename: "R code"
+#| cache: True
+#| filename: 'R code'
 
 # define our bbox coordinates, use WGS84
 bbox_lambeth <- poi24 |>
   st_transform(4326) |>
   st_bbox()
-  
+
 # osm query
-osm_network <- opq(bbox = bbox_lambeth ) |>
+osm_network <- opq(bbox = bbox_lambeth) |>
   add_osm_feature(
-    key = 'highway', 
-    value = c('primary', 'secondary', 'tertiary', 'residential', 'path', 'footway', 'unclassified', 'living_street', 'pedestrian')) |> 
+    key = 'highway',
+    value = c('primary', 'secondary', 'tertiary', 'residential', 'path', 'footway', 'unclassified', 'living_street', 'pedestrian')) |>
   osmdata_sf()
 ```
 
 ::: {.callout-warning}
-In some cases, the OSM query may return an error, particularly when multiple users from the same location are executing the exact same query. If so, you can download a prepared copy of the data here: [[Download]](https://github.com/jtvandijk/GEOG0114/raw/master/data/London-OSM-Roads.RData). You can load this copy into R through `load('data/London-OSM-Roads.RData')`
+In some cases, the OSM query may return an error, particularly when multiple users from the same location are executing the exact same query. If so, you can download a prepared copy of the data here: [[Download]](https://github.com/jtvandijk/GEOG0114/raw/refs/heads/master/data/spatial/London-OSM-Roads.RData). You can load this copy into R through `load('data/spatial/London-OSM-Roads.RData')`
 :::
 
 The returned `osm_network` object contains a variety of elements with the specified tags. Our next step is to extract the spatial data from this object to create our road network dataset. Specifically, we will extract the edges of the network, which represent the lines of the roads, as well as the nodes, which represent the points where the roads start, end, or intersect.
@@ -329,13 +357,13 @@ The returned `osm_network` object contains a variety of elements with the specif
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 
 # extract the nodes, with their osm_id
-osm_network_nodes <- osm_network$osm_points[, "osm_id"]
+osm_network_nodes <- osm_network$osm_points[, 'osm_id']
 
 # extract the edges, with their osm_id and relevant columns
-osm_network_edges <- osm_network$osm_lines[, c("osm_id", "name", "highway", "maxspeed", "oneway")]
+osm_network_edges <- osm_network$osm_lines[, c('osm_id', 'name', 'highway', 'maxspeed', 'oneway')]
 
 # inspect
 head(osm_network_nodes)
@@ -344,64 +372,72 @@ head(osm_network_nodes)
 head(osm_network_edges)
 ```
 
-We can quickly map the network edges to see how the road network looks like:
+We can quickly map the network edges to see what the road network looks like:
 
-```{r tidy='styler'} 
+```{r tidy='styler'}
 #| label: fig-08-netx-map
 #| fig-cap: Extracted OpenStreetMap road network data for Lambeth.
 #| classes: styled-output
 #| echo: True
 #| eval: True
-#| filename: "R code"
-# shape, polygon
+#| filename: 'R code'
+# shape
 tm_shape(osm_network_edges) +
-  
-  # specify column, classes
+
+  # map data
   tm_lines(
-    col = '#bdbdbd', 
+    col = '#bdbdbd',
     lwd = 0.2,
   ) +
-  
-  # shape, polygon
-  tm_shape(lambeth) +
-  
-  # specify column, classes
+
+# shape
+tm_shape(lambeth) +
+
+  # map data
   tm_borders(
-    col = '#252525', 
+    col = '#252525',
     lwd = 2
   ) +
-  
-  # set legend
+
+  # legend
   tm_add_legend(
-    type = 'line', 
-    labels = 'Road segments', 
-    col = '#bdbdbd'
+    type = 'lines',
+    labels = 'Road segments',
+    col = '#bdbdbd',
+    frame = FALSE
   ) +
-  
+
   tm_add_legend(
-    type = 'line', 
-    labels = 'Outline Lambeth', 
-    col = '#252525'
+    type = 'lines',
+    labels = 'Outline Lambeth',
+    col = '#252525',
+    frame = FALSE
   ) +
-  
-  # set layout
+
+  # layout
   tm_layout(
-    frame = FALSE,
-    legend.outside = TRUE,
-    legend.position = c('right', 'bottom'),
+
+    # legend
+    legend.outside = FALSE,
+    legend.position = c(1.0, 0.15),
+    legend.text.size = 0.8,
+
+    # canvas
+    frame = FALSE
   )
+
 ```
 
 ### Network preparation
 Since our focus is on schoolchildren and walking distances, we will overwrite the `oneway` variable to assume that none of the road segments are restricted to one-way traffic. This adjustment will ensure our analysis is not skewed by such restrictions and will help maintain a more accurate representation of the general connectivity of the network.
 
-```{r} 
+```{r}
 #| label: 08-network-one-way
 #| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 
 # overwrite one-way default
 osm_network_edges$oneway <- 'no'
@@ -411,35 +447,35 @@ Now we have the network edges, we can turn this into a graph-representation that
 
 In any network analysis, the primary data structure is a graph composed of nodes and edges. The `dodgr` library utilises weighting profiles to assign weights based on road types, tailored to the mode of transport that each profile is designed to model. In this instance, we will use the `foot` weighting profile, as our focus is on modelling walking accessibility. To prevent errors related to the weighting profile, we will replace any `NA` values in the highway tag with the value `unclassified`.
 
-```{r} 
+```{r}
 #| label: 08-network-graph
 #| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 
-# replace missing highway tags with unclassified 
+# replace missing highway tags with unclassified
 osm_network_edges <- osm_network_edges |>
   mutate(highway = if_else(is.na(highway), 'unclassified', highway))
 
-# create network graph 
+# create network graph
 osm_network_graph <- weight_streetnet(osm_network_edges, wt_profile = 'foot')
 ```
 
-Once we have constructed our graph, we can use it to calculate network distances between our points of interest. One important consideration is that not all individual components in the extracted network may be connected. This can occur, for example, if the bounding box cuts off access to the road of a [cul-de-sac](https://en.wikipedia.org/wiki/Dead_end_(street)). To ensure that our entire extracted network is connected, we will therefore extract the largest connected component of the graph. 
+Once we have constructed our graph, we can use it to calculate network distances between our points of interest. One important consideration is that not all individual components in the extracted network may be connected. This can occur, for example, if the bounding box cuts off access to the road of a [cul-de-sac](https://en.wikipedia.org/wiki/Dead_end_(street)). To ensure that our entire extracted network is connected, we will therefore extract the largest connected component of the graph.
 
 ::: {.callout-note}
 The `dodgr` package documentation explains that components are numbered in order of decreasing size, with `$component = 1` always representing the largest component. It is essential to inspect the resulting subgraph to ensure that its coverage is adequate for analysis.
 :::
 
-```{r} 
+```{r}
 #| label: 08-connected-network-graph
 #| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 
 # extract the largest connected graph component
 netx_connected <- osm_network_graph[osm_network_graph$component == 1, ]
@@ -453,20 +489,20 @@ OpenStreetMap is a dynamic dataset, meaning that changes are made on a continuou
 :::
 
 ### Accessibility analysis
-Now that we have our connected subgraph, we can use the `dodgr_distances()` function to calculate the network distances between every possible origin (i.e. school) and destination (i.e. fast food outlet). For all combinations, the function will map the point of interest locations to the nearest point on the network and return the corresponding shortest-path distances. 
+Now that we have our connected subgraph, we can use the `dodgr_distances()` function to calculate the network distances between every possible origin (i.e. school) and destination (i.e. fast food outlet). For all combinations, the function will map the point of interest locations to the nearest point on the network and return the corresponding shortest-path distances.
 
 ::: {.callout-tip}
 The `dodgr` package requires data to be projected in WGS84, so we need to reproject our point of interest data accordingly.
 :::
 
-```{r} 
+```{r}
 #| label: 08-distance-matrix
 #| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
 #| message: False
-#| filename: "R code"
+#| filename: 'R code'
 
 # reproject
 poi_schools <- poi_schools |>
@@ -474,14 +510,14 @@ poi_schools <- poi_schools |>
 poi_fastfood <- poi_fastfood |>
   st_transform(4326)
 
-# distance matrix 
+# distance matrix
 distance_matrix <- dodgr_distances(
   netx_connected,
-  from=st_coordinates(poi_schools),
-  to= st_coordinates(poi_fastfood), 
-  shortest = FALSE, 
-  pairwise = FALSE, 
-  quiet=FALSE)
+  from = st_coordinates(poi_schools),
+  to = st_coordinates(poi_fastfood),
+  shortest = FALSE,
+  pairwise = FALSE,
+  quiet = FALSE)
 ```
 
 The result of this computation is a distance matrix that contains the network distances between all origins (i.e. schools) and all destinations (i.e. fast-food outlets):
@@ -492,7 +528,7 @@ The result of this computation is a distance matrix that contains the network di
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 
 # inspect
 distance_matrix[1:5,1:5]
@@ -503,13 +539,13 @@ The above output displays the distance (in metres) between the first five school
 
 Now that we have the distance matrix, we can aggregate the data and perform accessibility analysis. For example, we can count the number of fast-food outlets within 500 or 1,000 metres walking distance from each school:
 
-```{r} 
+```{r}
 #| label: 08-distance-matrix-aggregate
 #| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 
 # fast-food outlets within 500m
 poi_schools$fastfood_500m <- rowSums(distance_matrix <= 500)
@@ -519,39 +555,39 @@ poi_schools$fastfood_1000m <- rowSums(distance_matrix <= 1000)
 ```
 
 ::: {.callout-tip}
-You can further inspect the results using the `View()` function. 
+You can further inspect the results using the `View()` function.
 :::
 
 In the final step, we can investigate whether there is a relationship between the proximity of fast-food outlets and the relative levels of deprivation in the area. One approach is to calculate the average number of fast-food outlets within 1,000 metres of a school for each LSOA, and then compare these figures to their corresponding IMD deciles.
 
-```{r tidy='styler'} 
+```{r tidy='styler'}
 #| label: 08-accessibility-join-imd
 #| classes: styled-output
 #| echo: True
 #| eval: True
-#| filename: "R code"
+#| filename: 'R code'
 # read imd dataset
-imd19 <- read_csv('data/England-IMD-2019.csv')
+imd25 <- read_csv('data/attributes/England-IMD-2025.csv')
 
 # join imd
-lsoa11 <- lsoa11 |>
-  left_join(imd19, by = c('lsoa11cd'='lsoa11cd'))
+lsoa21 <- lsoa21 |>
+  left_join(imd25, by = c('lsoa21cd'='lsoa21cd'))
 
 # join schools to their parent lsoa
-poi_schools <- poi_schools |> 
+poi_schools <- poi_schools |>
   st_transform(27700) |>
-  st_join(lsoa11)
+  st_join(lsoa21)
 ```
 
 We can use this approach to derive the average number of fast-food by IMD decile:
 
-```{r} 
+```{r}
 #| label: 08-accessibility-cnt-imd
 #| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # average counts by imd decile
 fastfood_imd <- poi_schools |>
   group_by(imd_dec) |>
@@ -565,17 +601,17 @@ fastfood_imd
 
 There appears to be a weak relationship, with schools in more deprived areas having, on average, a higher number of fast-food outlets within a 1,000-metre walking distance. However, this trend is not consistent, as schools in the least deprived areas of Lambeth show the highest accessibility on average.
 
-## Assignment 
-Accessibility analysis involves evaluating how easily people can reach essential services, destinations, or opportunities, such as schools, healthcare facilities, or workplaces, from a given location. It considers factors like distance, travel time, and transport networks, providing valuable insights for urban planning, transport policies, and social equity. The CDRC [Access to Healthy Assets & Hazards (AHAH)](https://data.cdrc.ac.uk/dataset/access-healthy-assets-hazards-ahah) dataset, for instance, uses accessibility analysis to quantify how easy it is to reach 'unhealthy' places, such as pubs and gambling outlets, for each neighbourhood in Great Britain. 
+## Assignment
+Accessibility analysis involves evaluating how easily people can reach essential services, destinations, or opportunities, such as schools, healthcare facilities, or workplaces, from a given location. The GeoDS [Access to Healthy Assets & Hazards (AHAH)](https://data.geods.ac.uk/dataset/access-to-healthy-assets-hazards-ahah) dataset, for instance, uses accessibility analysis to quantify how easy it is to reach 'unhealthy' places, such as pubs and gambling outlets, for each neighbourhood in Great Britain.
 
 Having run through all the steps during the tutorial, we can recreate this analysis ourselves. Using Lambeth as a case study, try to complete the following tasks:
 
-1. Extract all `pubs` from the Point of Interest dataset.
-2. For each LSOA within Lambeth, calculate the average walking distance to the nearest pub.
-3. Create a map of the results.
+1. Extract all `pubs` from the Point of Interest dataset, along with a second point of interest category that you would classify as a "healthy" asset (for example, a GP surgery, pharmacy, or leisure centre).
+2. For each LSOA within Lambeth, calculate the average walking distance to the nearest pub and to the nearest asset in your chosen "healthy" category.
+3. Create maps of both results, and compare them. Do the two accessibility patterns differ, and what might that suggest about the borough?
 
 ::: {.callout-note}
-Unlike before, LSOAs are now the unit of analysis. This means you will need to use the LSOA centroids as inputs for your distance matrix.
+Unlike before, LSOAs are now the unit of analysis. This means you will need to input the LSOA *centroids* into your distance matrix.
 :::
 
 ::: {.callout-tip}
@@ -583,4 +619,4 @@ If you want to take a deep dive into accessibility analysis, there is a great re
 :::
 
 ## Before you leave
-This brings us to the end of the tutorial. You should now have a basic understanding of the concepts behind accessibility analysis, how it can be executed in R, and some of the challenges you may encounter when conducting your own research. With this being said, [you have now reached the end of this week's content](https://www.youtube.com/watch?v=fFw7q-BLxLA). Onwards and upwards! 
+This brings us to the end of the tutorial. You should now have a basic understanding of the concepts behind accessibility analysis, how it can be executed in R, and some of the challenges you may encounter when conducting your own research. With this being said, [you have now reached the end of this week's content](https://www.youtube.com/watch?v=fFw7q-BLxLA). Onwards and upwards!
