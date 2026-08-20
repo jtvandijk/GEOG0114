@@ -35,12 +35,6 @@ The data covers all usual residents, as recorded in the 2021 Census for England 
 | London LSOA Census 2021 Main Language       | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/attributes/London-LSOA-MainLanguage.csv) |
 | London LSOA 2021 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0114/raw/refs/heads/master/data/spatial/London-LSOA-2021.gpkg) |
 
-::: {.callout-tip}
-You may have already downloaded some of these datasets in previous weeks, but for completeness, they are all provided here. Only download the datasets you do not already have or did not save.
-:::
-
-Open a new script within your `GEOG0114` project and save this as `w07-geodemographic-classification.r`.
-
 Begin by loading the necessary libraries:
 
 ```{r}

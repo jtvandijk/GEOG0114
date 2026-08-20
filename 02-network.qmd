@@ -39,15 +39,9 @@ You can download a subset of the POI dataset via the link provided below, along 
 | London Borough Spatial Boundaries           | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0114/raw/refs/heads/master/data/spatial/London-Boroughs.gpkg) |
 | England 2025 Index of Multiple Deprivation  | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/attributes/England-IMD-2025.csv) |
 
-::: {.callout-tip}
-You may have already downloaded some of these datasets in previous weeks, but for completeness, they are all provided here. Only download the datasets you do not already have or did not save.
-:::
-
 ::: {.callout-note}
 To extract the Lambeth Overture Points of Interest data, a 2-kilometre buffer was applied around the boundaries of Lambeth. This approach ensures that points just outside the study area are included, as locations beyond the borough boundary may still be accessible to residents and could represent the nearest available options.
 :::
-
-Open a new script within your `GEOG0114` project and save this as `w08-accessibility-analysis.r`.
 
 We will start by loading the libraries that we will need:
 
