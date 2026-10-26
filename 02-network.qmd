@@ -589,7 +589,7 @@ fastfood_imd <- poi_schools |>
 fastfood_imd
 ```
 
-There appears to be a weak relationship, with schools in more deprived areas having, on average, a higher number of fast-food outlets within a 1,000-metre walking distance. However, this trend is not consistent, as schools in the least deprived areas of Lambeth show the highest accessibility on average.
+Decile 1 represents the most deprived areas. There does not appear to be a clear relationship between deprivation and the number of fast-food outlets within a 1,000-metre walking distance: the highest average is found for schools in a mid-ranked decile (decile 6), while the lowest averages are found for schools in the most deprived decile and in decile 7. Some deciles, including the most deprived one, contain very few schools, so these averages should be interpreted with caution.
 
 ## Assignment
 Accessibility analysis involves evaluating how easily people can reach essential services, destinations, or opportunities, such as schools, healthcare facilities, or workplaces, from a given location. The GeoDS [Access to Healthy Assets & Hazards (AHAH)](https://data.geods.ac.uk/dataset/access-to-healthy-assets-hazards-ahah) dataset, for instance, uses accessibility analysis to quantify how easy it is to reach 'unhealthy' places, such as pubs and gambling outlets, for each neighbourhood in Great Britain.
