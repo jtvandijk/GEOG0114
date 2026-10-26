@@ -6,7 +6,7 @@ lang: en
 
 execute:
   freeze: false
-  cache: true
+  cache: false
 
 format:
   html:

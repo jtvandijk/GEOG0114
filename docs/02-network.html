@@ -409,8 +409,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="suggested-readings" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="suggested-readings">Suggested readings</h4>
 <ul>
-<li>Higgins, C., Palm, M. DeJohn, A. <em>et al.</em> 2022. Calculating place-based transit accessibility: Methods, tools and algorithmic dependence. <em>Journal of Transport and Land Use</em> 15(1): 95-116. <a href="https://doi.org/10.5198/jtlu.2022.2012">[Link]</a></li>
-<li>Pönkänen, M., Tenkanen, H., and Mladenović, M. 2024. Spatial accessibility and transport inequity in Finland: Open source models and perspectives from planning practice. <em>Computers, Environment and Urban Systems</em> 116: 102218. <a href="https://doi.org/10.1016/j.compenvurbsys.2024.102218">[Link]</a></li>
+<li>Higgins, C., Palm, M., DeJohn, A. <em>et al.</em> 2022. Calculating place-based transit accessibility: Methods, tools and algorithmic dependence. <em>Journal of Transport and Land Use</em> 15(1): 95-116. <a href="https://doi.org/10.5198/jtlu.2022.2012">[Link]</a></li>
+<li>Pönkänen, M., Tenkanen, H., and Mladenović, M. 2025. Spatial accessibility and transport inequity in Finland: Open source models and perspectives from planning practice. <em>Computers, Environment and Urban Systems</em> 116: 102218. <a href="https://doi.org/10.1016/j.compenvurbsys.2024.102218">[Link]</a></li>
 <li>Van Dijk, J., Krygsman, S. and De Jong, T. 2015. Toward spatial justice: The spatial equity effects of a toll road in Cape Town, South Africa. <em>Journal of Transport and Land Use</em> 8(3): 95-114. <a href="https://doi.org/10.5198/jtlu.2015.555">[Link]</a></li>
 <li>Van Dijk, J. and De Jong, T. 2017. Post-processing GPS-tracks in reconstructing travelled routes in a GIS-environment: network subset selection and attribute adjustment. <em>Annals of GIS</em> 23(3): 203-217. <a href="https://doi.org/10.1080/19475683.2017.1340340">[Link]</a></li>
 </ul>
@@ -1010,10 +1010,10 @@ Figure&nbsp;1: Extracted school and fast food locations for Lambeth.
 <pre><code>Simple feature collection with 6 features and 1 field
 Geometry type: POINT
 Dimension:     XY
-Bounding box:  xmin: -0.1541499 ymin: 51.52435 xmax: -0.1457924 ymax: 51.52698
+Bounding box:  xmin: -0.1541499 ymin: 51.52435 xmax: -0.1457845 ymax: 51.52698
 Geodetic CRS:  WGS 84
       osm_id                    geometry
-78112  78112 POINT (-0.1457924 51.52698)
+78112  78112 POINT (-0.1457845 51.52698)
 99878  99878 POINT (-0.1529802 51.52435)
 99879  99879 POINT (-0.1532899 51.52482)
 99880  99880 POINT (-0.1535797 51.52508)
@@ -1034,13 +1034,13 @@ Geodetic CRS:  WGS 84
 31959     31959     Cleveland Street residential   20 mph    yes
 554369   554369  King William Street    tertiary   20 mph    yes
 554526   554526     Fenchurch Street    tertiary   20 mph   &lt;NA&gt;
-1530592 1530592  Borough High Street     primary   30 mph    yes
+1530592 1530592  Borough High Street     primary   20 mph    yes
                               geometry
 31030   LINESTRING (-0.1349283 51.5...
 31039   LINESTRING (-0.1303693 51.5...
 31959   LINESTRING (-0.139505 51.52...
 554369  LINESTRING (-0.0877134 51.5...
-554526  LINESTRING (-0.085135 51.51...
+554526  LINESTRING (-0.0838564 51.5...
 1530592 LINESTRING (-0.0882957 51.5...</code></pre>
 </div>
 </div>
@@ -1158,7 +1158,7 @@ Figure&nbsp;2: Extracted OpenStreetMap road network data for Lambeth.
 <span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(netx_connected)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 618264</code></pre>
+<pre><code>[1] 545976</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-warning">
@@ -1212,11 +1212,11 @@ Figure&nbsp;2: Extracted OpenStreetMap road network data for Lambeth.
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            6807494201 7110321980 7110321980 12488816452 12376580459
-8796433764    4632.413   4645.734   4645.734    2972.932    2950.001
-8820889464    3645.986   3787.217   3787.217    1986.504    1963.574
-11479633279   8429.905   8468.413   8468.413    6770.424    6747.493
-292521291     5142.590   5142.623   5142.623    3801.380    3849.844
-12331531180   5881.669   5881.702   5881.702    5284.800    5333.264</code></pre>
+8796433764    4568.927   4709.414   4709.414    2972.976    2950.045
+8820889464    3582.456   3722.942   3722.942    1986.504    1963.574
+11479633279   8366.419   8506.906   8506.906    6770.468    6747.538
+292521291     4940.085   4939.748   4939.748    3801.750    3850.214
+12331531180   5882.216   5881.879   5881.879    5285.815    5334.279</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-tip">
@@ -1302,13 +1302,13 @@ dbl (2): imd_rank, imd_dec
   imd_dec avg_cnt
     &lt;dbl&gt;   &lt;dbl&gt;
 1       1     6  
-2       2    18.1
-3       3    19  
+2       2    18.4
+3       3    19.5
 4       4    18.8
 5       5    10.7
-6       6    28.2
-7       7     6.4
-8       8    14.6</code></pre>
+6       6    29.2
+7       7     6.6
+8       8    14.8</code></pre>
 </div>
 </div>
 <p>There appears to be a weak relationship, with schools in more deprived areas having, on average, a higher number of fast-food outlets within a 1,000-metre walking distance. However, this trend is not consistent, as schools in the least deprived areas of Lambeth show the highest accessibility on average.</p>
