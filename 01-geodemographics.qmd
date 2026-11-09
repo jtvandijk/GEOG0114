@@ -8,7 +8,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 #### Essential readings {.unnumbered}
 - Dalton, C. M. and Thatcher, J. 2015. Inflated granularity: Spatial "Big Data" and geodemographics. *Big Data & Society* 2(2): 1-15. [[Link]](https://doi.org/10.1177/2053951715601144)
 - Longley, P. A. 2012. Geodemographics and the practices of geographic information science. *International Journal of Geographical Information Science* 26(12): 2227-2237. [[Link]](https://doi.org/10.1080/13658816.2012.719623)
-- Wyszomierski, J., Longley, P. A., and Singleton, A. *et al.* 2024. A neighbourhood Output Area Classification from the 2021 and 2022 UK censuses. *The Geographical Journal*. 190(2): e12550. [[Link]](https://doi.org/10.1111/geoj.12550)
+- Wyszomierski, J., Longley, P. A., Singleton, A. *et al.* 2024. A neighbourhood Output Area Classification from the 2021 and 2022 UK censuses. *The Geographical Journal*. 190(2): e12550. [[Link]](https://doi.org/10.1111/geoj.12550)
 
 #### Suggested readings {.unnumbered}
 - Fränti, P. and Sieranoja, S. 2019. How much can k-means be improved by using better initialization and repeats? *Pattern Recognition* 93: 95-112. [[Link]](https://doi.org/10.1016/j.patcog.2019.04.014)
@@ -90,11 +90,7 @@ lsoa_eth <- read_csv('data/attributes/London-LSOA-Ethnicity.csv')
 lsoa_lan <- read_csv('data/attributes/London-LSOA-MainLanguage.csv')
 ```
 
-::: {.callout-warning}
-If using a Windows machine, you may need to substitute your forward-slashes (`/`) with two backslashes (`\\`) whenever you are dealing with file paths.
-:::
-
-Now, carefully examine each individual dataframe to understand how the data is structured and what information it contains.
+Now, carefully examine each individual data frame to understand how the data is structured and what information it contains.
 
 ```{r}
 #| label: 07-inspect-data
@@ -127,7 +123,7 @@ To identify geodemographic clusters in our dataset, we will use a technique call
 $k$-means clustering is an unsupervised machine learning algorithm used to group data into a predefined number of clusters, based on similarities between data points. It works by initially assigning $k$ random centroids, then iteratively updating them by assigning each data point to the nearest centroid and recalculating the centroid's position based on the mean of the points in each cluster. The process continues until the centroids stabilise, meaning they no longer change significantly. $k$-means is often used for tasks such as data segmentation, image compression, or anomaly detection. It is simple but may not work well with non-spherical or overlapping clusters.
 :::
 
-Because all the data are stored in [long format](https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb), with each London LSOA appearing on multiple rows for each category — such as separate rows for different age groups, ethnicities, countries of birth, and first or preferred languages — we need to transform it into a [wide format](https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb). For example, instead of having multiple rows for an LSOA showing counts for different age groups all the information for each LSOA will be consolidated into a single row. Additionally, we will clean up the column names to follow standard R naming conventions and make the data easier to work with. Like we have done previously, we can automate this process using the `janitor` package.
+Because all the data are stored in [long format](https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb), with each London LSOA appearing on multiple rows for each category — such as separate rows for different age groups, ethnicities, countries of birth, and first or preferred languages — we need to transform it into a [wide format](https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb). For example, instead of having multiple rows for an LSOA showing counts for different age groups, all the information for each LSOA will be consolidated into a single row. Additionally, we will clean up the column names to follow standard R naming conventions and make the data easier to work with. Like we have done previously, we can automate this process using the `janitor` package.
 
 We will begin with the `age` dataframe:
 
@@ -245,7 +241,7 @@ lsoa_lan <- lsoa_lan |>
   select(-2, -11, -13)
 ```
 
-We now have four separate datasets, each containing the proportions of usual residents classified into different groups based on age, country of birth, ethnicity, and language.
+We now have four separate datasets, each containing the proportions of usual residents classified into different groups based on age, country of birth, ethnicity, and language. Note that the `select()` calls above also dropped two categories by position: `Does not apply`, which is not a group of people (it is empty in the country of birth and ethnicity data and holds 3.6% of residents in the language data), and `Sign and supported languages`, a very small group (0.06% of residents) in the language data.
 
 ### Variable selection
 Where we initially selected variables from different demographic domains, not all variables may be suitable for inclusion. Firstly, the variables need to exhibit sufficient heterogeneity to ensure they capture meaningful differences between observations. Secondly, variables should not be highly correlated with one another, as this redundancy can skew the clustering results. Ensuring acceptable correlation between variables helps maintain the diversity of information and improves the robustness of the clustering outcome.
@@ -270,13 +266,14 @@ A straightforward yet effective method to examine the distribution of our variab
 #| filename: 'R code'
 # wide to long
 lsoa_age_wd <- lsoa_age |>
-  pivot_longer(cols = c(2:5), names_to = 'agegroup', values_to = 'count')
+  pivot_longer(cols = c(2:6), names_to = 'agegroup', values_to = 'proportion')
 
 # facet age
-ggplot(lsoa_age_wd, aes(y = count)) +
+ggplot(lsoa_age_wd, aes(y = proportion)) +
   geom_boxplot() +
   facet_wrap(~agegroup, ncol = 2) +
   theme_minimal() +
+  theme(axis.text.x = element_blank()) +
   ylab('')
 ```
 
@@ -346,12 +343,32 @@ cor_mat <- cor(lsoa_df_vis[,-1])
 ggcorrplot(cor_mat, outline.col = '#ffffff', tl.cex = 8, legend.title = 'Correlation')
 ```
 
+The plot labels the variables `v01` to `v36`. The table below links each code to the variable it stands for. Keep it at hand, as you will need it later when interpreting the clusters.
+
+```{r}
+#| label: 07-variable-lookup
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: 'R code'
+# lookup table of variable codes
+var_lookup <- tibble(code = names(lsoa_df_vis)[2:37], variable = names(lsoa_df)[2:37])
+
+# inspect
+print(var_lookup, n = 36)
+```
+
 Following the approach from [Wyszomierski *et al.* (2024)](https://doi.org/10.1111/geoj.12550), we can define a *weak* correlation as lying between 0 and 0.40, *moderate* as between 0.41 and 0.65, *strong* as between 0.66 and 0.80, and *very strong* as between 0.81 and 1.
 
-A few *strong* and *very strong* correlations can be observed that potentially could be removed; however, to maintain representation, here we decide to retain all variables.
+Several pairs of variables are *strong* or *very strong* (25 of the 630 pairs, of which 9 are *very strong*). Most of these pairs describe the same group of people in two different domains: being born in Africa and identifying as Black African (0.87), or speaking an Asian language and being born in the Middle East or Asia (0.94). A pair of variables above roughly 0.7 is a common candidate for removing one of the two; however, to maintain representation across the domains, here we decide to retain all variables.
+
+Note that the five age proportions add up to 1, so one of them is in principle redundant. We keep all five. As every variable counts equally in the clustering, a domain with many variables, such as ethnicity (19 variables), carries more weight than a domain with few, such as age (5 variables).
 
 ### Variable standardisation
 If the input data are heavily skewed or contain outliers, $k$-means may produce less meaningful clusters. While normality is not required per se, it has been common to do this nonetheless. More important is to standardise the input variables, especially when they are measured on different scales. This ensures that each variable contributes equally to the clustering process.
+
+We reduce the skew with an inverse hyperbolic sine transformation. It behaves like a logarithm for large values, but unlike a logarithm it is defined at zero, which many of our variables contain. The transformation only does something useful when the values are large enough: for proportions between 0 and 1 it leaves the values almost unchanged. We therefore first express the proportions as percentages.
 
 ```{r}
 #| label: 07-standardise-variables
@@ -360,19 +377,19 @@ If the input data are heavily skewed or contain outliers, $k$-means may produce 
 #| eval: True
 #| tidy: True
 #| filename: 'R code'
-# inverse hyperbolic sine
-lsoa_df_vis[,-1] <- sapply(lsoa_df_vis[-1], asinh)
+# inverse hyperbolic sine of the percentages
+lsoa_df_vis[,-1] <- sapply(lsoa_df_vis[-1], function(x){asinh(x * 100)})
 
 # range standardise
 lsoa_df_vis[,-1] <- sapply(lsoa_df_vis[-1], function(x){(x-min(x))/(max(x)-min(x))})
 ```
 
 ### Selecting the number of clusters
-Now our data are prepared we will start by creating an elbow plot. The [elbow method](https://en.wikipedia.org/wiki/Elbow_method_(clustering)#:~:text=In%20cluster%20analysis%2C%20the%20elbow,number%20of%20clusters%20to%20use%60) is a visual tool that helps determine the optimal number of clusters in a dataset. This is important because with $k$-means clustering you need to specify the numbers of clusters *a priori*. The elbow method involves running the clustering algorithm with varying numbers of clusters ($k$) and plotting the total explained variation (known as the *Within Sum of Squares*) against the number of clusters. The goal is to identify the *elbow* point on the curve, where the rate of decrease in explained variation starts to slow. This point suggests that adding more clusters yields diminishing returns in terms of explained variation.
+Now our data are prepared we will start by creating an elbow plot. The [elbow method](https://en.wikipedia.org/wiki/Elbow_method_(clustering)#:~:text=In%20cluster%20analysis%2C%20the%20elbow,number%20of%20clusters%20to%20use%60) is a visual tool that helps determine the optimal number of clusters in a dataset. This is important because with $k$-means clustering you need to specify the numbers of clusters *a priori*. The elbow method involves running the clustering algorithm with varying numbers of clusters ($k$) and plotting the *total within-cluster sum of squares* against the number of clusters. This is the variation that remains inside the clusters (the unexplained variation) and it always decreases as clusters are added. The goal is to identify the *elbow* point on the curve, where the decrease starts to slow. This point suggests that adding more clusters yields diminishing returns.
 
 ```{r}
 #| label: fig-07-elbow-plot
-#| fig-cap: Elbow plot with *Within Sum of Squares* against number of clusters.
+#| fig-cap: Elbow plot with the total within-cluster sum of squares against number of clusters.
 #| classes: styled-output
 #| echo: True
 #| eval: True
@@ -383,14 +400,14 @@ Now our data are prepared we will start by creating an elbow plot. The [elbow me
 fviz_nbclust(lsoa_df_vis[,-1], kmeans, nstart = 100, iter.max = 100, method = 'wss')
 ```
 
-Based on the elbow plot, we can now choose the number of clusters and it looks like **6** clusters would be a reasonable choice.
+Based on the elbow plot, we can now choose the number of clusters. The curve bends around 4 or 5 clusters and then flattens gradually, so there is no single clear answer. We go with **6** clusters.
 
 ::: {.callout-note}
 The interpretation of an elbow plot can be quite subjective, and multiple options for the optimal number of clusters might be justified; for instance, 4, 5, or even 7 clusters could be reasonable choices. In addition to the elbow method, other techniques can aid in determining the optimal number of clusters, such as [silhouette scores](https://en.wikipedia.org/wiki/Silhouette_(clustering)) and the [gap statistic](https://en.wikipedia.org/wiki/Determining_the_number_of_clusters_in_a_data_set#The_gap_statistics). An alternative and helpful approach is to use a [clustergram](https://clustergram.readthedocs.io/en/stable/notebooks/introduction.html), which is a two-dimensional plot that visualises the flows of observations between clusters as more clusters are added. This method illustrates how your data reshuffles with each additional cluster and provides insights into the quality of the splits. This method can be done in R, but is currently easier to implement in Python.
 :::
 
 ### $k$-means clustering
-Now we have decided on the number of clusters, we can run our $k$-means analysis.
+Now we have decided on the number of clusters, we can run our $k$-means analysis. Because $k$-means starts from randomly chosen centres and a poor start can end in a poor solution, `nstart = 100` runs the algorithm from 100 different random starts and keeps the one with the lowest within-cluster sum of squares. `set.seed()` makes the result reproducible.
 
 ```{r}
 #| label: 07-run-kmeans
@@ -424,7 +441,7 @@ lsoa_clus
 We now need to perform some post-processing to extract useful summary data for each cluster. To characterise the clusters, we can compare the global mean values of each variable with the mean values specific to each cluster.
 
 ```{r}
-#| label: 07-cluster-comparision
+#| label: 07-cluster-comparison
 #| classes: styled-output
 #| echo: True
 #| eval: True
@@ -471,7 +488,7 @@ ggplot(cluster_diffs_long, aes(x = factor(vars), y = score)) +
   ylab('')
 ```
 
-These plots can serve as a foundation for creating pen portraits by closely examining which variables drive each cluster.
+These plots can serve as a foundation for creating pen portraits by closely examining which variables drive each cluster. Use the lookup table from earlier to see which variable each code stands for.
 
 ::: {.callout-tip}
 For easier interpretation, these values can be transformed into index scores, allowing us to assess which variables are under- or overrepresented within each cluster group.
@@ -499,12 +516,12 @@ tm_shape(lsoa21) +
 tm_polygons(
   fill = 'cluster',
   fill.scale = tm_scale_categorical(
-    values = c('#feebe2', '#fbb4b9', '#f768a1', '#c51b8a', '#7a0177'),
+    values = c('#1b9e77', '#d95f02', '#7570b3', '#e7298a', '#66a61e', '#e6ab02'),
   ),
 
   # legend
   fill.legend = tm_legend(
-    title = 'Cluster number',
+    title = 'Cluster',
     frame = FALSE,
   ),
 
