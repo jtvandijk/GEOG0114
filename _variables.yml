@@ -2,7 +2,7 @@ meta:
   title: GEOG0114
 
 urls:
-  git-url-am: "https://uclpg-msc-sgds.github.io/GEOG0114"
+  git-url-am: "https://uclpg-msc-sgds.github.io/GEOG0114/00-module_overview.html"
   geodemographics: "01-geodemographics.html"
   transport-ntx: "02-network.html"
 
