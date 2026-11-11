@@ -319,6 +319,11 @@ lsoa_df <- lsoa_df |>
 The code above makes use of [Boolean logic](https://en.wikipedia.org/wiki/Boolean_algebra) to calculate the proportion of zeroes within each variable. The `x == 0` part checks each value in column `x` to see if it is equal to `0`, returning `TRUE` or `FALSE` for each element. The `mean()` function is then used to calculate the average of the `TRUE` values in the column. Since `TRUE` is treated as `1` and `FALSE` as `0`, this gives the proportion of values in the column that are equal to zero.
 :::
 
+::: {.callout-note .exercise icon=false}
+## Predict first
+Before you run the next chunk, predict which groups of variables will be most strongly correlated with each other, for example country of birth and ethnicity. Check the plot afterwards.
+:::
+
 We can subsequently check for multicollinearity of the remaining variables. The easiest way to check the correlations between all variables is probably by visualising a correlation matrix:
 
 ```{r}
@@ -436,6 +441,11 @@ We can inspect the object to get some information about our clusters:
 # inspect
 lsoa_clus
 ```
+
+::: {.callout-note .exercise icon=false}
+## Try it yourself
+Change the value in `set.seed()`, rerun the clustering, and predict whether the clusters will change. Compare the cluster sizes before and after.
+:::
 
 ### Visualising clusters
 We now need to perform some post-processing to extract useful summary data for each cluster. To characterise the clusters, we can compare the global mean values of each variable with the mean values specific to each cluster.

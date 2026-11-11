@@ -326,16 +326,23 @@ bbox_lambeth <- poi24 |>
   st_transform(4326) |>
   st_bbox()
 
-# osm query
-osm_network <- opq(bbox = bbox_lambeth) |>
-  add_osm_feature(
-    key = 'highway',
-    value = c('primary', 'secondary', 'tertiary', 'residential', 'path', 'footway', 'unclassified', 'living_street', 'pedestrian')) |>
-  osmdata_sf()
+# osm query, fall back to the prepared copy if the query fails
+osm_network <- tryCatch(
+  opq(bbox = bbox_lambeth) |>
+    add_osm_feature(
+      key = 'highway',
+      value = c('primary', 'secondary', 'tertiary', 'residential', 'path', 'footway', 'unclassified', 'living_street', 'pedestrian')) |>
+    osmdata_sf(),
+  error = function(e) {
+    message('OSM query failed, loading the prepared copy instead.')
+    load('data/spatial/London-OSM-Roads.RData')
+    osm_network
+  }
+)
 ```
 
 ::: {.callout-warning}
-In some cases, the OSM query may return an error, particularly when multiple users from the same location are executing the exact same query. If so, you can download a prepared copy of the data here: [[Download]](https://github.com/jtvandijk/GEOG0114/raw/refs/heads/master/data/spatial/London-OSM-Roads.RData). You can load this copy into R through `load('data/spatial/London-OSM-Roads.RData')`
+OSM is edited continuously, so the numbers you obtain may differ slightly from those in the text.
 :::
 
 The returned `osm_network` object contains a variety of elements with the specified tags. Our next step is to extract the spatial data from this object to create our road network dataset. Specifically, we will extract the edges of the network, which represent the lines of the roads. The nodes, the points where roads start, end or intersect, are created for us when we build the graph in the next step.
@@ -537,6 +544,11 @@ poi_schools$fastfood_500m <- rowSums(distance_matrix <= 500)
 poi_schools$fastfood_1000m <- rowSums(distance_matrix <= 1000)
 ```
 
+::: {.callout-note .exercise icon=false}
+## Try it yourself
+Change the 500 metres threshold to a smaller or larger distance, and predict how the counts of fast-food outlets change. Rerun the code and compare the result with your prediction.
+:::
+
 ::: {.callout-tip}
 You can further inspect the results using the `View()` function.
 :::
@@ -561,6 +573,11 @@ poi_schools <- poi_schools |>
   st_transform(27700) |>
   st_join(lsoa21)
 ```
+
+::: {.callout-note .exercise icon=false}
+## Predict first
+Before you run the next chunk, predict whether schools in the most deprived LSOAs have more fast-food outlets within 500 metres than schools in the least deprived LSOAs. Compare your prediction with the table that follows.
+:::
 
 We can use this approach to derive the average number of fast-food outlets per school by IMD decile:
 

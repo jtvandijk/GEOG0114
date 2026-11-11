@@ -972,11 +972,15 @@ Figure&nbsp;1: Extracted school and fast-food locations for Lambeth.
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_transform</span>(<span class="dv">4326</span>) <span class="sc">|&gt;</span></span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_bbox</span>()</span>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># osm query</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>osm_network <span class="ot">&lt;-</span> <span class="fu">opq</span>(<span class="at">bbox =</span> bbox_lambeth) <span class="sc">|&gt;</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># osm query, fall back to the prepared copy if the query fails</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>osm_network <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(<span class="fu">opq</span>(<span class="at">bbox =</span> bbox_lambeth) <span class="sc">|&gt;</span></span>
 <span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_osm_feature</span>(<span class="at">key =</span> <span class="st">"highway"</span>, <span class="at">value =</span> <span class="fu">c</span>(<span class="st">"primary"</span>, <span class="st">"secondary"</span>, <span class="st">"tertiary"</span>,</span>
 <span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"residential"</span>, <span class="st">"path"</span>, <span class="st">"footway"</span>, <span class="st">"unclassified"</span>, <span class="st">"living_street"</span>, <span class="st">"pedestrian"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">osmdata_sf</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">osmdata_sf</span>(), <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">message</span>(<span class="st">"OSM query failed, loading the prepared copy instead."</span>)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">load</span>(<span class="st">"data/spatial/London-OSM-Roads.RData"</span>)</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>    osm_network</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-warning">
@@ -985,7 +989,7 @@ Figure&nbsp;1: Extracted school and fast-food locations for Lambeth.
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>In some cases, the OSM query may return an error, particularly when multiple users from the same location are executing the exact same query. If so, you can download a prepared copy of the data here: <a href="https://github.com/jtvandijk/GEOG0114/raw/refs/heads/master/data/spatial/London-OSM-Roads.RData">[Download]</a>. You can load this copy into R through <code>load('data/spatial/London-OSM-Roads.RData')</code></p>
+<p>OSM is edited continuously, so the numbers you obtain may differ slightly from those in the text.</p>
 </div>
 </div>
 </div>
@@ -1138,7 +1142,7 @@ Figure&nbsp;2: Extracted OpenStreetMap road network data for Lambeth.
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(netx_connected)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 546050</code></pre>
+<pre><code>[1] 546246</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-warning">
@@ -1222,6 +1226,19 @@ Figure&nbsp;2: Extracted OpenStreetMap road network data for Lambeth.
 <span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>poi_schools<span class="sc">$</span>fastfood_1000m <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(distance_matrix <span class="sc">&lt;=</span> <span class="dv">1000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
+<div class="exercise callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Try it yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Change the 500 metres threshold to a smaller or larger distance, and predict how the counts of fast-food outlets change. Rerun the code and compare the result with your prediction.</p>
+</div>
+</div>
 <div class="callout callout-style-simple callout-tip">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -1259,6 +1276,19 @@ dbl (2): imd_rank, imd_dec
 <span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>poi_schools <span class="ot">&lt;-</span> poi_schools <span class="sc">|&gt;</span></span>
 <span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="dv">27700</span>) <span class="sc">|&gt;</span></span>
 <span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_join</span>(lsoa21)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="exercise callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Predict first
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before you run the next chunk, predict whether schools in the most deprived LSOAs have more fast-food outlets within 500 metres than schools in the least deprived LSOAs. Compare your prediction with the table that follows.</p>
+</div>
 </div>
 <p>We can use this approach to derive the average number of fast-food outlets per school by IMD decile:</p>
 <div class="cell styled-output">

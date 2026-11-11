@@ -903,6 +903,19 @@ Figure&nbsp;1: Boxplots of the distribution of the <code>age</code> dataset.
 </div>
 </div>
 </div>
+<div class="exercise callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Predict first
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before you run the next chunk, predict which groups of variables will be most strongly correlated with each other, for example country of birth and ethnicity. Check the plot afterwards.</p>
+</div>
+</div>
 <p>We can subsequently check for multicollinearity of the remaining variables. The easiest way to check the correlations between all variables is probably by visualising a correlation matrix:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
@@ -1143,6 +1156,19 @@ Available components:
 
 [1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"
 [6] "betweenss"    "size"         "iter"         "ifault"      </code></pre>
+</div>
+</div>
+<div class="exercise callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Try it yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Change the value in <code>set.seed()</code>, rerun the clustering, and predict whether the clusters will change. Compare the cluster sizes before and after.</p>
 </div>
 </div>
 </section>

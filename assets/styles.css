@@ -73,3 +73,12 @@ div.sidebar-header {
     max-width: 100%;
     height: auto;
 }
+
+.callout.exercise {
+  border-left-color: var(--main-color, var(--bs-primary)) !important;
+  background-color: color-mix(in srgb, var(--main-color, var(--bs-primary)) 5%, transparent);
+}
+
+.callout.exercise .callout-title-container {
+  color: var(--main-color, var(--bs-primary));
+}
