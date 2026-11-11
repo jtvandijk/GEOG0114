@@ -1,3 +1,7 @@
+---
+number-offset: 7
+---
+
 # Accessibility Analysis
 Accessibility is often described as the ease with which individuals can reach places and opportunities, such as employment, public services, and cultural activities. We can utilise transport network data to quantify accessibility and characterise areas based on their accessibility levels. This week, we will use the `dodgr` R library to measure accessibility between different points of interest by calculating the network distances between them.
 

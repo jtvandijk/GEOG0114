@@ -18,6 +18,8 @@ format:
     toc: true
     smooth-scroll: true
     highlight-style: atom-one
+    number-sections: true
+    number-depth: 4
     pagetitle: "{{< var meta.title >}}"
 
 website:
@@ -43,8 +45,10 @@ website:
           file: index.qmd
       - section: "Applied Spatial Analysis"
         contents:
-          - 01-geodemographics.qmd
-          - 02-network.qmd
+          - text: "7 Geodemographic Classification"
+            file: 01-geodemographics.qmd
+          - text: "8 Accessibility Analysis"
+            file: 02-network.qmd
 
 editor: source
 

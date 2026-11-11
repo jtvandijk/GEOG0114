@@ -319,7 +319,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-geodemographics.html">Applied Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./01-geodemographics.html">Geodemographic Classification</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-geodemographics.html">Applied Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./01-geodemographics.html">7 Geodemographic Classification</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -374,13 +374,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01-geodemographics.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Geodemographic Classification</span></a>
+ <span class="menu-text">7 Geodemographic Classification</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-network.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Accessibility Analysis</span></a>
+ <span class="menu-text">8 Accessibility Analysis</span></a>
   </div>
 </li>
       </ul>
@@ -395,42 +395,42 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#geodemographic-classification" id="toc-geodemographic-classification" class="nav-link active" data-scroll-target="#geodemographic-classification">Geodemographic Classification</a>
+  <li><a href="#geodemographic-classification" id="toc-geodemographic-classification" class="nav-link active" data-scroll-target="#geodemographic-classification"><span class="header-section-number">7</span> Geodemographic Classification</a>
   <ul class="collapse">
-  <li><a href="#lecture-slides" id="toc-lecture-slides" class="nav-link" data-scroll-target="#lecture-slides">Lecture slides</a></li>
-  <li><a href="#reading-list" id="toc-reading-list" class="nav-link" data-scroll-target="#reading-list">Reading list</a></li>
-  <li><a href="#start-of-session" id="toc-start-of-session" class="nav-link" data-scroll-target="#start-of-session">Start of session</a></li>
-  <li><a href="#classifying-london" id="toc-classifying-london" class="nav-link" data-scroll-target="#classifying-london">Classifying London</a>
+  <li><a href="#lecture-slides" id="toc-lecture-slides" class="nav-link" data-scroll-target="#lecture-slides"><span class="header-section-number">7.1</span> Lecture slides</a></li>
+  <li><a href="#reading-list" id="toc-reading-list" class="nav-link" data-scroll-target="#reading-list"><span class="header-section-number">7.2</span> Reading list</a></li>
+  <li><a href="#start-of-session" id="toc-start-of-session" class="nav-link" data-scroll-target="#start-of-session"><span class="header-section-number">7.3</span> Start of session</a></li>
+  <li><a href="#classifying-london" id="toc-classifying-london" class="nav-link" data-scroll-target="#classifying-london"><span class="header-section-number">7.4</span> Classifying London</a>
   <ul class="collapse">
-  <li><a href="#variable-preparation" id="toc-variable-preparation" class="nav-link" data-scroll-target="#variable-preparation">Variable preparation</a></li>
-  <li><a href="#variable-selection" id="toc-variable-selection" class="nav-link" data-scroll-target="#variable-selection">Variable selection</a></li>
-  <li><a href="#variable-standardisation" id="toc-variable-standardisation" class="nav-link" data-scroll-target="#variable-standardisation">Variable standardisation</a></li>
-  <li><a href="#selecting-the-number-of-clusters" id="toc-selecting-the-number-of-clusters" class="nav-link" data-scroll-target="#selecting-the-number-of-clusters">Selecting the number of clusters</a></li>
-  <li><a href="#k-means-clustering" id="toc-k-means-clustering" class="nav-link" data-scroll-target="#k-means-clustering"><span class="math inline">\(k\)</span>-means clustering</a></li>
-  <li><a href="#visualising-clusters" id="toc-visualising-clusters" class="nav-link" data-scroll-target="#visualising-clusters">Visualising clusters</a></li>
+  <li><a href="#variable-preparation" id="toc-variable-preparation" class="nav-link" data-scroll-target="#variable-preparation"><span class="header-section-number">7.4.1</span> Variable preparation</a></li>
+  <li><a href="#variable-selection" id="toc-variable-selection" class="nav-link" data-scroll-target="#variable-selection"><span class="header-section-number">7.4.2</span> Variable selection</a></li>
+  <li><a href="#variable-standardisation" id="toc-variable-standardisation" class="nav-link" data-scroll-target="#variable-standardisation"><span class="header-section-number">7.4.3</span> Variable standardisation</a></li>
+  <li><a href="#selecting-the-number-of-clusters" id="toc-selecting-the-number-of-clusters" class="nav-link" data-scroll-target="#selecting-the-number-of-clusters"><span class="header-section-number">7.4.4</span> Selecting the number of clusters</a></li>
+  <li><a href="#k-means-clustering" id="toc-k-means-clustering" class="nav-link" data-scroll-target="#k-means-clustering"><span class="header-section-number">7.4.5</span> <span class="math inline">\(k\)</span>-means clustering</a></li>
+  <li><a href="#visualising-clusters" id="toc-visualising-clusters" class="nav-link" data-scroll-target="#visualising-clusters"><span class="header-section-number">7.4.6</span> Visualising clusters</a></li>
   </ul></li>
-  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment">Assignment</a></li>
-  <li><a href="#before-you-leave" id="toc-before-you-leave" class="nav-link" data-scroll-target="#before-you-leave">Before you leave</a></li>
+  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment"><span class="header-section-number">7.5</span> Assignment</a></li>
+  <li><a href="#before-you-leave" id="toc-before-you-leave" class="nav-link" data-scroll-target="#before-you-leave"><span class="header-section-number">7.6</span> Before you leave</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/jtvandijk/GEOG0114/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-geodemographics.html">Applied Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./01-geodemographics.html">Geodemographic Classification</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-geodemographics.html">Applied Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./01-geodemographics.html">7 Geodemographic Classification</a></li></ol></nav></header>
 
 
 
 
 
-<section id="geodemographic-classification" class="level1">
-<h1>Geodemographic Classification</h1>
+<section id="geodemographic-classification" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Geodemographic Classification</h1>
 <p>This week we will turn to geodemographic classification. Geodemographic classification is a method used to categorise geographic areas and the people living in them based on demographic, socioeconomic, and sometimes lifestyle characteristics. This approach combines geographic information with demographic data to create profiles of different neighbourhoods.</p>
-<section id="lecture-slides" class="level2">
-<h2 class="anchored" data-anchor-id="lecture-slides">Lecture slides</h2>
+<section id="lecture-slides" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="lecture-slides"><span class="header-section-number">7.1</span> Lecture slides</h2>
 <p>You can download the slides of this week’s lecture here: <a href="https://github.com/jtvandijk/GEOG0114/tree/master/slides/w07-psa.pdf">[Link]</a>.</p>
 </section>
-<section id="reading-list" class="level2">
-<h2 class="anchored" data-anchor-id="reading-list">Reading list</h2>
+<section id="reading-list" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="reading-list"><span class="header-section-number">7.2</span> Reading list</h2>
 <section id="essential-readings" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="essential-readings">Essential readings</h4>
 <ul>
@@ -449,16 +449,16 @@ window.Quarto = {
 </ul>
 </section>
 </section>
-<section id="start-of-session" class="level2">
-<h2 class="anchored" data-anchor-id="start-of-session">Start of session</h2>
+<section id="start-of-session" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="start-of-session"><span class="header-section-number">7.3</span> Start of session</h2>
 <p>Before working through the tutorial, we will spend a few minutes looking at:</p>
 <ul>
 <li>How <code>cbind()</code> joins the cluster results to the map</li>
 <li>Why the variables are transformed before standardising</li>
 </ul>
 </section>
-<section id="classifying-london" class="level2">
-<h2 class="anchored" data-anchor-id="classifying-london">Classifying London</h2>
+<section id="classifying-london" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="classifying-london"><span class="header-section-number">7.4</span> Classifying London</h2>
 <p>Today, we will create our own geodemographic classification to examine demographic clusters across London, drawing inspiration from <a href="https://doi.org/10.1177/23998083241242913">London Output Area Classification</a>. Specifically, we will try to identify clusters based on age group, self-identified ethnicity, country of birth, and first or preferred language.</p>
 <p>The data covers all usual residents, as recorded in the 2021 Census for England and Wales, aggregated at the <a href="https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies">Lower Super Output Area (LSOA)</a> level. These datasets have been extracted using the <a href="https://www.ons.gov.uk/datasets/create">Custom Dataset Tool</a>, and you can download each file via the links provided below. A copy of the 2021 London LSOAs spatial boundaries is also available. Save these files in your project folder under <code>data</code>.</p>
 <table class="caption-top table">
@@ -662,8 +662,8 @@ dbl (2): Main language (11 categories) Code, Observation
 </div>
 </div>
 </div>
-<section id="variable-preparation" class="level3">
-<h3 class="anchored" data-anchor-id="variable-preparation">Variable preparation</h3>
+<section id="variable-preparation" class="level3" data-number="7.4.1">
+<h3 data-number="7.4.1" class="anchored" data-anchor-id="variable-preparation"><span class="header-section-number">7.4.1</span> Variable preparation</h3>
 <p>To identify geodemographic clusters in our dataset, we will use a technique called <span class="math inline">\(k\)</span>-means. <span class="math inline">\(k\)</span>-means aims to partition a set of standardised observations into a specified number of clusters (<span class="math inline">\(k\)</span>). To do this we first need to prepare the individual datasets, as well as transform and standardise the input variables.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
@@ -799,8 +799,8 @@ dbl (2): Main language (11 categories) Code, Observation
 </div>
 <p>We now have four separate datasets, each containing the proportions of usual residents classified into different groups based on age, country of birth, ethnicity, and language. Note that the <code>select()</code> calls above also dropped two categories by position: <code>Does not apply</code>, which is not a group of people (it is empty in the country of birth and ethnicity data and holds 3.6% of residents in the language data), and <code>Sign and supported languages</code>, a very small group (0.06% of residents) in the language data.</p>
 </section>
-<section id="variable-selection" class="level3">
-<h3 class="anchored" data-anchor-id="variable-selection">Variable selection</h3>
+<section id="variable-selection" class="level3" data-number="7.4.2">
+<h3 data-number="7.4.2" class="anchored" data-anchor-id="variable-selection"><span class="header-section-number">7.4.2</span> Variable selection</h3>
 <p>Where we initially selected variables from different demographic domains, not all variables may be suitable for inclusion. Firstly, the variables need to exhibit sufficient heterogeneity to ensure they capture meaningful differences between observations. Secondly, variables should not be highly correlated with one another, as this redundancy can skew the clustering results. Ensuring acceptable correlation between variables helps maintain the diversity of information and improves the robustness of the clustering outcome.</p>
 <div class="callout callout-style-simple callout-warning">
 <div class="callout-body d-flex">
@@ -1044,8 +1044,8 @@ Figure&nbsp;2: Correlation plot of classification variables.
 <p>Several pairs of variables are <em>strong</em> or <em>very strong</em> (25 of the 630 pairs, of which 9 are <em>very strong</em>). Most of these pairs describe the same group of people in two different domains: being born in Africa and identifying as Black African (0.87), or speaking an Asian language and being born in the Middle East or Asia (0.94). A pair of variables above roughly 0.7 is a common candidate for removing one of the two; however, to maintain representation across the domains, here we decide to retain all variables.</p>
 <p>Note that the five age proportions add up to 1, so one of them is in principle redundant. We keep all five. As every variable counts equally in the clustering, a domain with many variables, such as ethnicity (19 variables), carries more weight than a domain with few, such as age (5 variables).</p>
 </section>
-<section id="variable-standardisation" class="level3">
-<h3 class="anchored" data-anchor-id="variable-standardisation">Variable standardisation</h3>
+<section id="variable-standardisation" class="level3" data-number="7.4.3">
+<h3 data-number="7.4.3" class="anchored" data-anchor-id="variable-standardisation"><span class="header-section-number">7.4.3</span> Variable standardisation</h3>
 <p>If the input data are heavily skewed or contain outliers, <span class="math inline">\(k\)</span>-means may produce less meaningful clusters. While normality is not required per se, it has been common to do this nonetheless. More important is to standardise the input variables, especially when they are measured on different scales. This ensures that each variable contributes equally to the clustering process.</p>
 <p>We reduce the skew with an inverse hyperbolic sine transformation. It behaves like a logarithm for large values, but unlike a logarithm it is defined at zero, which many of our variables contain. The transformation only does something useful when the values are large enough: for proportions between 0 and 1 it leaves the values almost unchanged. We therefore first express the proportions as percentages.</p>
 <div class="cell styled-output">
@@ -1065,8 +1065,8 @@ Figure&nbsp;2: Correlation plot of classification variables.
 </div>
 </div>
 </section>
-<section id="selecting-the-number-of-clusters" class="level3">
-<h3 class="anchored" data-anchor-id="selecting-the-number-of-clusters">Selecting the number of clusters</h3>
+<section id="selecting-the-number-of-clusters" class="level3" data-number="7.4.4">
+<h3 data-number="7.4.4" class="anchored" data-anchor-id="selecting-the-number-of-clusters"><span class="header-section-number">7.4.4</span> Selecting the number of clusters</h3>
 <p>Now our data are prepared we will start by creating an elbow plot. The <a href="https://en.wikipedia.org/wiki/Elbow_method_(clustering)#:~:text=In%20cluster%20analysis%2C%20the%20elbow,number%20of%20clusters%20to%20use%60">elbow method</a> is a visual tool that helps determine the optimal number of clusters in a dataset. This is important because with <span class="math inline">\(k\)</span>-means clustering you need to specify the numbers of clusters <em>a priori</em>. The elbow method involves running the clustering algorithm with varying numbers of clusters (<span class="math inline">\(k\)</span>) and plotting the <em>total within-cluster sum of squares</em> against the number of clusters. This is the variation that remains inside the clusters (the unexplained variation) and it always decreases as clusters are added. The goal is to identify the <em>elbow</em> point on the curve, where the decrease starts to slow. This point suggests that adding more clusters yields diminishing returns.</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
@@ -1101,8 +1101,8 @@ Figure&nbsp;3: Elbow plot with the total within-cluster sum of squares against n
 </div>
 </div>
 </section>
-<section id="k-means-clustering" class="level3">
-<h3 class="anchored" data-anchor-id="k-means-clustering"><span class="math inline">\(k\)</span>-means clustering</h3>
+<section id="k-means-clustering" class="level3" data-number="7.4.5">
+<h3 data-number="7.4.5" class="anchored" data-anchor-id="k-means-clustering"><span class="header-section-number">7.4.5</span> <span class="math inline">\(k\)</span>-means clustering</h3>
 <p>Now we have decided on the number of clusters, we can run our <span class="math inline">\(k\)</span>-means analysis. Because <span class="math inline">\(k\)</span>-means starts from randomly chosen centres and a poor start can end in a poor solution, <code>nstart = 100</code> runs the algorithm from 100 different random starts and keeps the one with the lowest within-cluster sum of squares. <code>set.seed()</code> makes the result reproducible.</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
@@ -1172,8 +1172,8 @@ Available components:
 </div>
 </div>
 </section>
-<section id="visualising-clusters" class="level3">
-<h3 class="anchored" data-anchor-id="visualising-clusters">Visualising clusters</h3>
+<section id="visualising-clusters" class="level3" data-number="7.4.6">
+<h3 data-number="7.4.6" class="anchored" data-anchor-id="visualising-clusters"><span class="header-section-number">7.4.6</span> Visualising clusters</h3>
 <p>We now need to perform some post-processing to extract useful summary data for each cluster. To characterise the clusters, we can compare the global mean values of each variable with the mean values specific to each cluster.</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
@@ -1312,8 +1312,8 @@ Figure&nbsp;5: Classification of London LSOAs based on several demographic varia
 </div>
 </section>
 </section>
-<section id="assignment" class="level2">
-<h2 class="anchored" data-anchor-id="assignment">Assignment</h2>
+<section id="assignment" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="assignment"><span class="header-section-number">7.5</span> Assignment</h2>
 <p>The creation of a geodemographic classification is an iterative process. This typically includes adding or removing variables, adjusting the number of clusters, and grouping data in different ways to achieve the most meaningful segmentation. Try to do the following:</p>
 <ol type="1">
 <li>Download the two datasets provided below and save them to your <code>data</code> folder. The datasets include:
@@ -1348,8 +1348,8 @@ Figure&nbsp;5: Classification of London LSOAs based on several demographic varia
 </tbody>
 </table>
 </section>
-<section id="before-you-leave" class="level2">
-<h2 class="anchored" data-anchor-id="before-you-leave">Before you leave</h2>
+<section id="before-you-leave" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="before-you-leave"><span class="header-section-number">7.6</span> Before you leave</h2>
 <p>Having finished this tutorial, you should now understand the basics of a geodemographic classification. That is <a href="https://www.youtube.com/watch?v=ArFyi_iaEdw">all for this week</a>!</p>
 
 
@@ -1777,8 +1777,8 @@ Figure&nbsp;5: Classification of London LSOAs based on several demographic varia
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./02-network.html" class="pagination-link" aria-label="Accessibility Analysis">
-        <span class="nav-page-text">Accessibility Analysis</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./02-network.html" class="pagination-link" aria-label="8 Accessibility Analysis">
+        <span class="nav-page-text">8 Accessibility Analysis</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

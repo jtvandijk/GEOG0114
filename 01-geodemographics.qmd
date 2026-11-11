@@ -1,3 +1,7 @@
+---
+number-offset: 6
+---
+
 # Geodemographic Classification
 This week we will turn to geodemographic classification. Geodemographic classification is a method used to categorise geographic areas and the people living in them based on demographic, socioeconomic, and sometimes lifestyle characteristics. This approach combines geographic information with demographic data to create profiles of different neighbourhoods.
 
