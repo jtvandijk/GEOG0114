@@ -9,3 +9,6 @@
 # can cache individual chunk results (e.g. dodgr street networks) well
 # past GitHub's 100MB file limit
 /*_cache/
+
+# knitr intermediate files (Quarto treats .rmarkdown as a render input)
+*.rmarkdown
