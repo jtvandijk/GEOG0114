@@ -62,7 +62,7 @@ div.sidebar-header {
     padding: 1px 3px;
     border: 1px solid var(--accent-color);
     border-radius: 3px;
-    background-color: rgba(37, 180, 151, .05);
+    background-color: color-mix(in srgb, var(--accent-color) 5%, transparent);
 }
 
 .explore {
